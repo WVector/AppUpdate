@@ -6,58 +6,25 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-
+        classpath 'com.novoda:bintray-release:0.3.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://www.jitpack.io" }
+    }
+    tasks.withType(Javadoc) {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-ext {
-    // Sdk and tools
-    minSdkVersion = 14
-    targetSdkVersion = 25
-    compileSdkVersion = 25
-    buildToolsVersion = '25.0.3'
-
-    //测试
-    testVersionCode = "020"
-    //正式
-    versionCode = "020"
-
-    //测试
-    host_test = "http://10.222.238.27:8080/pelDem"
-    //正式
-//    host = 'http://10.222.238.27:8080/pelDem'
-//    host = 'http://10.222.5.191:8080/pelDem'
-    host = 'http://47.94.102.201/mobileCard'
-//    host = 'http://218.202.107.139:8080/pelDem'
-
-    // App dependencies
-    supportLibraryVersion = '25.3.1'
-    constraintVersion = '1.0.0-beta5'
-    junitVersion = '4.12'
-    retrofitVersion = '2.2.0'
-    okhttpVersion = '3.6.0'
-    rxjavaVersion = '2.0.6'
-    rxandroidVersion = '2.0.1'
-    rxCacheVersion = '1.8.0-2.x'
-    rxCacheGsonVersion = '0.0.3'
-    espressoVersion = '2.2.2'
-    gsonVersion = '2.8.0'
-    daggerVersion = '2.9'
-    butterKnifeVersion = '8.5.1'
-    frescoVersion = '1.2.0'
-    arouterVersion = '1.2.0'
-    arouterCompilerVersion = '1.1.1'
-    easypermissionVersion = '0.3.1'
-    autoScrollViewPagerVersion = '2.1.7'
 }
