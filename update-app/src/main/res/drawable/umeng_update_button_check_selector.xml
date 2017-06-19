@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_checked="true" android:state_window_focused="false"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_on_holo_light" />
+    <item android:state_checked="false" android:state_window_focused="false"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_off_holo_light" />
+
+    <item android:state_checked="true" android:state_pressed="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_on_pressed_holo_light" />
+    <item android:state_checked="false" android:state_pressed="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_off_pressed_holo_light" />
+
+    <item android:state_checked="true" android:state_focused="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_on_focused_holo_light" />
+    <item android:state_checked="false" android:state_focused="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_off_focused_holo_light" />
+
+    <item android:state_checked="false"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_off_holo_light" />
+    <item android:state_checked="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/umeng_update_btn_check_on_holo_light" />
+</selector>
