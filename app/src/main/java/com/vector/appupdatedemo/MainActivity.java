@@ -12,7 +12,13 @@ import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
+import java.io.File;
+
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -33,15 +39,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateApp(View view) {
-        //http://47.94.102.201/mobileCard/com/mobile/updateVersion.html?version=0.2.0&appKey=ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f
-        //http://47.94.102.201/mobileCard/com/mobile/updateVersion.html?appKey=ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f&version=0.1.0
-
         String url = "http://47.94.102.201/mobileCard/com/mobile/updateVersion.html";
         String appKey = "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f";
 
-        final String targetPath = Environment.getExternalStorageState();
+        final String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-        final MyHttpUtil httpManager = new MyHttpUtil();
+        final UpdateAppHttpUtil httpManager = new UpdateAppHttpUtil();
 
         final UpdateAppManager updateAppManager = UpdateAppManager.getInstance();
 
@@ -82,6 +85,41 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(MainActivity.this, "未授权", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+
+    }
+
+    public void downloadApp(View view) {
+        String url = "http://47.94.102.201/online/appDownFile/yimiao-0.3.0-2017-06-19-release.apk";
+        String fileName = "test.app";
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
+        OkHttpUtils.get()
+                .url(url)
+                .build()
+                .execute(new FileCallBack(path, fileName) {
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
+                        super.inProgress(progress, total, id);
+                        Log.d(TAG, "inProgress() called with: progress = [" + progress + "], total = [" + total + "], id = [" + id + "]");
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e, int id) {
+                        Log.d(TAG, validateError(e, response));
+                    }
+
+                    @Override
+                    public void onResponse(File response, int id) {
+                        Log.d(TAG, response.getAbsolutePath());
+
+                    }
+
+                    @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        Log.d(TAG, "onBefore() called with: request = [" + request + "], id = [" + id + "]");
                     }
                 });
 

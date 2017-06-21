@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 
@@ -36,6 +38,12 @@ public class UpdateAppManager {
      */
     public void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp) {
 
+        String preSuffix = "/storage/emulated";
+
+        if (TextUtils.isEmpty(targetPath) || !targetPath.startsWith(preSuffix)) {
+            Log.e(TAG, "下载路径错误:" + targetPath);
+            return;
+        }
         if (updateApp == null) {
             return;
         }

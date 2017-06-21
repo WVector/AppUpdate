@@ -108,8 +108,6 @@ public class DownloadService extends Service {
 
         String target = appDir + File.separator + updateApp.getNew_version();
 
-        new File(target).mkdir();
-
 //        //可以利用md5验证是否重复下载
         updateApp.getHttpManager().download(apkUrl, target, appName, new FileDownloadCallBack(callback));
 

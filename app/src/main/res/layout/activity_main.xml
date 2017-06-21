@@ -21,6 +21,13 @@
         android:text="更新App"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="downloadApp"
+        android:text="下载App"
+        />
+
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
