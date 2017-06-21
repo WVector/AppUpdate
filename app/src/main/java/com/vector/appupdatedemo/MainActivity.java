@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         OkHttpUtils.getInstance()
                 .init(this)
-                .debug(true, "vetor")
+                .debug(true, "vector")
                 .timeout(20 * 1000);
 
     }
