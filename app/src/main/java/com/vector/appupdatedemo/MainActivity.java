@@ -53,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
             public void isHasNewApp(boolean hasNewApp, UpdateAppBean updateApp) {
                 Log.d(TAG, "isHasNewApp() called with: hasNewApp = [" + hasNewApp + "], updateApp = [" + updateApp + "]");
                 if (hasNewApp) {
+                    if (updateApp.isConstraint()) {
+                        //强制更新
+                    } else {
+                        //正常更新
+                    }
                     updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp);
                 } else {
                     Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
