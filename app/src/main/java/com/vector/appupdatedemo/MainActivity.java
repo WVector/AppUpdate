@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -83,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(MainActivity.this, "未授权", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
 
