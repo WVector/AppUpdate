@@ -28,6 +28,13 @@
         android:text="下载App"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="test"
+        android:text="测试"
+        />
+
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"

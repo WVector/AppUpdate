@@ -1,5 +1,6 @@
 package com.vector.appupdatedemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.vector.update_app.TestActivity;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
@@ -128,5 +130,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void test(View view) {
+        startActivity(new Intent(this, TestActivity.class));
     }
 }
