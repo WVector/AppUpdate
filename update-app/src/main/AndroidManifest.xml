@@ -13,7 +13,7 @@
             android:theme="@style/Dialog"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
-            android:name=".TestActivity"
+            android:name=".NewDialogActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"

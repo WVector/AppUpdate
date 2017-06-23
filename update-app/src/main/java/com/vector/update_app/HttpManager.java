@@ -12,7 +12,7 @@ public interface HttpManager extends Serializable {
 
     void download(@NonNull String url, @NonNull String path, @NonNull String fileName, @NonNull FileCallback callback);
 
-    public interface FileCallback {
+    interface FileCallback {
         void onProgress(float progress, long total);
 
         void onError(String error);
@@ -22,7 +22,7 @@ public interface HttpManager extends Serializable {
         void onBefore();
     }
 
-    public interface Callback {
+    interface Callback {
         void onResponse(String result);
 
         void onError(String error);

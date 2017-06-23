@@ -18,11 +18,10 @@ import java.util.Map;
 public class UpdateAppManager {
     final static String INTENT_KEY = "update_dialog_values";
     private static final String TAG = UpdateAppManager.class.getSimpleName();
+    private static UpdateAppManager sUpdateAppManager = null;
 
     private UpdateAppManager() {
     }
-
-    private static UpdateAppManager sUpdateAppManager = null;
 
     public static UpdateAppManager getInstance() {
         if (sUpdateAppManager == null) {
@@ -49,7 +48,7 @@ public class UpdateAppManager {
         }
 
         if (context != null && !context.isFinishing()) {
-            Intent updateIntent = new Intent(context, UpdateDialogActivity.class);
+            Intent updateIntent = new Intent(context, NewDialogActivity.class);
             updateApp.setTargetPath(targetPath);
             updateApp.setHttpManager(httpManager);
             updateIntent.putExtra(INTENT_KEY, updateApp);

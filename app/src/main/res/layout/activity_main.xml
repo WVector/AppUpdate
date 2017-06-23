@@ -35,6 +35,14 @@
         android:text="测试"
         />
 
+    <com.vector.update_app.view.NumberProgressBar
+        android:id="@+id/numberbar1"
+        style="@style/NumberProgressBar_Default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        />
+
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"

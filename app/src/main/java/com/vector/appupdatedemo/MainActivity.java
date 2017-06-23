@@ -9,10 +9,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.vector.update_app.TestActivity;
+import com.vector.update_app.NewDialogActivity;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
+import com.vector.update_app.view.NumberProgressBar;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -98,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void downloadApp(View view) {
-        String url = "http://47.94.102.201/online/appDownFile/yimiao-0.3.0-2017-06-19-release.apk";
+        final NumberProgressBar numberProgressBar = (NumberProgressBar) findViewById(R.id.numberbar1);
+
+        String url = "http://47.94.102.201:80/online/appDownFile/yimiao-0.7.0-2017-06-22-release.apk";
         String fileName = "test.app";
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void inProgress(float progress, long total, int id) {
                         super.inProgress(progress, total, id);
+                        numberProgressBar.setProgress((int) (progress * 100));
                         Log.d(TAG, "inProgress() called with: progress = [" + progress + "], total = [" + total + "], id = [" + id + "]");
                     }
 
@@ -133,6 +137,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void test(View view) {
-        startActivity(new Intent(this, TestActivity.class));
+        startActivity(new Intent(this, NewDialogActivity.class));
     }
 }
