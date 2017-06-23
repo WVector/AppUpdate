@@ -26,14 +26,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|top"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:src="@drawable/ic_close_black_24dp"/>
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@drawable/update_info_bg"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -52,7 +52,7 @@
                 android:padding="8dp"
                 android:text="1，xxxxxxxx\n2，ooooooooo"
                 android:textColor="#666"
-                android:textSize="13sp"/>
+                android:textSize="14sp"/>
 
             <Button
                 android:id="@+id/btn_ok"
@@ -61,7 +61,8 @@
                 android:background="@drawable/update_button_ok_bg_selector"
                 android:minHeight="35dp"
                 android:text="升级"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
 
             <com.vector.update_app.view.NumberProgressBar
                 android:id="@+id/npb"

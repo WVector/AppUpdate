@@ -29,6 +29,9 @@ public class UpdateAppBean implements Serializable {
     private boolean delta;
     private String new_md5;
     private String target_size;
+    private HttpManager httpManager;
+    private String targetPath;
+    private boolean constraint;
 
     public HttpManager getHttpManager() {
         return httpManager;
@@ -38,8 +41,6 @@ public class UpdateAppBean implements Serializable {
         this.httpManager = httpManager;
     }
 
-    private HttpManager httpManager;
-
     public String getTargetPath() {
         return targetPath;
     }
@@ -48,13 +49,9 @@ public class UpdateAppBean implements Serializable {
         this.targetPath = targetPath;
     }
 
-    private String targetPath;
-
-
-    private boolean constraint;
-
     public boolean isConstraint() {
         return constraint;
+//        return true;
     }
 
     public void setConstraint(boolean constraint) {
@@ -63,10 +60,6 @@ public class UpdateAppBean implements Serializable {
 
     public String getUpdate() {
         return update;
-    }
-
-    public void setUpdate(String update) {
-        this.update = update;
     }
 
     public String getNew_version() {
@@ -117,28 +110,28 @@ public class UpdateAppBean implements Serializable {
         this.target_size = target_size;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getMsg() {
         return msg;
     }
 
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     public Long getTimestamp() {
         return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public boolean isSucceed() {
@@ -147,5 +140,9 @@ public class UpdateAppBean implements Serializable {
 
     public boolean isUpdate() {
         return isSucceed() && !TextUtils.isEmpty(this.update) && "Yes".equals(this.update);
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
     }
 }

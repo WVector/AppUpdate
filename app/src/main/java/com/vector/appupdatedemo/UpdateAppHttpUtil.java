@@ -25,7 +25,7 @@ import static android.content.ContentValues.TAG;
 class UpdateAppHttpUtil implements HttpManager {
 
     @Override
-    public void postSync(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
+    public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.post()
                 .url(url)
                 .params(params)

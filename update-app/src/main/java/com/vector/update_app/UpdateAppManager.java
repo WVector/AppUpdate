@@ -84,7 +84,7 @@ public class UpdateAppManager {
             versionName = versionName.substring(0, versionName.lastIndexOf('-'));
         }
         params.put("version", versionName);
-        httpManager.postSync(updateUrl, params, new HttpManager.Callback() {
+        httpManager.asyncPost(updateUrl, params, new HttpManager.Callback() {
             @Override
             public void onResponse(String result) {
                 callback.onAfter();
@@ -96,7 +96,7 @@ public class UpdateAppManager {
             @Override
             public void onError(String error) {
                 callback.onAfter();
-                callback.isHasNewApp(false, null);
+                callback.noNewApp();
             }
         });
     }
@@ -112,18 +112,18 @@ public class UpdateAppManager {
             UpdateAppBean updateApp = JSON.parseObject(result, UpdateAppBean.class);
             if (updateApp.isSucceed()) {
                 if (updateApp.isUpdate()) {
-                    callback.isHasNewApp(true, updateApp);
+                    callback.hasNewApp(updateApp);
                     //跳转到升级界面
 //                    showUpdatedDialog(updateApp);
                 } else {
-                    callback.isHasNewApp(false, updateApp);
+                    callback.noNewApp();
                 }
             } else {
-                callback.isHasNewApp(false, updateApp);
+                callback.noNewApp();
             }
         } catch (Exception ignored) {
             ignored.printStackTrace();
-            callback.isHasNewApp(false, null);
+            callback.noNewApp();
         }
     }
 

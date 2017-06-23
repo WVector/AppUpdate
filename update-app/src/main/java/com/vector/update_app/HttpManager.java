@@ -6,9 +6,11 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
 
-
+/**
+ * app版本更新接口
+ */
 public interface HttpManager extends Serializable {
-    void postSync(@NonNull String url, @NonNull Map<String, String> params, @NonNull Callback callBack);
+    void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull Callback callBack);
 
     void download(@NonNull String url, @NonNull String path, @NonNull String fileName, @NonNull FileCallback callback);
 

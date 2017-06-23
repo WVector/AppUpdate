@@ -3,6 +3,7 @@ package com.vector.appupdatedemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -53,24 +54,24 @@ public class MainActivity extends AppCompatActivity {
 
         updateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
             @Override
-            public void isHasNewApp(boolean hasNewApp, UpdateAppBean updateApp) {
-                Log.d(TAG, "isHasNewApp() called with: hasNewApp = [" + hasNewApp + "], updateApp = [" + updateApp + "]");
-                if (hasNewApp) {
-                    if (updateApp.isConstraint()) {
-                        //强制更新
-                    } else {
-                        //正常更新
-                    }
-                    updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp);
+            public void hasNewApp(@Nullable UpdateAppBean updateApp) {
+                if (updateApp.isConstraint()) {
+                    //强制更新
                 } else {
-                    Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+                    //正常更新
                 }
+                updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp);
             }
 
             @Override
             public void onAfter() {
                 Log.d(TAG, "onAfter() called");
                 CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+            }
+
+            @Override
+            public void noNewApp() {
+                Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
             }
 
             @Override
