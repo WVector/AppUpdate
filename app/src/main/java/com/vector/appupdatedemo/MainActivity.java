@@ -14,15 +14,8 @@ import com.vector.update_app.DialogActivity;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
-import com.vector.update_app.view.NumberProgressBar;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
 
-import java.io.File;
-
-import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -99,43 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void downloadApp(View view) {
-        final NumberProgressBar numberProgressBar = (NumberProgressBar) findViewById(R.id.numberbar1);
-
-        String url = "http://47.94.102.201:80/online/appDownFile/yimiao-0.7.0-2017-06-22-release.apk";
-        String fileName = "test.app";
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-
-        OkHttpUtils.get()
-                .url(url)
-                .build()
-                .execute(new FileCallBack(path, fileName) {
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
-                        super.inProgress(progress, total, id);
-                        numberProgressBar.setProgress((int) (progress * 100));
-                        Log.d(TAG, "inProgress() called with: progress = [" + progress + "], total = [" + total + "], id = [" + id + "]");
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e, int id) {
-                        Log.d(TAG, validateError(e, response));
-                    }
-
-                    @Override
-                    public void onResponse(File response, int id) {
-                        Log.d(TAG, response.getAbsolutePath());
-
-                    }
-
-                    @Override
-                    public void onBefore(Request request, int id) {
-                        super.onBefore(request, id);
-                        Log.d(TAG, "onBefore() called with: request = [" + request + "], id = [" + id + "]");
-                    }
-                });
-
-    }
 
     public void test(View view) {
         startActivity(new Intent(this, DialogActivity.class));
