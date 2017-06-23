@@ -1,7 +1,6 @@
 package com.vector.appupdatedemo;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.vector.update_app.HttpManager;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -14,8 +13,6 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Vector
@@ -46,7 +43,6 @@ class UpdateAppHttpUtil implements HttpManager {
 
     @Override
     public void download(@NonNull String url, @NonNull String path, @NonNull String fileName, @NonNull final FileCallback callback) {
-        Log.d(TAG, "download() called with: url = [" + url + "], path = [" + path + "], fileName = [" + fileName + "], callback = [" + callback + "]");
         OkHttpUtils.get()
                 .url(url)
                 .build()

@@ -30,12 +30,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.qianwen:okhttp-utils:3.8.0'
-//    compile 'com.qianwen:update-app:1.1.0'
+
     //rxjava 1
     compile 'io.reactivex:rxjava:1.2.9'
     compile 'io.reactivex:rxandroid:1.2.0'
     //权限引导
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     testCompile 'junit:junit:4.12'
-    compile project(':update-app')
+//    compile project(':update-app')
+    compile 'com.qianwen:update-app:2.0.0'
 }
