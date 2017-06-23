@@ -48,7 +48,7 @@ public class UpdateAppManager {
         }
 
         if (context != null && !context.isFinishing()) {
-            Intent updateIntent = new Intent(context, NewDialogActivity.class);
+            Intent updateIntent = new Intent(context, DialogActivity.class);
             updateApp.setTargetPath(targetPath);
             updateApp.setHttpManager(httpManager);
             updateIntent.putExtra(INTENT_KEY, updateApp);

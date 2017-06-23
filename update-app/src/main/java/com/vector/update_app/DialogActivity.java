@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.view.NumberProgressBar;
 
-public class NewDialogActivity extends FragmentActivity implements View.OnClickListener {
+public class DialogActivity extends FragmentActivity implements View.OnClickListener {
 
 
     public static boolean isShow = false;
@@ -113,36 +113,36 @@ public class NewDialogActivity extends FragmentActivity implements View.OnClickL
             binder.start(mUpdateApp, new DownloadService.DownloadCallback() {
                 @Override
                 public void onStart() {
-                    if (!NewDialogActivity.this.isFinishing()) {
+                    if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
                 public void onProgress(float progress) {
-                    if (!NewDialogActivity.this.isFinishing()) {
+                    if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setProgress((int) progress);
                     }
                 }
 
                 @Override
                 public void setMax(float total) {
-                    if (!NewDialogActivity.this.isFinishing()) {
+                    if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setMax((int) total);
                     }
                 }
 
                 @Override
                 public void onFinish() {
-                    if (!NewDialogActivity.this.isFinishing()) {
-                        NewDialogActivity.this.finish();
+                    if (!DialogActivity.this.isFinishing()) {
+                        DialogActivity.this.finish();
                     }
                 }
 
                 @Override
                 public void onError(String msg) {
-                    if (!NewDialogActivity.this.isFinishing()) {
-                        NewDialogActivity.this.finish();
+                    if (!DialogActivity.this.isFinishing()) {
+                        DialogActivity.this.finish();
                     }
                 }
             });

@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.vector.update_app.NewDialogActivity;
+import com.vector.update_app.DialogActivity;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
@@ -138,6 +138,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void test(View view) {
-        startActivity(new Intent(this, NewDialogActivity.class));
+        startActivity(new Intent(this, DialogActivity.class));
     }
 }

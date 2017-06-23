@@ -4,9 +4,8 @@
 
     <application>
         <service android:name=".service.DownloadService"/>
-
         <activity
-            android:name=".NewDialogActivity"
+            android:name=".DialogActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
