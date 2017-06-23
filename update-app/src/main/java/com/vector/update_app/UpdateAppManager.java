@@ -71,7 +71,7 @@ public class UpdateAppManager {
 
         callback.onBefore();
 
-        if (UpdateDialogActivity.isShow) {
+        if (DialogActivity.isShow) {
             callback.onAfter();
             return;
         }

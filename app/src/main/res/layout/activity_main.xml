@@ -37,7 +37,7 @@
 
     <com.vector.update_app.view.NumberProgressBar
         android:id="@+id/numberbar1"
-        style="@style/NumberProgressBar_Default"
+        style="@style/NumberProgressBar_Red"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
