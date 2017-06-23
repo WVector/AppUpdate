@@ -10,7 +10,7 @@ public class ConstantJson {
     String json = "{\n" +
             "    \"update\": \"Yes\",\n" +
             "    \"new_version\": \"0.5.0\",\n" +
-            "    \"apk_file_url\": \"http://47.94.102.201:80/online/appDownFile/yimiao-0.5.0-2017-06-21-release.apk\",\n" +
+            "    \"apk_file_url\": \"http://*******/app-0.5.0-2017-06-21-release.apk\",\n" +
             "    \"update_log\": \"1，修复修改密码验证码校验问题\",\n" +
             "    \"target_size\": \"4M\",\n" +
             "    \"constraint\": false,\n" +

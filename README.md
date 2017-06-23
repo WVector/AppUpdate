@@ -1,5 +1,8 @@
 # AppUpdateDemo
 ## App更新工具
+
+	compile 'com.qianwen:update-app:2.0.0'
+
 1，自己实现网络工具
   我使用okhhtp
 
