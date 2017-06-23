@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/update_info_bg"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -49,7 +49,8 @@
                 android:id="@+id/tv_update_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="1，xxxxxxxx\n2，ooooooooo"
                 android:textColor="#666"
                 android:textSize="14sp"/>
@@ -59,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/update_button_ok_bg_selector"
-                android:minHeight="35dp"
+                android:minHeight="40dp"
                 android:text="升级"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"/>

@@ -43,7 +43,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isShow = true;
-        setContentView(R.layout.new_update_dialog);
+        setContentView(R.layout.update_dialog);
         initView();
         initData();
     }
