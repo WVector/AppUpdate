@@ -68,7 +68,8 @@
             <com.vector.update_app.view.NumberProgressBar
                 android:id="@+id/npb"
                 style="@style/NumberProgressBar_Red"
-                android:padding="8dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:visibility="gone"/>
 
         </LinearLayout>
