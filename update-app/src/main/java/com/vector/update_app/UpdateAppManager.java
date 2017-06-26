@@ -3,6 +3,7 @@ package com.vector.update_app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,8 @@ import java.util.Map;
  */
 public class UpdateAppManager {
     final static String INTENT_KEY = "update_dialog_values";
+    final static String THEME_KEY = "theme_color";
+    final static String TOP_IMAGE_KEY = "top_resId";
     private static final String TAG = UpdateAppManager.class.getSimpleName();
     private static UpdateAppManager sUpdateAppManager = null;
 
@@ -35,7 +38,7 @@ public class UpdateAppManager {
      *
      * @param updateApp
      */
-    public void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp) {
+    public void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp, int themeColor, @DrawableRes int resId) {
 
         String preSuffix = "/storage/emulated";
 
@@ -52,9 +55,21 @@ public class UpdateAppManager {
             updateApp.setTargetPath(targetPath);
             updateApp.setHttpManager(httpManager);
             updateIntent.putExtra(INTENT_KEY, updateApp);
+            if (themeColor != 0) {
+                updateIntent.putExtra(THEME_KEY, themeColor);
+            }
+
+            if (resId != 0) {
+                updateIntent.putExtra(TOP_IMAGE_KEY, resId);
+            }
             context.startActivity(updateIntent);
         }
 
+    }
+
+    public void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp) {
+
+        showUpdatedDialog(httpManager, context, targetPath, updateApp, 0, 0);
     }
 
     /**

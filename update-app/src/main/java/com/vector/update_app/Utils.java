@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 
 import java.util.List;
 
@@ -102,4 +103,17 @@ public class Utils {
         return bitmap;
 
     }
+
+    public static int dip2px(int dip, Context context) {
+        return (int) (dip * getDensity(context) + 0.5f);
+    }
+
+    public static float getDensity(Context context) {
+        return getDisplayMetrics(context).density;
+    }
+
+    public static DisplayMetrics getDisplayMetrics(Context context) {
+        return context.getResources().getDisplayMetrics();
+    }
+
 }

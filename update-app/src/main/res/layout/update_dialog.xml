@@ -16,6 +16,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/iv_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/top"/>
@@ -59,7 +60,6 @@
                 android:id="@+id/btn_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/update_button_ok_bg_selector"
                 android:minHeight="40dp"
                 android:text="升级"
                 android:textColor="@android:color/white"

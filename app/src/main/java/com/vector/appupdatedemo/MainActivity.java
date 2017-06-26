@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateApp(View view) {
+        final int color = 0xff38e98b;
+
+
         String url = "http://47.94.102.201/mobileCard/com/mobile/updateVersion.html";
         String appKey = "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f";
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //正常更新
                 }
-                updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp);
+                updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp, color, R.mipmap.top_test);
             }
 
             @Override

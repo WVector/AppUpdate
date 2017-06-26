@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.view.NumberProgressBar;
@@ -49,6 +50,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     }
 
     private void initView() {
+
         mContentTextView = (TextView) findViewById(R.id.tv_update_info);
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
         mUpdateOkButton = (Button) findViewById(R.id.btn_ok);
@@ -58,6 +60,10 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
     private void initData() {
         mUpdateApp = (UpdateAppBean) getIntent().getSerializableExtra(UpdateAppManager.INTENT_KEY);
+
+        initTheme();
+
+
         if (mUpdateApp != null) {
             //弹出对话框
             String newVersion = mUpdateApp.getNew_version();
@@ -65,8 +71,8 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             String updateLog = mUpdateApp.getUpdate_log();
 
 
-            String msg = "新版本大小：" + targetSize + "\n"
-                    + updateLog;
+            String msg = "新版本大小：" + targetSize +
+                    "\n" + updateLog;
 
 
             mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
@@ -77,6 +83,21 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             }
             initEvents();
         }
+    }
+
+    /**
+     * 初始化主题色
+     */
+    private void initTheme() {
+        int defaultColor = 0xffe94339;
+        int color = getIntent().getIntExtra(UpdateAppManager.THEME_KEY, defaultColor);
+        int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, R.mipmap.top);
+        ImageView topIv = (ImageView) findViewById(R.id.iv_top);
+        topIv.setImageResource(topResId);
+        mUpdateOkButton.setBackgroundDrawable(DrawableUtils.getDrawable(Utils.dip2px(4, this), color));
+
+        mNumberProgressBar.setProgressTextColor(color);
+        mNumberProgressBar.setReachedBarColor(color);
     }
 
     private void initEvents() {
@@ -91,6 +112,9 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             downloadApp();
             mUpdateOkButton.setVisibility(View.GONE);
         } else if (i == R.id.iv_close) {
+            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
+                Toast.makeText(this, "后台更新app", Toast.LENGTH_LONG).show();
+            }
             finish();
         }
     }
