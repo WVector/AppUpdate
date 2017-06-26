@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateApp(View view) {
+
+
         final int color = 0xff38e98b;
 
 
