@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
 
 
     <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <FrameLayout
+        <ImageView
+            android:id="@+id/iv_top"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_top"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/top"/>
-
-            <ImageView
-                android:id="@+id/iv_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|top"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="35dp"
-                android:src="@drawable/ic_close_black_24dp"/>
-        </FrameLayout>
+            android:layout_height="wrap_content"
+            android:src="@mipmap/top"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +47,7 @@
                 android:id="@+id/btn_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:minHeight="40dp"
                 android:text="升级"
                 android:textColor="@android:color/white"
@@ -76,4 +64,12 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_close_black_24dp"/>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.vector.update_app;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vector.update_app.service.DownloadService;
+import com.vector.update_app.utils.DrawableUtils;
+import com.vector.update_app.utils.Utils;
 import com.vector.update_app.view.NumberProgressBar;
 
 public class DialogActivity extends FragmentActivity implements View.OnClickListener {
@@ -98,6 +101,9 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
+
+        //随背景颜色变化
+        mUpdateOkButton.setTextColor(DrawableUtils.isTextColorDark(color) ? Color.BLACK : Color.WHITE);
     }
 
     private void initEvents() {

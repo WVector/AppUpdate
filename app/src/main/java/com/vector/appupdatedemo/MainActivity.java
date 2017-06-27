@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateApp(View view) {
 
 
-        final int color = 0xff38e98b;
+        final int color = 0xffeac447;
 
 
         String url = "http://47.94.102.201/mobileCard/com/mobile/updateVersion.html";

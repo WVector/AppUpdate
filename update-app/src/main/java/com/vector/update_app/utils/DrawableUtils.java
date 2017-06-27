@@ -1,4 +1,4 @@
-package com.vector.update_app;
+package com.vector.update_app.utils;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -41,6 +41,15 @@ public class DrawableUtils {
         blue = (int) (blue * ratio);
 
         return Color.argb(alpha, red, green, blue);
+    }
+
+    /**
+     * @param color 背景颜色
+     * @return 前景色是否深色
+     */
+    public static boolean isTextColorDark(int color) {
+        float a = (Color.red(color) * 0.299f + Color.green(color) * 0.587f + Color.blue(color) * 0.114f);
+        return a > 180;
     }
 
     /**
@@ -111,6 +120,7 @@ public class DrawableUtils {
     public static StateListDrawable getDrawable(int cornerRadius, int normalArgb) {
         return getDrawable(cornerRadius, colorDeep(normalArgb), normalArgb);
     }
+
 
     /**
      * @param cornerRadius 圆角半径

@@ -1,4 +1,4 @@
-package com.vector.update_app;
+package com.vector.update_app.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;

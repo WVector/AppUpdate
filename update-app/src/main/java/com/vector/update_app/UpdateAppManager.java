@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.vector.update_app.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
