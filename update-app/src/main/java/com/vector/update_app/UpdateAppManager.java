@@ -22,16 +22,8 @@ public class UpdateAppManager {
     final static String THEME_KEY = "theme_color";
     final static String TOP_IMAGE_KEY = "top_resId";
     private static final String TAG = UpdateAppManager.class.getSimpleName();
-    private static UpdateAppManager sUpdateAppManager = null;
 
     private UpdateAppManager() {
-    }
-
-    public static UpdateAppManager getInstance() {
-        if (sUpdateAppManager == null) {
-            sUpdateAppManager = new UpdateAppManager();
-        }
-        return sUpdateAppManager;
     }
 
     /**
@@ -39,7 +31,7 @@ public class UpdateAppManager {
      *
      * @param updateApp
      */
-    public void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp, int themeColor, @DrawableRes int resId) {
+    public static void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp, int themeColor, @DrawableRes int resId) {
 
         String preSuffix = "/storage/emulated";
 
@@ -68,7 +60,7 @@ public class UpdateAppManager {
 
     }
 
-    public void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp) {
+    public static void showUpdatedDialog(HttpManager httpManager, Activity context, String targetPath, UpdateAppBean updateApp) {
 
         showUpdatedDialog(httpManager, context, targetPath, updateApp, 0, 0);
     }
@@ -78,7 +70,7 @@ public class UpdateAppManager {
      *
      * @param callback
      */
-    public void updateApp(Context context, HttpManager httpManager, String updateUrl, String appKey, final UpdateCallback callback) {
+    public static void updateApp(Context context, HttpManager httpManager, String updateUrl, String appKey, final UpdateCallback callback) {
 
 
         if (callback == null) {
@@ -123,7 +115,7 @@ public class UpdateAppManager {
      * @param result
      * @param callback
      */
-    private void processData(String result, @NonNull UpdateCallback callback) {
+    private static void processData(String result, @NonNull UpdateCallback callback) {
         try {
             UpdateAppBean updateApp = JSON.parseObject(result, UpdateAppBean.class);
             if (updateApp.isSucceed()) {

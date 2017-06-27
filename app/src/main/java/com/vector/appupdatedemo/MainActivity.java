@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         final UpdateAppHttpUtil httpManager = new UpdateAppHttpUtil();
 
-        final UpdateAppManager updateAppManager = UpdateAppManager.getInstance();
-
-        updateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
+        UpdateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
             @Override
             public void hasNewApp(@Nullable UpdateAppBean updateApp) {
                 if (updateApp.isConstraint()) {
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //正常更新
                 }
-                updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp, color, R.mipmap.top_test);
+                UpdateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp, color, R.mipmap.top_test);
             }
 
             @Override
