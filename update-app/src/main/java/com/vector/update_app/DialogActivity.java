@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         public void onServiceDisconnected(ComponentName name) {
         }
     };
+    private LinearLayout mLlClose;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         mUpdateOkButton = (Button) findViewById(R.id.btn_ok);
         mNumberProgressBar = (NumberProgressBar) findViewById(R.id.npb);
         mIvClose = (ImageView) findViewById(R.id.iv_close);
+        mLlClose = (LinearLayout) findViewById(R.id.ll_close);
     }
 
     private void initData() {
@@ -83,7 +86,8 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             mContentTextView.setText(msg);
             //强制更新
             if (mUpdateApp.isConstraint()) {
-                mIvClose.setVisibility(View.GONE);
+//                mIvClose.setVisibility(View.GONE);
+                mLlClose.setVisibility(View.GONE);
             }
             initEvents();
         }
