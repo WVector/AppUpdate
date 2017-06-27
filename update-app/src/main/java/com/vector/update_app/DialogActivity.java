@@ -74,8 +74,9 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             String updateLog = mUpdateApp.getUpdate_log();
 
 
-            String msg = "新版本大小：" + targetSize +
-                    "\n" + updateLog;
+            String msg =
+                    "新版本大小：" + targetSize
+                            + "\n" + updateLog;
 
 
             mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
