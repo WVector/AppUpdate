@@ -1,9 +1,19 @@
 # AppUpdateDemo
 ## App更新工具
 
-	compile 'com.qianwen:update-app:2.0.0'
 
-1，自己实现网络工具
+	
+
+## Gradle 
+```gradle
+dependencies {
+    // other dependencies here
+    compile 'com.qianwen:update-app:2.0.0'
+}
+```
+
+###1，自己实现网络工具
+
   我使用okhhtp
 
 ```java
@@ -64,7 +74,7 @@
 
 ```
 
-2, 客户端和服务器的json格式，服务按照以下格式传输就可以
+###2, 客户端和服务器的json格式，服务按照以下格式传输就可以
 
 ```json
 
@@ -81,7 +91,7 @@
 	}
 ```
 
-3,客户端检测是否有新版本，并且更新下载
+###3,客户端检测是否有新版本，并且更新下载
 
 ```java
 
