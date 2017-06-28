@@ -2,7 +2,7 @@
 ## App更新工具
 
 
-<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_01.png?raw=true"  width="400"></a>
+<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_01.png?raw=true" width="400">
 	
 
 ### Gradle 
