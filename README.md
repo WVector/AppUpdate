@@ -16,7 +16,7 @@ dependencies {
 
 ```
 
-[ ![Download](https://api.bintray.com/packages/aritraroy/maven/patternlockview/images/download.svg) ](https://bintray.com/qianwen/maven/update-app/_latestVersion) [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Download](https://api.bintray.com/packages/qianwen/maven/update-app/images/download.svg) ](https://bintray.com/qianwen/maven/update-app/_latestVersion) [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ### 1，自己实现网络工具
 
@@ -100,44 +100,42 @@ dependencies {
 ### 3,客户端检测是否有新版本，并且更新下载
 
 ```java
-
-	String url = "http://***********/com/mobile/updateVersion.html";
-	String appKey = "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f";
-	
-	final String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-	
-	final UpdateAppHttpUtil httpManager = new UpdateAppHttpUtil();
-	
-	final UpdateAppManager updateAppManager = UpdateAppManager.getInstance();
-	
-	updateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
-	@Override
-	public void hasNewApp(@Nullable UpdateAppBean updateApp) {
-	    if (updateApp.isConstraint()) {
-	        //强制更新
-	    } else {
-	        //正常更新
-	    }
-	    updateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp);
-	}
-	
-	@Override
-	public void onAfter() {
-	    Log.d(TAG, "onAfter() called");
-	    CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
-	}
-	
-	@Override
-	public void noNewApp() {
-	    Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
-	}
-	
-	@Override
-	public void onBefore() {
-	    Log.d(TAG, "onBefore() called");
-	    CProgressDialogUtils.showProgressDialog(MainActivity.this);
-	}
-	
-	});
+     final int color = 0xffeac447;
+                   
+                   
+                           String url = "http://47.94.102.201/mobileCard/com/mobile/updateVersion.html";
+                           String appKey = "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f";
+                   
+                           final String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                   
+                           final UpdateAppHttpUtil httpManager = new UpdateAppHttpUtil();
+                   
+                           UpdateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
+                               @Override
+                               public void hasNewApp(@Nullable UpdateAppBean updateApp) {
+                                   if (updateApp.isConstraint()) {
+                                       //强制更新
+                                   } else {
+                                       //正常更新
+                                   }
+                                   UpdateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp, color, R.mipmap.top_test);
+                               }
+                   
+                               @Override
+                               public void onAfter() {
+                                   CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+                               }
+                   
+                               @Override
+                               public void noNewApp() {
+                                   Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+                               }
+                   
+                               @Override
+                               public void onBefore() {
+                                   CProgressDialogUtils.showProgressDialog(MainActivity.this);
+                               }
+                   
+                           });
 
 ```
