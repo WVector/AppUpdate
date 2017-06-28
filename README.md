@@ -6,6 +6,8 @@
 1，自己实现网络工具
   我使用okhhtp
 
+```java
+
 	class UpdateAppHttpUtil implements HttpManager {
 	    @Override
 	    public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
@@ -59,6 +61,8 @@
 	
 	    }
 	}
+
+```
 
 2, 客户端和服务器的json格式，服务按照以下格式传输就可以
 
