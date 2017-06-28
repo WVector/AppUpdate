@@ -100,42 +100,41 @@ dependencies {
 ### 3,客户端检测是否有新版本，并且更新下载
 
 ```java
-     final int color = 0xffeac447;
-                   
-                   
-                           String url = "http://47.94.102.201/mobileCard/com/mobile/updateVersion.html";
-                           String appKey = "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f";
-                   
-                           final String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-                   
-                           final UpdateAppHttpUtil httpManager = new UpdateAppHttpUtil();
-                   
-                           UpdateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
-                               @Override
-                               public void hasNewApp(@Nullable UpdateAppBean updateApp) {
-                                   if (updateApp.isConstraint()) {
-                                       //强制更新
-                                   } else {
-                                       //正常更新
-                                   }
-                                   UpdateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp, color, R.mipmap.top_test);
-                               }
-                   
-                               @Override
-                               public void onAfter() {
-                                   CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
-                               }
-                   
-                               @Override
-                               public void noNewApp() {
-                                   Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
-                               }
-                   
-                               @Override
-                               public void onBefore() {
-                                   CProgressDialogUtils.showProgressDialog(MainActivity.this);
-                               }
-                   
-                           });
+    	            
+	   final int color = 0xffeac447;            
+	   String url = "http://47.94.102.201/mobileCard/com/mobile/updateVersion.html";
+	   String appKey = "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f";
+	
+	   final String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+	
+	   final UpdateAppHttpUtil httpManager = new UpdateAppHttpUtil();
+	
+	   UpdateAppManager.updateApp(this, httpManager, url, appKey, new UpdateCallback() {
+	       @Override
+	       public void hasNewApp(@Nullable UpdateAppBean updateApp) {
+	           if (updateApp.isConstraint()) {
+	               //强制更新
+	           } else {
+	               //正常更新
+	           }
+	           UpdateAppManager.showUpdatedDialog(httpManager, MainActivity.this, targetPath, updateApp, color, R.mipmap.top_test);
+	       }
+	
+	       @Override
+	       public void onAfter() {
+	           CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+	       }
+	
+	       @Override
+	       public void noNewApp() {
+	           Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+	       }
+	
+	       @Override
+	       public void onBefore() {
+	           CProgressDialogUtils.showProgressDialog(MainActivity.this);
+	       }
+	
+	   });
 
 ```
