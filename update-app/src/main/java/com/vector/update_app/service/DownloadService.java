@@ -31,25 +31,25 @@ public class DownloadService extends Service {
 
     private static final int NOTIFY_ID = 0;
     private static final String TAG = DownloadService.class.getSimpleName();
+    public static boolean isRunning = false;
     private NotificationManager mNotificationManager;
     private DownloadBinder binder = new DownloadBinder();
     private NotificationCompat.Builder mBuilder;
-
-    /**
-     * 开启服务方法
-     *
-     * @param context
-     */
-    public static void startService(Context context) {
-        Intent intent = new Intent(context, DownloadService.class);
-        context.startService(intent);
-    }
-
+//    /**
+//     * 开启服务方法
+//     *
+//     * @param context
+//     */
+//    public static void startService(Context context) {
+//        Intent intent = new Intent(context, DownloadService.class);
+//        context.startService(intent);
+//    }
 
     public static void bindService(Context context, ServiceConnection connection) {
         Intent intent = new Intent(context, DownloadService.class);
         context.startService(intent);
         context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        isRunning = true;
     }
 
     @Override
@@ -118,7 +118,12 @@ public class DownloadService extends Service {
         Notification notification = mBuilder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         mNotificationManager.notify(NOTIFY_ID, notification);
+        close();
+    }
+
+    private void close() {
         stopSelf();
+        isRunning = false;
     }
 
     /**
@@ -191,7 +196,7 @@ public class DownloadService extends Service {
             }
             try {
                 mNotificationManager.cancel(NOTIFY_ID);
-                stopSelf();
+                close();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -238,8 +243,7 @@ public class DownloadService extends Service {
                 mNotificationManager.notify(NOTIFY_ID, mBuilder.build());
             }
             //下载完自杀
-            stopSelf();
-
+            close();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.vector.update_app.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -114,6 +115,16 @@ public class Utils {
 
     public static DisplayMetrics getDisplayMetrics(Context context) {
         return context.getResources().getDisplayMetrics();
+    }
+
+    public static String getManifestString(Context context, String name) {
+        try {
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            return appInfo.metaData.getString(name);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

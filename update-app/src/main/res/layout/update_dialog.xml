@@ -24,7 +24,7 @@
             android:id="@+id/line"
             android:layout_width="1dp"
             android:layout_height="50dp"
-            android:background="#88d8d8d8"
+            android:background="#d8d8d8"
             android:visibility="visible"/>
     </LinearLayout>
 

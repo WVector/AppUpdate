@@ -55,7 +55,6 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     }
 
     private void initView() {
-
         mContentTextView = (TextView) findViewById(R.id.tv_update_info);
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
         mUpdateOkButton = (Button) findViewById(R.id.btn_ok);
@@ -79,7 +78,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
             String msg =
                     "新版本大小：" + targetSize
-                            + "\n" + updateLog;
+                            + "\n\n" + updateLog;
 
 
             mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
