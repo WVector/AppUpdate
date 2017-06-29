@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vector.update_app.service.DownloadService;
-import com.vector.update_app.utils.DrawableUtils;
+import com.vector.update_app.utils.ColorUtil;
+import com.vector.update_app.utils.DrawableUtil;
 import com.vector.update_app.utils.Utils;
 import com.vector.update_app.view.NumberProgressBar;
 
@@ -101,13 +101,13 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, R.mipmap.top);
         ImageView topIv = (ImageView) findViewById(R.id.iv_top);
         topIv.setImageResource(topResId);
-        mUpdateOkButton.setBackgroundDrawable(DrawableUtils.getDrawable(Utils.dip2px(4, this), color));
+        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, this), color));
 
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
 
         //随背景颜色变化
-        mUpdateOkButton.setTextColor(DrawableUtils.isTextColorDark(color) ? Color.BLACK : Color.WHITE);
+        mUpdateOkButton.setTextColor(ColorUtil.isTextColorDark(color) ? Color.BLACK : Color.WHITE);
     }
 
     private void initEvents() {
@@ -122,10 +122,10 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             downloadApp();
             mUpdateOkButton.setVisibility(View.GONE);
         } else if (i == R.id.iv_close) {
-            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
-                Toast.makeText(this, "后台更新app", Toast.LENGTH_LONG).show();
-            }
-            finish();
+//            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
+//                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
+//            }
+            onBackPressed();
         }
     }
 

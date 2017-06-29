@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -11,6 +12,7 @@ import com.vector.update_app.DialogActivity;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
+import com.vector.update_app.utils.DrawableUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import rx.functions.Action1;
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 .debug(true, "vector")
                 .timeout(20 * 1000);
 
-
+        DrawableUtil.setTextTheme((Button) findViewById(R.id.btn_get_permission));
+        DrawableUtil.setTextTheme((Button) findViewById(R.id.btn_test));
+        DrawableUtil.setTextTheme((Button) findViewById(R.id.btn_update_app));
     }
 
     public void updateApp(View view) {

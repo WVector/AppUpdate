@@ -4,26 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical"
     tools:context="com.vector.appupdatedemo.MainActivity">
 
     <Button
+        android:id="@+id/btn_get_permission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:onClick="getPermission"
         android:text="获取权限"
         />
 
     <Button
+        android:id="@+id/btn_update_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:onClick="updateApp"
         android:text="更新App"
         />
 
     <Button
+        android:id="@+id/btn_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:onClick="test"
         android:text="测试"
         />
@@ -31,6 +38,7 @@
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:gravity="center"/>
 
 </LinearLayout>
