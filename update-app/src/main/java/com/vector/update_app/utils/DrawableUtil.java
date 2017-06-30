@@ -90,17 +90,17 @@ public class DrawableUtil {
      *
      * @param cornerRadiusPX 圆角半径
      * @param strokeWidthPX  边框宽度
-     * @param strokeColor    表框颜色
-     * @param solidColor     实心颜色
+     * @param subColor    表框颜色
+     * @param mainColor     实心颜色
      * @return 状态选择器
      */
-    public static StateListDrawable getStrokeSolidDrawable(int cornerRadiusPX, int strokeWidthPX, int strokeColor, int solidColor) {
+    public static StateListDrawable getStrokeSolidDrawable(int cornerRadiusPX, int strokeWidthPX, int subColor, int mainColor) {
         //一般solidColor 为透明
         return getStateListDrawable(
                 //实心
-                getSolidRectDrawable(cornerRadiusPX, strokeColor),
+                getSolidRectDrawable(cornerRadiusPX, subColor),
                 //空心
-                getStrokeRectDrawable(cornerRadiusPX, solidColor, strokeColor, strokeWidthPX));
+                getStrokeRectDrawable(cornerRadiusPX, mainColor, subColor, strokeWidthPX));
     }
 
     /**
@@ -108,17 +108,17 @@ public class DrawableUtil {
      *
      * @param cornerRadiusPX 圆角半径
      * @param strokeWidthPX  边框宽度
-     * @param strokeColor    表框颜色
-     * @param solidColor     实心颜色
+     * @param subColor    表框颜色
+     * @param mainColor     实心颜色
      * @return 状态选择器
      */
-    public static StateListDrawable getSolidStrokeDrawable(int cornerRadiusPX, int strokeWidthPX, int strokeColor, int solidColor) {
+    public static StateListDrawable getSolidStrokeDrawable(int cornerRadiusPX, int strokeWidthPX, int subColor, int mainColor) {
         //一般solidColor 为透明
         return getStateListDrawable(
                 //空心
-                getStrokeRectDrawable(cornerRadiusPX, solidColor, strokeColor, strokeWidthPX),
+                getStrokeRectDrawable(cornerRadiusPX, mainColor, subColor, strokeWidthPX),
                 //实心
-                getSolidRectDrawable(cornerRadiusPX, solidColor));
+                getSolidRectDrawable(cornerRadiusPX, mainColor));
     }
 
     /**
