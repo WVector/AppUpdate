@@ -77,7 +77,7 @@ public class DownloadService extends Service {
         mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setContentTitle("开始下载")
                 .setContentText("正在连接服务器")
-                .setSmallIcon(R.drawable.ic_file_download_black_24dp)
+                .setSmallIcon(R.mipmap.update)
                 .setLargeIcon(Utils.drawableToBitmap(Utils.getAppIcon(DownloadService.this)))
                 .setOngoing(true)
                 .setWhen(System.currentTimeMillis());

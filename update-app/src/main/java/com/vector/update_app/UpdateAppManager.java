@@ -190,8 +190,9 @@ public class UpdateAppManager {
             return isPost;
         }
 
-        public void setPost(boolean post) {
+        public Builder setPost(boolean post) {
             isPost = post;
+            return this;
         }
 
         public String getTargetPath() {
