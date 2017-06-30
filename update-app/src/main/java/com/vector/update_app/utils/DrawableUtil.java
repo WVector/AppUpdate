@@ -1,7 +1,6 @@
 package com.vector.update_app.utils;
 
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -90,8 +89,8 @@ public class DrawableUtil {
      *
      * @param cornerRadiusPX 圆角半径
      * @param strokeWidthPX  边框宽度
-     * @param subColor    表框颜色
-     * @param mainColor     实心颜色
+     * @param subColor       表框颜色
+     * @param mainColor      实心颜色
      * @return 状态选择器
      */
     public static StateListDrawable getStrokeSolidDrawable(int cornerRadiusPX, int strokeWidthPX, int subColor, int mainColor) {
@@ -108,15 +107,15 @@ public class DrawableUtil {
      *
      * @param cornerRadiusPX 圆角半径
      * @param strokeWidthPX  边框宽度
-     * @param subColor    表框颜色
-     * @param mainColor     实心颜色
+     * @param subColor       表框颜色
+     * @param mainColor      实心颜色
      * @return 状态选择器
      */
     public static StateListDrawable getSolidStrokeDrawable(int cornerRadiusPX, int strokeWidthPX, int subColor, int mainColor) {
         //一般solidColor 为透明
         return getStateListDrawable(
                 //空心
-                getStrokeRectDrawable(cornerRadiusPX, mainColor, subColor, strokeWidthPX),
+                getStrokeRectDrawable(cornerRadiusPX, subColor, mainColor, strokeWidthPX),
                 //实心
                 getSolidRectDrawable(cornerRadiusPX, mainColor));
     }
@@ -193,10 +192,10 @@ public class DrawableUtil {
      * @param cornerRadius 圆角
      * @param color        颜色
      */
-    public static void setTextTheme(TextView textView, int strokeWidth, int cornerRadius, int color) {
+    public static void setTextStrokeTheme(TextView textView, int strokeWidth, int cornerRadius, int color) {
         textView.setBackgroundDrawable(getStrokeSolidDrawable(cornerRadius, strokeWidth, color, Color.WHITE));
         textView.setTextColor(getColorStateList(Color.WHITE, color));
-        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+//        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
     }
 
     /**
@@ -206,8 +205,8 @@ public class DrawableUtil {
      * @param strokeWidth  边框宽度 px
      * @param cornerRadius 圆角
      */
-    public static void setTextTheme(TextView textView, int strokeWidth, int cornerRadius) {
-        setTextTheme(textView, strokeWidth, cornerRadius, ColorUtil.getRandomColor());
+    public static void setTextStrokeTheme(TextView textView, int strokeWidth, int cornerRadius) {
+        setTextStrokeTheme(textView, strokeWidth, cornerRadius, ColorUtil.getRandomColor());
     }
 
     /**
@@ -215,8 +214,42 @@ public class DrawableUtil {
      *
      * @param textView textView
      */
-    public static void setTextTheme(TextView textView) {
-        setTextTheme(textView, 6, 10);
+    public static void setTextStrokeTheme(TextView textView) {
+        setTextStrokeTheme(textView, 6, 10);
+    }
+
+    /**
+     * 设置TextView 主题，
+     *
+     * @param textView     textView
+     * @param strokeWidth  边框宽度 px
+     * @param cornerRadius 圆角
+     * @param color        颜色
+     */
+    public static void setTextSolidTheme(TextView textView, int strokeWidth, int cornerRadius, int color) {
+        textView.setBackgroundDrawable(getSolidStrokeDrawable(cornerRadius, strokeWidth, Color.WHITE, color));
+        textView.setTextColor(getColorStateList(color, Color.WHITE));
+//        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+    }
+
+    /**
+     * 设置TextView 主题，随机颜色
+     *
+     * @param textView     textView
+     * @param strokeWidth  边框宽度 px
+     * @param cornerRadius 圆角
+     */
+    public static void setTextSolidTheme(TextView textView, int strokeWidth, int cornerRadius) {
+        setTextSolidTheme(textView, strokeWidth, cornerRadius, ColorUtil.getRandomColor());
+    }
+
+    /**
+     * 设置TextView 主题，随机颜色
+     *
+     * @param textView textView
+     */
+    public static void setTextSolidTheme(TextView textView) {
+        setTextSolidTheme(textView, 6, 10);
     }
 
 }

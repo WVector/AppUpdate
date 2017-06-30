@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 .debug(true, "vector")
                 .timeout(20 * 1000);
 
-        DrawableUtil.setTextTheme((Button) findViewById(R.id.btn_get_permission));
-        DrawableUtil.setTextTheme((Button) findViewById(R.id.btn_test));
-        DrawableUtil.setTextTheme((Button) findViewById(R.id.btn_update_app));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_get_permission));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_update_app));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_test));
     }
 
     public void updateApp(View view) {
@@ -51,18 +51,18 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onAfter() {
+                    public void onBefore() {
+                        CProgressDialogUtils.showProgressDialog(MainActivity.this);
+                    }
 
+                    @Override
+                    public void onAfter() {
+                        CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
                     }
 
                     @Override
                     public void noNewApp() {
-
-                    }
-
-                    @Override
-                    public void onBefore() {
-
+                        Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
 
