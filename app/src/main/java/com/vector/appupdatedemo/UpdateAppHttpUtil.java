@@ -20,7 +20,13 @@ import okhttp3.Response;
  */
 
 class UpdateAppHttpUtil implements HttpManager {
-
+    /**
+     * 异步get
+     *
+     * @param url      get请求地址
+     * @param params   get参数
+     * @param callBack 回调
+     */
     @Override
     public void asyncGet(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.get()
@@ -40,6 +46,13 @@ class UpdateAppHttpUtil implements HttpManager {
                 });
     }
 
+    /**
+     * 异步post
+     *
+     * @param url      post请求地址
+     * @param params   post请求参数
+     * @param callBack 回调
+     */
     @Override
     public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.post()
@@ -60,6 +73,14 @@ class UpdateAppHttpUtil implements HttpManager {
 
     }
 
+    /**
+     * 下载
+     *
+     * @param url      下载地址
+     * @param path     文件保存路径
+     * @param fileName 文件名称
+     * @param callback 回调
+     */
     @Override
     public void download(@NonNull String url, @NonNull String path, @NonNull String fileName, @NonNull final FileCallback callback) {
         OkHttpUtils.get()
