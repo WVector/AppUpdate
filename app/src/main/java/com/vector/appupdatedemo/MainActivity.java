@@ -53,25 +53,45 @@ public class MainActivity extends AppCompatActivity {
         String updateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
         new UpdateAppManager
                 .Builder()
+                //当前Activity
                 .setActivity(this)
+                //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
+                //更新地址
                 .setUpdateUrl(updateUrl)
                 .build()
+                //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {
+                    /**
+                     * 有新版本
+                     *
+                     * @param updateApp        新版本信息
+                     * @param updateAppManager app更新管理器
+                     */
                     @Override
                     public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
                         updateAppManager.showDialog();
                     }
 
+                    /**
+                     * 网络请求之前
+                     */
                     @Override
                     public void onBefore() {
                         CProgressDialogUtils.showProgressDialog(MainActivity.this);
                     }
 
+                    /**
+                     * 网路请求之后
+                     */
                     @Override
                     public void onAfter() {
                         CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
                     }
+
+                    /**
+                     * 没有新版本
+                     */
 
                     @Override
                     public void noNewApp() {
