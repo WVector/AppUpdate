@@ -1,15 +1,32 @@
-## AppUpdateDemo
+
 ## App更新工具
 
+## 目录
+
+* [功能介绍](#功能介绍)
+* [效果图与示例 apk](#效果图与示例-apk)
+* [使用](#使用)
+* [License](#license)
+
+## 功能介绍
+
+- [x] 实现app版本更新
+
+## 效果图与示例 apk
 
 <img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_01.png?raw=true" width="1000">
 	
+[点击下载 Demo.apk](https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk) 或扫描下面的二维码安装
 
-### Gradle 
+![Demo apk文件二维](https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/1498810770.png)
+
+## 使用 
+
+### Gradle 依赖
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:2.0.0'
+    compile 'com.qianwen:update-app:2.6.0'
 }
 ```
 
@@ -30,7 +47,7 @@ dependencies {
 ```java   	            
 ```
 
-### License
+## License
 
     Copyright 2015 bingoogolapple
 
