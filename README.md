@@ -30,7 +30,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:2.6.0'
+    compile 'com.qianwen:update-app:3.0.0'
 }
 ```
 
@@ -77,7 +77,7 @@ dependencies {
   "timestamp": 1498785412690
 }
 ```
-### 1，自己实现网络接口
+### 1，根据自己项目使用的网络框架，自己实现HttpManager接口，
 
 ```java
 
