@@ -1,6 +1,7 @@
 package com.vector.update_app.utils;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -68,7 +69,10 @@ public class DrawableUtil {
         StateListDrawable stateListDrawable = new StateListDrawable();
         stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_pressed}, pressedDrawable);
         stateListDrawable.addState(new int[]{android.R.attr.state_enabled}, normalDrawable);
-        stateListDrawable.addState(new int[]{}, normalDrawable);
+        //设置不能用的状态
+        //默认其他状态背景
+        GradientDrawable gray = getSolidRectDrawable(10, Color.GRAY);
+        stateListDrawable.addState(new int[]{}, gray);
         return stateListDrawable;
     }
 
@@ -185,7 +189,7 @@ public class DrawableUtil {
     }
 
     /**
-     * 设置TextView 主题，
+     * 默认空心 设置TextView 主题，
      *
      * @param textView     textView
      * @param strokeWidth  边框宽度 px
@@ -195,11 +199,11 @@ public class DrawableUtil {
     public static void setTextStrokeTheme(TextView textView, int strokeWidth, int cornerRadius, int color) {
         textView.setBackgroundDrawable(getStrokeSolidDrawable(cornerRadius, strokeWidth, color, Color.WHITE));
         textView.setTextColor(getColorStateList(Color.WHITE, color));
-//        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
     }
 
     /**
-     * 设置TextView 主题，随机颜色
+     * 默认空心 设置TextView 主题，随机颜色
      *
      * @param textView     textView
      * @param strokeWidth  边框宽度 px
@@ -210,7 +214,7 @@ public class DrawableUtil {
     }
 
     /**
-     * 设置TextView 主题，随机颜色
+     * 默认空心 设置TextView 主题，随机颜色
      *
      * @param textView textView
      */
@@ -219,7 +223,16 @@ public class DrawableUtil {
     }
 
     /**
-     * 设置TextView 主题，
+     * 默认空心 设置TextView 主题，随机颜色
+     *
+     * @param textView textView
+     */
+    public static void setTextStrokeTheme(TextView textView, int color) {
+        setTextStrokeTheme(textView, 6, 10, color);
+    }
+
+    /**
+     * 默认实心 设置TextView 主题，
      *
      * @param textView     textView
      * @param strokeWidth  边框宽度 px
@@ -229,11 +242,11 @@ public class DrawableUtil {
     public static void setTextSolidTheme(TextView textView, int strokeWidth, int cornerRadius, int color) {
         textView.setBackgroundDrawable(getSolidStrokeDrawable(cornerRadius, strokeWidth, Color.WHITE, color));
         textView.setTextColor(getColorStateList(color, Color.WHITE));
-//        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        textView.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
     }
 
     /**
-     * 设置TextView 主题，随机颜色
+     * 默认实心 设置TextView 主题，随机颜色
      *
      * @param textView     textView
      * @param strokeWidth  边框宽度 px
@@ -244,7 +257,7 @@ public class DrawableUtil {
     }
 
     /**
-     * 设置TextView 主题，随机颜色
+     * 默认实心 设置TextView 主题，随机颜色
      *
      * @param textView textView
      */

@@ -11,6 +11,8 @@ import java.util.Random;
  */
 
 public class ColorUtil {
+
+
     /**
      * 颜色选择器
      *
@@ -19,9 +21,10 @@ public class ColorUtil {
      * @return 颜色选择器
      */
     public static ColorStateList getColorStateList(int pressedColor, int normalColor) {
+        //其他状态默认为白色
         return new ColorStateList(
-                new int[][]{{android.R.attr.state_enabled, android.R.attr.state_pressed}, {android.R.attr.state_enabled}},
-                new int[]{pressedColor, normalColor});
+                new int[][]{{android.R.attr.state_enabled, android.R.attr.state_pressed}, {android.R.attr.state_enabled}, {}},
+                new int[]{pressedColor, normalColor, Color.WHITE});
     }
 
     /**

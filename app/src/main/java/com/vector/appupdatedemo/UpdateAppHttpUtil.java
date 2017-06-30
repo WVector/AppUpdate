@@ -22,6 +22,25 @@ import okhttp3.Response;
 class UpdateAppHttpUtil implements HttpManager {
 
     @Override
+    public void asyncGet(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
+        OkHttpUtils.get()
+                .url(url)
+                .params(params)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Response response, Exception e, int id) {
+                        callBack.onError(validateError(e, response));
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        callBack.onResponse(response);
+                    }
+                });
+    }
+
+    @Override
     public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.post()
                 .url(url)

@@ -35,6 +35,7 @@ public class UpdateAppManager {
     private String mAppKey;
     private UpdateAppBean mUpdateApp;
     private String mTargetPath;
+    private boolean isPost;
 
     private UpdateAppManager(Builder builder) {
         mActivity = builder.getActivity();
@@ -46,6 +47,7 @@ public class UpdateAppManager {
 
         mAppKey = builder.getAppKey();
         mTargetPath = builder.getTargetPath();
+        isPost = builder.isPost();
     }
 
     /**
@@ -106,21 +108,40 @@ public class UpdateAppManager {
             versionName = versionName.substring(0, versionName.lastIndexOf('-'));
         }
         params.put("version", versionName);
-        mHttpManager.asyncPost(mUpdateUrl, params, new HttpManager.Callback() {
-            @Override
-            public void onResponse(String result) {
-                callback.onAfter();
-                if (result != null) {
-                    processData(result, callback);
+        if (isPost) {
+            mHttpManager.asyncPost(mUpdateUrl, params, new HttpManager.Callback() {
+                @Override
+                public void onResponse(String result) {
+                    callback.onAfter();
+                    if (result != null) {
+                        processData(result, callback);
+                    }
                 }
-            }
 
-            @Override
-            public void onError(String error) {
-                callback.onAfter();
-                callback.noNewApp();
-            }
-        });
+                @Override
+                public void onError(String error) {
+                    callback.onAfter();
+                    callback.noNewApp();
+                }
+            });
+        } else {
+            mHttpManager.asyncGet(mUpdateUrl, params, new HttpManager.Callback() {
+                @Override
+                public void onResponse(String result) {
+                    callback.onAfter();
+                    if (result != null) {
+                        processData(result, callback);
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    callback.onAfter();
+                    callback.noNewApp();
+                }
+            });
+        }
+
     }
 
     /**
@@ -163,6 +184,15 @@ public class UpdateAppManager {
         int mTopPic = 0;
         private String mAppKey;
         private String mTargetPath;
+        private boolean isPost;
+
+        public boolean isPost() {
+            return isPost;
+        }
+
+        public void setPost(boolean post) {
+            isPost = post;
+        }
 
         public String getTargetPath() {
             return mTargetPath;

@@ -23,8 +23,27 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:onClick="updateApp"
-        android:text="更新App"
+        android:text="更新App(默认)"
         />
+
+    <Button
+        android:id="@+id/btn_update_app_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="updateApp2"
+        android:text="更新App(颜色e939dc)"
+        />
+
+    <Button
+        android:id="@+id/btn_update_app_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="updateApp3"
+        android:text="更新App(颜色39c1e9)"
+        />
+
 
     <Button
         android:id="@+id/btn_test"
@@ -33,12 +52,20 @@
         android:layout_margin="16dp"
         android:onClick="test"
         android:text="测试"
+        android:visibility="gone"
         />
 
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
