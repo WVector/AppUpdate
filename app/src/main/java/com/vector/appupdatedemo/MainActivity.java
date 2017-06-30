@@ -108,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 .setActivity(this)
                 .setHttpManager(new UpdateAppHttpUtil())
                 .setUpdateUrl(updateUrl)
+                //自定义对话框头部图片
                 .setTopPic(R.mipmap.top_2)
+                //设置主题色
                 .setThemeColor(color2)
                 .build()
                 .checkNewApp(new UpdateCallback() {
@@ -142,7 +144,9 @@ public class MainActivity extends AppCompatActivity {
                 .setActivity(this)
                 .setHttpManager(new UpdateAppHttpUtil())
                 .setUpdateUrl(updateUrl)
+                //自定义对话框头部图片
                 .setTopPic(R.mipmap.top_3)
+                //设置主题色
                 .setThemeColor(color3)
                 .build()
                 .checkNewApp(new UpdateCallback() {

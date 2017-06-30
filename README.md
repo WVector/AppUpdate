@@ -11,6 +11,10 @@
 ## 功能介绍
 
 - [x] 实现app版本更新
+- [x] 支持get,post请求
+- [x] 支持进度显示，对话框进度，和通知栏进度条展示
+- [x] 支持简单主题色配置
+- [x] 完美支持android7.0
 
 ## 效果图与示例 apk
 
@@ -36,14 +40,14 @@ dependencies {
 
 #### 1，和服务器交互请求参数
 	1,appkey app的唯一标志
-	appkey可以再manifest文件中配置
-	配置如下：
+	appkey可以再manifest文件中配置，可以在代码中添加
+	xml配置如下：
 ```xml
   <meta-data
             android:name="UPDATE_APP_KEY"
             android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
 ```
-	可以在代码中添加
+	
 	2,version 版本号，工具自动添加
 
 #### 2, 服务器的返回json格式
@@ -178,7 +182,57 @@ dependencies {
 
 ### 3,客户端检测是否有新版本，并且更新下载
 
-```java   	            
+```java
+
+	String updateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
+	new UpdateAppManager
+	        .Builder()
+	        //当前Activity
+	        .setActivity(this)
+	        //实现httpManager接口的对象
+	        .setHttpManager(new UpdateAppHttpUtil())
+	        //更新地址
+	        .setUpdateUrl(updateUrl)
+	        .build()
+	        //检测是否有新版本
+	        .checkNewApp(new UpdateCallback() {
+	            /**
+	             * 有新版本
+	             * @param updateApp 新版本信息
+	             * @param updateAppManager app更新管理器
+	             */
+	            @Override
+	            public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+	                updateAppManager.showDialog();
+	            }
+	
+	            /**
+	             * 网络请求之前
+	             */
+	            @Override
+	            public void onBefore() {
+	                CProgressDialogUtils.showProgressDialog(MainActivity.this);
+	            }
+	
+	            /**
+	             * 网路请求之后
+	             */
+	            @Override
+	            public void onAfter() {
+	                CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+	            }
+	
+	            /**
+	             * 没有新版本
+	             */
+	
+	            @Override
+	            public void noNewApp() {
+	                Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+	            }
+	        });
+
+   	            
 ```
 
 ## License
