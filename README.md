@@ -42,10 +42,13 @@ dependencies {
 	1,appkey app的唯一标志
 	appkey可以再manifest文件中配置，可以在代码中添加
 	xml配置如下：
+
 ```xml
+
   <meta-data
             android:name="UPDATE_APP_KEY"
             android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
+
 ```
 	
 	2,version 版本号，工具自动添加
@@ -54,6 +57,7 @@ dependencies {
 	1,有新版本
 
 ```json
+
 {
   "update": "Yes",
   "new_version": "0.8.3",
@@ -65,17 +69,20 @@ dependencies {
   "msg": "ok",
   "timestamp": 1498785412690
 }
+
 ```
 
 	2,没有新版本
 
 ```json
+
 {
   "update": "No",
   "status": "success",
   "msg": "ok",
   "timestamp": 1498785412690
 }
+
 ```
 ### 1，根据自己项目使用的网络框架，自己实现HttpManager接口，
 
