@@ -47,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView im = (ImageView) findViewById(R.id.iv);
 
         im.setImageBitmap(Utils.drawableToBitmap(Utils.getAppIcon(this)));
-
-        //e94339 默认
-        //e939dc  2
-        //39c1e9  3
     }
 
     public void updateApp(View view) {
