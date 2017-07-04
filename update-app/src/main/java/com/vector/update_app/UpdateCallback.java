@@ -1,7 +1,7 @@
 package com.vector.update_app;
 
 /**
- * Created by fengjunming_t on 2016/5/24 0024.
+ * 新版本版本检测回调
  */
 public interface UpdateCallback {
     /**

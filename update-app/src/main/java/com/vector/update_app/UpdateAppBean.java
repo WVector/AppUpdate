@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.io.Serializable;
 
 /**
- * Created by fengjunming_t on 2016/5/24 0024.
+ * 版本信息
  */
 public class UpdateAppBean implements Serializable {
     private static final long serialVersionUID = 1L;

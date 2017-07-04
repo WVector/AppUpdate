@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by fengjunming_t on 2016/5/24 0024.
+ * 版本更新管理器
  */
 public class UpdateAppManager {
     final static String INTENT_KEY = "update_dialog_values";

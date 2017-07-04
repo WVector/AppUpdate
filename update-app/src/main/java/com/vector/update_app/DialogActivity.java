@@ -20,6 +20,9 @@ import com.vector.update_app.utils.DrawableUtil;
 import com.vector.update_app.utils.Utils;
 import com.vector.update_app.view.NumberProgressBar;
 
+/**
+ * 新版本提交对话框
+ */
 public class DialogActivity extends FragmentActivity implements View.OnClickListener {
 
 

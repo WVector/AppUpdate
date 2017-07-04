@@ -25,7 +25,7 @@ import java.io.File;
 
 
 /**
- * Created by fengjunming_t on 2016/5/24 0024.
+ * 后台下载
  */
 public class DownloadService extends Service {
 
