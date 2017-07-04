@@ -60,9 +60,11 @@ dependencies {
 ```
 	
 	2,version 版本号，工具自动添加(服务器判断客户端传过来的version和服务器存的最新的version，决定是否更新)
-####服务器app后台管理界面
+
+	3, 服务器app后台管理界面(下次放出服务器的代码)
 
 <img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_04.png?raw=true" width="1000">
+
 #### 2, 服务器的返回json格式
 	1,有新版本
 
