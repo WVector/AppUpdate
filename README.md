@@ -65,12 +65,12 @@ dependencies {
 ```json
 
 {
-  "update": "Yes",
-  "new_version": "0.8.3",
+  "update": "Yes",//有新版本
+  "new_version": "0.8.3",	//新版本号
   "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk",
   "update_log": "1，添加删除信用卡接口\r\n2，添加vip认证\r\n3，区分自定义消费，一个小时不限制。\r\n4，添加放弃任务接口，小时内不生成。\r\n5，消费任务手动生成。",
-  "target_size": "5M",
-  "constraint": false,
+  "target_size": "5M",//apk大小
+  "constraint": false,//是否强制更新
   "status": "success",
   "msg": "ok",
   "timestamp": 1498785412690
@@ -83,7 +83,7 @@ dependencies {
 ```json
 
 {
-  "update": "No",
+  "update": "No",//没有新版本
   "status": "success",
   "msg": "ok",
   "timestamp": 1498785412690
