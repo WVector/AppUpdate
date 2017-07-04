@@ -25,6 +25,8 @@
 <img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_02.png?raw=true" width="1000">
 
 <img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_03.png?raw=true" width="1000">
+
+
 	
 [点击下载 Demo.apk](https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk) 或扫描下面的二维码安装
 
@@ -46,7 +48,7 @@ dependencies {
 
 #### 1，和服务器交互请求参数
 	1,appkey app的唯一标志
-	appkey可以再manifest文件中配置，可以在代码中添加
+	appkey可以在manifest文件中配置，也可以在代码中添加
 	xml配置如下：
 
 ```xml
@@ -57,8 +59,10 @@ dependencies {
 
 ```
 	
-	2,version 版本号，工具自动添加
+	2,version 版本号，工具自动添加(服务器判断客户端传过来的version和服务器存的最新的version，决定是否更新)
+####服务器app后台管理界面
 
+<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_04.png?raw=true" width="1000">
 #### 2, 服务器的返回json格式
 	1,有新版本
 
@@ -66,9 +70,9 @@ dependencies {
 
 {
   "update": "Yes",//有新版本
-  "new_version": "0.8.3",	//新版本号
-  "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk",
-  "update_log": "1，添加删除信用卡接口\r\n2，添加vip认证\r\n3，区分自定义消费，一个小时不限制。\r\n4，添加放弃任务接口，小时内不生成。\r\n5，消费任务手动生成。",
+  "new_version": "0.8.3",//新版本号
+  "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk", //apk下载地址
+  "update_log": "1，添加删除信用卡接口\r\n2，添加vip认证\r\n3，区分自定义消费，一个小时不限制。\r\n4，添加放弃任务接口，小时内不生成。\r\n5，消费任务手动生成。",//更新内容
   "target_size": "5M",//apk大小
   "constraint": false,//是否强制更新
   "status": "success",
