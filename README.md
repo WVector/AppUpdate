@@ -257,10 +257,12 @@ dependencies {
 
    	            
 ```
+#### 进度条使用的是代码家的「[NumberProgressBar](https://github.com/daimajia/NumberProgressBar)」
 
 ## License
 
-   
+   	Copyright 2017 千匍
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
