@@ -32,7 +32,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.alibaba:fastjson:1.1.58.android'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
@@ -42,7 +41,7 @@ publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
     artifactId = 'update-app'//项目名称
-    publishVersion = '3.0.0'//版本号
+    publishVersion = '3.1.0'//版本号
     desc = 'App update tools'
     website = 'https://github.com/WVector/AppUpdateDemo'
 }

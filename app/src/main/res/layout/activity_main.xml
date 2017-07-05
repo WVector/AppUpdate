@@ -44,6 +44,14 @@
         android:text="更新App(颜色39c1e9)"
         />
 
+    <Button
+        android:id="@+id/btn_update_app_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="updateApp4"
+        android:text="自定义接口协议"
+        />
 
     <Button
         android:id="@+id/btn_test"

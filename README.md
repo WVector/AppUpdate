@@ -6,11 +6,13 @@
 * [功能介绍](#功能介绍)
 * [效果图与示例 apk](#效果图与示例-apk)
 * [使用](#使用)
+* [自定义接口协议](#自定义接口协议)
 * [License](#license)
 
 ## 功能介绍
 
 - [x] 实现app版本更新
+- [x] 自定义接口协议，可以不改变现有项目的协议就能使用
 - [x] 支持get,post请求
 - [x] 支持进度显示，对话框进度条，和通知栏进度条展示
 - [x] 支持后台下载
@@ -38,7 +40,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.0.0'
+    compile 'com.qianwen:update-app:3.1.0'
 }
 ```
 
@@ -80,10 +82,7 @@ dependencies {
   "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk", //apk下载地址
   "update_log": "1，添加删除信用卡接口\r\n2，添加vip认证\r\n3，区分自定义消费，一个小时不限制。\r\n4，添加放弃任务接口，小时内不生成。\r\n5，消费任务手动生成。",//更新内容
   "target_size": "5M",//apk大小
-  "constraint": false,//是否强制更新
-  "status": "success",
-  "msg": "ok",
-  "timestamp": 1498785412690
+  "constraint": false//是否强制更新
 }
 
 ```
@@ -94,9 +93,6 @@ dependencies {
 
 {
   "update": "No",//没有新版本
-  "status": "success",
-  "msg": "ok",
-  "timestamp": 1498785412690
 }
 
 ```
@@ -205,6 +201,7 @@ dependencies {
 
 ### 3,客户端检测是否有新版本，并且更新下载
 
+
 ```java
 
 	String updateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
@@ -257,6 +254,89 @@ dependencies {
 
    	            
 ```
+
+## 自定义接口协议
+
+自定义接口协议，根据自己项目的接口，自己实现 parseJson 方法
+
+```java
+
+	new UpdateAppManager
+	            .Builder()
+	            //当前Activity
+	            .setActivity(this)
+	            //实现httpManager接口的对象
+	            .setHttpManager(new UpdateAppHttpUtil())
+	            //更新地址
+	            .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
+	            .build()
+	            //检测是否有新版本
+	            .checkNewApp(new UpdateCallback() {
+	                /**
+	                 * 解析json,自定义协议
+	                 *
+	                 * @param json 服务器返回的json
+	                 * @return UpdateAppBean
+	                 */
+	                @Override
+	                protected UpdateAppBean parseJson(String json) {
+	                    UpdateAppBean updateAppBean = new UpdateAppBean();
+	                    try {
+	                        JSONObject jsonObject = new JSONObject(json);
+	                        updateAppBean
+	                                //是否更新Yes,No
+	                                .setUpdate(jsonObject.getString("update"))
+	                                //新版本号
+	                                .setNew_version(jsonObject.getString("new_version"))
+	                                //下载地址
+	                                .setApk_file_url(jsonObject.getString("apk_file_url"))
+	                                //大小
+	                                .setTarget_size(jsonObject.getString("target_size"))
+	                                //更新内容
+	                                .setUpdate_log(jsonObject.getString("update_log"))
+	                                //是否强制更新
+	                                .setConstraint(jsonObject.getBoolean("constraint"));
+	                    } catch (JSONException e) {
+	                        e.printStackTrace();
+	                    }
+	                    return updateAppBean;
+	                }
+	                /**
+	                 * 有新版本
+	                 *
+	                 * @param updateApp        新版本信息
+	                 * @param updateAppManager app更新管理器
+	                 */
+	                @Override
+	                public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+	                    updateAppManager.showDialog();
+	                }
+	                /**
+	                 * 网络请求之前
+	                 */
+	                @Override
+	                public void onBefore() {
+	                    CProgressDialogUtils.showProgressDialog(MainActivity.this);
+	                }
+	                /**
+	                 * 网路请求之后
+	                 */
+	                @Override
+	                public void onAfter() {
+	                    CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+	                }
+	                /**
+	                 * 没有新版本
+	                 */
+	                @Override
+	                public void noNewApp() {
+	                    Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+	                }
+	            });
+
+```
+
+
 #### 进度条使用的是代码家的「[NumberProgressBar](https://github.com/daimajia/NumberProgressBar)」
 
 ## License

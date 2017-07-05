@@ -19,19 +19,34 @@ public class UpdateAppBean implements Serializable {
      * new_md5 : xxxxxxxxxxxxxx
      * target_size : 601132
      */
-    private String status;
-    private String msg;
-    private Long timestamp;
+    //是否有新版本
     private String update;
+    //新版本号
     private String new_version;
+    //新app下载地址
     private String apk_file_url;
+    //更新日志
     private String update_log;
-    private boolean delta;
-    private String new_md5;
+    //新app大小
     private String target_size;
-    private HttpManager httpManager;
-    private String targetPath;
+    //是否强制更新
     private boolean constraint;
+
+
+    //md5暂时不用
+    private String new_md5;
+    //是否增量 暂时不用
+    private boolean delta;
+
+
+    //网络工具，内部使用
+    private HttpManager httpManager;
+    //目标地址，内部使用
+    private String targetPath;
+
+    public boolean isUpdate() {
+        return !TextUtils.isEmpty(this.update) && "Yes".equals(this.update);
+    }
 
     public HttpManager getHttpManager() {
         return httpManager;
@@ -51,7 +66,6 @@ public class UpdateAppBean implements Serializable {
 
     public boolean isConstraint() {
         return constraint;
-//        return true;
     }
 
     public void setConstraint(boolean constraint) {
@@ -62,28 +76,36 @@ public class UpdateAppBean implements Serializable {
         return update;
     }
 
+    public UpdateAppBean setUpdate(String update) {
+        this.update = update;
+        return this;
+    }
+
     public String getNew_version() {
         return new_version;
     }
 
-    public void setNew_version(String new_version) {
+    public UpdateAppBean setNew_version(String new_version) {
         this.new_version = new_version;
+        return this;
     }
 
     public String getApk_file_url() {
         return apk_file_url;
     }
 
-    public void setApk_file_url(String apk_file_url) {
+    public UpdateAppBean setApk_file_url(String apk_file_url) {
         this.apk_file_url = apk_file_url;
+        return this;
     }
 
     public String getUpdate_log() {
         return update_log;
     }
 
-    public void setUpdate_log(String update_log) {
+    public UpdateAppBean setUpdate_log(String update_log) {
         this.update_log = update_log;
+        return this;
     }
 
     public boolean isDelta() {
@@ -106,43 +128,8 @@ public class UpdateAppBean implements Serializable {
         return target_size;
     }
 
-    public void setTarget_size(String target_size) {
+    public UpdateAppBean setTarget_size(String target_size) {
         this.target_size = target_size;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public boolean isSucceed() {
-        return !TextUtils.isEmpty(this.status) && "success".equals(this.status);
-    }
-
-    public boolean isUpdate() {
-        return isSucceed() && !TextUtils.isEmpty(this.update) && "Yes".equals(this.update);
-    }
-
-    public void setUpdate(String update) {
-        this.update = update;
+        return this;
     }
 }

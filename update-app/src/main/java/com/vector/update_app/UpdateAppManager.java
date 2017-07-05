@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.Utils;
 
@@ -152,15 +151,9 @@ public class UpdateAppManager {
      */
     private void processData(String result, @NonNull UpdateCallback callback) {
         try {
-            mUpdateApp = JSON.parseObject(result, UpdateAppBean.class);
-            if (mUpdateApp.isSucceed()) {
-                if (mUpdateApp.isUpdate()) {
-                    callback.hasNewApp(mUpdateApp, this);
-                    //跳转到升级界面
-//                    showDialog(checkNewApp);
-                } else {
-                    callback.noNewApp();
-                }
+            mUpdateApp = callback.parseJson(result);
+            if (mUpdateApp.isUpdate()) {
+                callback.hasNewApp(mUpdateApp, this);
             } else {
                 callback.noNewApp();
             }
