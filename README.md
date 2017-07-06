@@ -5,7 +5,9 @@
 
 * [功能介绍](#功能介绍)
 * [效果图与示例 apk](#效果图与示例-apk)
-* [使用](#使用)
+* [Gradle 依赖](#Gradle-依赖)
+* [自定义接口协议](#自定义接口协议)
+* [使用默认的接口协议](#使用默认的接口协议)
 * [自定义接口协议](#自定义接口协议)
 * [License](#license)
 
@@ -34,17 +36,121 @@
 
 ![Demo apk文件二维](https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/1498810770.png)
 
-## 使用 
 
-### Gradle 依赖
+
+## Gradle 依赖
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.1.0'
+    compile 'com.qianwen:update-app:3.2.2'
 }
 ```
 
 [![Download](https://api.bintray.com/packages/qianwen/maven/update-app/images/download.svg) ](https://bintray.com/qianwen/maven/update-app/_latestVersion) [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
+## 自定义接口协议
+
+自定义接口协议，根据自己项目的接口，自己实现 parseJson 方法
+
+```java
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("key1", "value1");
+        params.put("key2", "value2");
+        params.put("key3", "value3");
+        params.put("key4", "value4");
+
+
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                //更新地址
+                .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
+                //添加自定义参数
+                .setParams(params)
+                //设置头部
+                .setTopPic(R.mipmap.top_5)
+                //设置主题色
+                .setThemeColor(0xff034ea0)
+                .build()
+                //检测是否有新版本
+                .checkNewApp(new UpdateCallback() {
+                    /**
+                     * 解析json,自定义协议
+                     *
+                     * @param json 服务器返回的json
+                     * @return UpdateAppBean
+                     */
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            updateAppBean
+                                    //是否更新Yes,No
+                                    .setUpdate(jsonObject.getString("update"))
+                                    //新版本号
+                                    .setNew_version(jsonObject.getString("new_version"))
+                                    //下载地址
+                                    .setApk_file_url(jsonObject.getString("apk_file_url"))
+                                    //大小
+                                    .setTarget_size(jsonObject.getString("target_size"))
+                                    //更新内容
+                                    .setUpdate_log(jsonObject.getString("update_log"))
+                                    //是否强制更新
+                                    .setConstraint(jsonObject.getBoolean("constraint"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return updateAppBean;
+                    }
+
+                    /**
+                     * 有新版本
+                     *
+                     * @param updateApp        新版本信息
+                     * @param updateAppManager app更新管理器
+                     */
+                    @Override
+                    public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialog();
+                    }
+
+                    /**
+                     * 网络请求之前
+                     */
+                    @Override
+                    public void onBefore() {
+                        CProgressDialogUtils.showProgressDialog(MainActivity.this);
+                    }
+
+                    /**
+                     * 网路请求之后
+                     */
+                    @Override
+                    public void onAfter() {
+                        CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+                    }
+
+                    /**
+                     * 没有新版本
+                     */
+                    @Override
+                    public void noNewApp() {
+                        Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+```
+
+## 使用默认的接口协议 
+
 
 ### 接口说明
 
@@ -255,86 +361,7 @@ dependencies {
    	            
 ```
 
-## 自定义接口协议
 
-自定义接口协议，根据自己项目的接口，自己实现 parseJson 方法
-
-```java
-
-	new UpdateAppManager
-	            .Builder()
-	            //当前Activity
-	            .setActivity(this)
-	            //实现httpManager接口的对象
-	            .setHttpManager(new UpdateAppHttpUtil())
-	            //更新地址
-	            .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
-	            .build()
-	            //检测是否有新版本
-	            .checkNewApp(new UpdateCallback() {
-	                /**
-	                 * 解析json,自定义协议
-	                 *
-	                 * @param json 服务器返回的json
-	                 * @return UpdateAppBean
-	                 */
-	                @Override
-	                protected UpdateAppBean parseJson(String json) {
-	                    UpdateAppBean updateAppBean = new UpdateAppBean();
-	                    try {
-	                        JSONObject jsonObject = new JSONObject(json);
-	                        updateAppBean
-	                                //是否更新Yes,No
-	                                .setUpdate(jsonObject.getString("update"))
-	                                //新版本号
-	                                .setNew_version(jsonObject.getString("new_version"))
-	                                //下载地址
-	                                .setApk_file_url(jsonObject.getString("apk_file_url"))
-	                                //大小
-	                                .setTarget_size(jsonObject.getString("target_size"))
-	                                //更新内容
-	                                .setUpdate_log(jsonObject.getString("update_log"))
-	                                //是否强制更新
-	                                .setConstraint(jsonObject.getBoolean("constraint"));
-	                    } catch (JSONException e) {
-	                        e.printStackTrace();
-	                    }
-	                    return updateAppBean;
-	                }
-	                /**
-	                 * 有新版本
-	                 *
-	                 * @param updateApp        新版本信息
-	                 * @param updateAppManager app更新管理器
-	                 */
-	                @Override
-	                public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-	                    updateAppManager.showDialog();
-	                }
-	                /**
-	                 * 网络请求之前
-	                 */
-	                @Override
-	                public void onBefore() {
-	                    CProgressDialogUtils.showProgressDialog(MainActivity.this);
-	                }
-	                /**
-	                 * 网路请求之后
-	                 */
-	                @Override
-	                public void onAfter() {
-	                    CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
-	                }
-	                /**
-	                 * 没有新版本
-	                 */
-	                @Override
-	                public void noNewApp() {
-	                    Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
-	                }
-	            });
-
-```
 
 
 #### 进度条使用的是代码家的「[NumberProgressBar](https://github.com/daimajia/NumberProgressBar)」

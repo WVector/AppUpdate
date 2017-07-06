@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateApp4(View view) {
         Map<String, String> params = new HashMap<String, String>();
 
-        params.put("appKey", "1111111111111111");
+        params.put("key1", "value1");
         params.put("key2", "value2");
         params.put("key3", "value3");
         params.put("key4", "value4");
@@ -221,6 +221,10 @@ public class MainActivity extends AppCompatActivity {
                 .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
                 //添加自定义参数
                 .setParams(params)
+                //设置头部
+                .setTopPic(R.mipmap.top_5)
+                //设置主题色
+                .setThemeColor(0xff034ea0)
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {
