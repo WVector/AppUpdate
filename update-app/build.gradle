@@ -40,9 +40,9 @@ dependencies {
 publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
-    artifactId = 'lib_update_app_update_icon-app'//项目名称
-    publishVersion = '3.2.1'//版本号
-    desc = 'App lib_update_app_update_icon tools'
+    artifactId = 'update-app'//项目名称
+    publishVersion = '3.2.2'//版本号
+    desc = 'App update tools'
     website = 'https://github.com/WVector/AppUpdateDemo'
 }
 repositories {
