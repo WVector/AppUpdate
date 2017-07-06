@@ -217,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
                 .setActivity(this)
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
+                //设置请求方式 默认get,
+                .setPost(false)
                 //更新地址
                 .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
                 //添加自定义参数
