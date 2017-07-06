@@ -17,12 +17,12 @@
             android:id="@+id/iv_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/update_app_top_bg"/>
+            android:src="@mipmap/lib_update_app_top_bg"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/update_app_info_bg"
+            android:background="@drawable/lib_update_app_info_bg"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -83,7 +83,7 @@
             android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/update_app_close"
+            android:src="@mipmap/lib_update_app_close"
             />
 
 
