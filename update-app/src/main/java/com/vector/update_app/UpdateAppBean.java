@@ -11,7 +11,7 @@ public class UpdateAppBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * lib_update_app_update_icon : Yes
+     * update : Yes
      * new_version : xxxxx
      * apk_url : http://cdn.the.url.of.apk/or/patch
      * update_log : xxxx
