@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="NumberProgressBar">
+    <declare-styleable name="UpdateAppNumberProgressBar">
         <attr name="progress_current" format="integer"/>
         <attr name="progress_max" format="integer"/>
 

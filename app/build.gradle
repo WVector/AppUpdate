@@ -38,5 +38,5 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     testCompile 'junit:junit:4.12'
     compile project(':update-app')
-//    compile 'com.qianwen:update-app:2.5.0'
+//    compile 'com.qianwen:update_app_update_icon-app:2.5.0'
 }

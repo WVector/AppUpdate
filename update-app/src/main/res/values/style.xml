@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="NumberProgressBar_Red">
+    <style name="UpdateAppNumberProgressBar_Red">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
 
@@ -18,7 +18,7 @@
         <item name="progress_unreached_bar_height">3dp</item>
     </style>
 
-    <style name="Dialog" parent="android:style/Theme.Dialog">
+    <style name="UpdateAppDialog" parent="android:style/Theme.Dialog">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>

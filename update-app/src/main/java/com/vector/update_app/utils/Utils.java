@@ -121,7 +121,7 @@ public class Utils {
         try {
             ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             return appInfo.metaData.getString(name);
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

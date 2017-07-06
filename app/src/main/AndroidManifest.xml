@@ -21,19 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
-
-        <meta-data
-            android:name="UPDATE_APP_KEY"
-            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
+        <!--<meta-data-->
+        <!--android:name="UPDATE_APP_KEY"-->
+        <!--android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>-->
     </application>
 
 </manifest>

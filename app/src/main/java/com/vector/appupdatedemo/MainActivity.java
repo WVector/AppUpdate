@@ -20,6 +20,9 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rx.functions.Action1;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -200,6 +203,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateApp4(View view) {
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("appKey", "1111111111111111");
+        params.put("key2", "value2");
+        params.put("key3", "value3");
+        params.put("key4", "value4");
+
+
         new UpdateAppManager
                 .Builder()
                 //当前Activity
@@ -208,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                 .setHttpManager(new UpdateAppHttpUtil())
                 //更新地址
                 .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
+                //添加自定义参数
+                .setParams(params)
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {

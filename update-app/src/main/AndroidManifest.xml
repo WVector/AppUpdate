@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.vector.update_app">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application>
         <service android:name=".service.DownloadService"/>
         <activity
@@ -9,9 +13,18 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@style/Dialog"
+            android:theme="@style/UpdateAppDialog"
             android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
+        <provider
+            android:name=".UpdateFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/new_app_file_paths"/>
+        </provider>
     </application>
 
 </manifest>

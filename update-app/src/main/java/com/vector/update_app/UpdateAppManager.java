@@ -24,6 +24,7 @@ public class UpdateAppManager {
     final static String TOP_IMAGE_KEY = "top_resId";
     private final static String UPDATE_APP_KEY = "UPDATE_APP_KEY";
     private static final String TAG = UpdateAppManager.class.getSimpleName();
+    private Map<String, String> mParams;
     private Activity mActivity;
     private HttpManager mHttpManager;
     private String mUpdateUrl;
@@ -35,6 +36,7 @@ public class UpdateAppManager {
     private UpdateAppBean mUpdateApp;
     private String mTargetPath;
     private boolean isPost;
+    //自定义参数
 
     private UpdateAppManager(Builder builder) {
         mActivity = builder.getActivity();
@@ -47,6 +49,7 @@ public class UpdateAppManager {
         mAppKey = builder.getAppKey();
         mTargetPath = builder.getTargetPath();
         isPost = builder.isPost();
+        mParams = builder.getParams();
     }
 
     /**
@@ -107,6 +110,14 @@ public class UpdateAppManager {
             versionName = versionName.substring(0, versionName.lastIndexOf('-'));
         }
         params.put("version", versionName);
+
+
+        //添加自定义参数，其实可以实现HttManager中添加
+        if (mParams != null && !mParams.isEmpty()) {
+            params.putAll(mParams);
+        }
+
+        //网络请求
         if (isPost) {
             mHttpManager.asyncPost(mUpdateUrl, params, new HttpManager.Callback() {
                 @Override
@@ -140,8 +151,8 @@ public class UpdateAppManager {
                 }
             });
         }
-
     }
+
 
     /**
      * 解析
@@ -178,6 +189,18 @@ public class UpdateAppManager {
         private String mAppKey;
         private String mTargetPath;
         private boolean isPost;
+
+        //自定义参数
+        private Map<String, String> params;
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+
+        public Builder setParams(Map<String, String> params) {
+            this.params = params;
+            return this;
+        }
 
         public boolean isPost() {
             return isPost;
@@ -266,7 +289,7 @@ public class UpdateAppManager {
             if (TextUtils.isEmpty(getAppKey())) {
                 String appKey = Utils.getManifestString(getActivity(), UPDATE_APP_KEY);
                 if (TextUtils.isEmpty(appKey)) {
-                    throw new NullPointerException("appKey 为空");
+//                    throw new NullPointerException("appKey 为空");
                 } else {
                     setAppKey(appKey);
                 }

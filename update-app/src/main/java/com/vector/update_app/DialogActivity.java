@@ -53,7 +53,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isShow = true;
-        setContentView(R.layout.update_dialog);
+        setContentView(R.layout.update_app_dialog);
         initView();
         initData();
     }
@@ -102,7 +102,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     private void initTheme() {
         int defaultColor = 0xffe94339;
         int color = getIntent().getIntExtra(UpdateAppManager.THEME_KEY, defaultColor);
-        int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, R.mipmap.top);
+        int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, R.mipmap.update_app_top_bg);
         ImageView topIv = (ImageView) findViewById(R.id.iv_top);
         topIv.setImageResource(topResId);
         mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, this), color));
