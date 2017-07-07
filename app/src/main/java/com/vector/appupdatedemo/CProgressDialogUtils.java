@@ -9,12 +9,11 @@ import android.content.DialogInterface;
  */
 public class CProgressDialogUtils {
     private static final String TAG = CProgressDialogUtils.class.getSimpleName();
+    private static ProgressDialog sCircleProgressDialog;
 
     private CProgressDialogUtils() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
-
-    private static ProgressDialog sCircleProgressDialog;
 
     public static void showProgressDialog(Activity activity) {
         showProgressDialog(activity, "加载中", false, null);
@@ -63,21 +62,6 @@ public class CProgressDialogUtils {
         if (!sCircleProgressDialog.isShowing()) {
             sCircleProgressDialog.show();
         }
-
-//        sCircleProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-//            @Override
-//            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-//                if (KeyEvent.KEYCODE_BACK == keyEvent.getKeyCode()) {
-//                    if (!activity.isFinishing()) {
-//                        cancelProgressDialog();
-//                        activity.finish();
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
 
     }
 
