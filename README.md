@@ -29,9 +29,9 @@
 
 <img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_03.png?raw=true" width="1000">
 
-<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_05.png?raw=true" width="1000">
+<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_05.png width="1000">
 
-<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_06.png?raw=true" width="1000">
+<img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_06.png width="1000">
 
 	
 [点击下载 Demo.apk](https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk) 或扫描下面的二维码安装
