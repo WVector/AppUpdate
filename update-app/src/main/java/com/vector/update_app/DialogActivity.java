@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.graphics.Palette;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,6 +49,10 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         }
     };
     private LinearLayout mLlClose;
+    //默认色
+    private int mDefaultColor = 0xffe94339;
+    private int mDefaultPicResId = R.mipmap.lib_update_app_top_bg;
+    private ImageView mTopIv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,14 +70,19 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
         //更新按钮
         mUpdateOkButton = (Button) findViewById(R.id.btn_ok);
+        //进度条
         mNumberProgressBar = (NumberProgressBar) findViewById(R.id.npb);
+        //关闭按钮
         mIvClose = (ImageView) findViewById(R.id.iv_close);
+        //关闭按钮+线 的整个布局
         mLlClose = (LinearLayout) findViewById(R.id.ll_close);
+        //顶部图片
+        mTopIv = (ImageView) findViewById(R.id.iv_top);
     }
 
     private void initData() {
         mUpdateApp = (UpdateAppBean) getIntent().getSerializableExtra(UpdateAppManager.INTENT_KEY);
-
+        //设置主题色
         initTheme();
 
 
@@ -81,14 +92,20 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             String targetSize = mUpdateApp.getTarget_size();
             String updateLog = mUpdateApp.getUpdate_log();
 
+            String msg = "";
 
-            String msg =
-                    "新版本大小：" + targetSize
-                            + "\n\n" + updateLog;
+            if (!TextUtils.isEmpty(targetSize)) {
+                msg = "新版本大小：" + targetSize + "\n\n";
+            }
 
+            if (!TextUtils.isEmpty(updateLog)) {
+                msg += updateLog;
+            }
 
-            mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
+            //更新内容
             mContentTextView.setText(msg);
+            //标题
+            mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
             //强制更新
             if (mUpdateApp.isConstraint()) {
 //                mIvClose.setVisibility(View.GONE);
@@ -102,16 +119,51 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
      * 初始化主题色
      */
     private void initTheme() {
-        int defaultColor = 0xffe94339;
-        int color = getIntent().getIntExtra(UpdateAppManager.THEME_KEY, defaultColor);
-        int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, R.mipmap.lib_update_app_top_bg);
-        ImageView topIv = (ImageView) findViewById(R.id.iv_top);
-        topIv.setImageResource(topResId);
-        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, this), color));
 
+
+        final int color = getIntent().getIntExtra(UpdateAppManager.THEME_KEY, -1);
+
+        final int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, -1);
+
+
+        if (-1 == topResId) {
+            if (-1 == color) {
+                //默认红色
+                setDialogTheme(mDefaultColor, mDefaultPicResId);
+            } else {
+                setDialogTheme(color, mDefaultPicResId);
+            }
+
+        } else {
+            if (-1 == color) {
+                //自动提色
+                Palette.from(Utils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(Palette palette) {
+                        int mDominantColor = palette.getDominantColor(mDefaultColor);
+                        setDialogTheme(mDominantColor, topResId);
+                    }
+                });
+            } else {
+                //更加指定的上色
+                setDialogTheme(color, topResId);
+            }
+        }
+
+
+    }
+
+    /**
+     * 设置
+     *
+     * @param color    主色
+     * @param topResId 图片
+     */
+    private void setDialogTheme(int color, int topResId) {
+        mTopIv.setImageResource(topResId);
+        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, this), color));
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
-
         //随背景颜色变化
         mUpdateOkButton.setTextColor(ColorUtil.isTextColorDark(color) ? Color.BLACK : Color.WHITE);
     }
@@ -198,6 +250,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         }
         super.onBackPressed();
     }
+
 
     @Override
     protected void onDestroy() {

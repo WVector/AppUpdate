@@ -18,7 +18,7 @@
 - [x] 支持进度显示，对话框进度条，和通知栏进度条展示
 - [x] 支持后台下载
 - [x] 支持强制更新
-- [x] 支持简单主题色配置
+- [x] 支持简单主题色配置(可以自动从顶部图片提取主色)
 - [x] 完美支持android7.0
 
 ## 效果图与示例 apk
@@ -41,7 +41,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.2.2'
+    compile 'com.qianwen:update-app:3.2.3'
 }
 ```
 

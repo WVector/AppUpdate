@@ -225,9 +225,9 @@ public class MainActivity extends AppCompatActivity {
                 //添加自定义参数
                 .setParams(params)
                 //设置头部
-                .setTopPic(R.mipmap.top_5)
+                .setTopPic(R.mipmap.top_6)
                 //设置主题色
-                .setThemeColor(0xff034ea0)
+//                .setThemeColor(0xff034ea0)
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {
