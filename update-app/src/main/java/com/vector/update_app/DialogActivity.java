@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -59,8 +58,11 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     }
 
     private void initView() {
+        //提示内容
         mContentTextView = (TextView) findViewById(R.id.tv_update_info);
+        //标题
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
+        //更新按钮
         mUpdateOkButton = (Button) findViewById(R.id.btn_ok);
         mNumberProgressBar = (NumberProgressBar) findViewById(R.id.npb);
         mIvClose = (ImageView) findViewById(R.id.iv_close);
@@ -158,7 +160,6 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
                 @Override
                 public void onProgress(float progress) {
-                    Log.d("", "onProgress() called with: progress = [" + progress + "]");
                     if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setProgress((int) progress);
                     }
@@ -166,7 +167,6 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
                 @Override
                 public void setMax(float total) {
-                    Log.d("", "setMax() called with: total = [" + total + "]");
                     if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setMax((int) total);
                     }
