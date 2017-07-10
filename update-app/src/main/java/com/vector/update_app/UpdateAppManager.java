@@ -87,7 +87,7 @@ public class UpdateAppManager {
     /**
      * 检测是否有新版本
      *
-     * @param callback
+     * @param callback 更新回调
      */
     public void checkNewApp(final UpdateCallback callback) {
         if (callback == null) {

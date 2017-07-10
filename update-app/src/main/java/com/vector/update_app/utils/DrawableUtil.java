@@ -224,8 +224,8 @@ public class DrawableUtil {
 
     /**
      * 默认空心 设置TextView 主题，随机颜色
-     *
-     * @param textView textView
+     * @param textView 文本控件
+     * @param color 颜色
      */
     public static void setTextStrokeTheme(TextView textView, int color) {
         setTextStrokeTheme(textView, 6, 10, color);

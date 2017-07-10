@@ -149,6 +149,8 @@ public class DownloadService extends Service {
     public class DownloadBinder extends Binder {
         /**
          * 开始下载
+         * @param updateApp 新app信息
+         * @param callback 下载回调
          */
         public void start(UpdateAppBean updateApp, DownloadCallback callback) {
             //初始化通知栏

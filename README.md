@@ -44,7 +44,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.2.3'
+    compile 'com.qianwen:update-app:3.2.4'
 }
 ```
 
