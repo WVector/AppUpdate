@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                                     //更新内容
                                     .setUpdate_log(jsonObject.getString("update_log"))
                                     //是否强制更新
-                                    .setConstraint(jsonObject.getBoolean("constraint"));
+                                    .setConstraint(true);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -1,6 +1,7 @@
 package com.vector.update_app;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -246,7 +247,10 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         //禁用
         if (mUpdateApp != null && mUpdateApp.isConstraint()) {
 //          ActManager.getInstance().finishAllActivity();
-            android.os.Process.killProcess(android.os.Process.myPid());
+//            android.os.Process.killProcess(android.os.Process.myPid());
+            //返回桌面
+            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
+            return;
         }
         super.onBackPressed();
     }

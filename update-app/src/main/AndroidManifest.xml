@@ -11,7 +11,6 @@
         <activity
             android:name=".DialogActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/UpdateAppDialog"
             android:windowSoftInputMode="adjustPan|stateHidden">
