@@ -254,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
                                     //更新内容
                                     .setUpdateLog(jsonObject.optString("update_log"))
                                     //是否强制更新
-                                    .setConstraint(true)
-                                    //设置md5
-                                    .setNewMd5(jsonObject.optString("new_md5ddfdfdf"));
+                                    .setConstraint(true);
+                            //设置md5
+//                                    .setNewMd5(jsonObject.optString("new_md5ddfdfdf"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
