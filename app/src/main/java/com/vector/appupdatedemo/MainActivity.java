@@ -244,17 +244,19 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(json);
                             updateAppBean
                                     //是否更新Yes,No
-                                    .setUpdate(jsonObject.getString("update"))
+                                    .setUpdate(jsonObject.optString("update"))
                                     //新版本号
-                                    .setNewVersion(jsonObject.getString("new_version"))
+                                    .setNewVersion(jsonObject.optString("new_version"))
                                     //下载地址
-                                    .setApkFileUrl(jsonObject.getString("apk_file_url"))
+                                    .setApkFileUrl(jsonObject.optString("apk_file_url"))
                                     //大小
-                                    .setTargetSize(jsonObject.getString("target_size"))
+                                    .setTargetSize(jsonObject.optString("target_size"))
                                     //更新内容
-                                    .setUpdateLog(jsonObject.getString("update_log"))
+                                    .setUpdateLog(jsonObject.optString("update_log"))
                                     //是否强制更新
-                                    .setConstraint(true);
+                                    .setConstraint(true)
+                                    //设置md5
+                                    .setNewMd5(jsonObject.optString("new_md5ddfdfdf"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

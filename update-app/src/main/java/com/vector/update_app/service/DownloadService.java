@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.vector.update_app.HttpManager;
 import com.vector.update_app.R;
 import com.vector.update_app.UpdateAppBean;
-import com.vector.update_app.utils.Md5Util;
 import com.vector.update_app.utils.Utils;
 
 import java.io.File;
@@ -110,32 +109,7 @@ public class DownloadService extends Service {
 
         String target = appDir + File.separator + updateApp.getNewVersion();
 
-        File appFile = new File(target.concat(File.separator + appName));
-        //有md5值
-        //已下载
-        //并且md5正确
-        if (!TextUtils.isEmpty(updateApp.getNewMd5())
-                && appFile.exists()
-                && Md5Util.getFileMD5(appFile).equals(updateApp.getNewMd5().toLowerCase())) {
-
-            Uri fileUri = FileProvider.getUriForFile(DownloadService.this, getApplicationContext().getPackageName() + ".fileProvider", appFile);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
-            } else {
-                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
-            }
-            if (getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
-                startActivity(intent);
-            }
-            //安装完自杀
-            close();
-        } else {
-            updateApp.getHttpManager().download(apkUrl, target, appName, new FileDownloadCallBack(callback));
-        }
-
+        updateApp.getHttpManager().download(apkUrl, target, appName, new FileDownloadCallBack(callback));
     }
 
     private void stop(String contentText) {

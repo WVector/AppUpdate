@@ -31,10 +31,10 @@ public class UpdateAppBean implements Serializable {
     private String target_size;
     //是否强制更新
     private boolean constraint;
-
-
-    //md5暂时不用
+    //md5
     private String new_md5;
+
+
     //是否增量 暂时不用
     private boolean delta;
 
@@ -68,8 +68,9 @@ public class UpdateAppBean implements Serializable {
         return constraint;
     }
 
-    public void setConstraint(boolean constraint) {
+    public UpdateAppBean setConstraint(boolean constraint) {
         this.constraint = constraint;
+        return this;
     }
 
     public String getUpdate() {
@@ -121,8 +122,9 @@ public class UpdateAppBean implements Serializable {
         return new_md5;
     }
 
-    public void setNewMd5(String new_md5) {
+    public UpdateAppBean setNewMd5(String new_md5) {
         this.new_md5 = new_md5;
+        return this;
     }
 
     public String getTargetSize() {

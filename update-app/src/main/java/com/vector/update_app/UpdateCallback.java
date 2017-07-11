@@ -1,6 +1,5 @@
 package com.vector.update_app;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -18,13 +17,14 @@ public abstract class UpdateCallback {
         UpdateAppBean updateAppBean = new UpdateAppBean();
         try {
             JSONObject jsonObject = new JSONObject(json);
-            updateAppBean.setUpdate(jsonObject.getString("update"))
-                    .setNewVersion(jsonObject.getString("new_version"))
-                    .setApkFileUrl(jsonObject.getString("apk_file_url"))
-                    .setTargetSize(jsonObject.getString("target_size"))
-                    .setUpdateLog(jsonObject.getString("update_log"))
-                    .setConstraint(jsonObject.getBoolean("constraint"));
-        } catch (JSONException e) {
+            updateAppBean.setUpdate(jsonObject.optString("update"))
+                    .setNewVersion(jsonObject.optString("new_version"))
+                    .setApkFileUrl(jsonObject.optString("apk_file_url"))
+                    .setTargetSize(jsonObject.optString("target_size"))
+                    .setUpdateLog(jsonObject.optString("update_log"))
+                    .setConstraint(jsonObject.optBoolean("constraint"))
+                    .setNewMd5(jsonObject.optString("new_md5"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return updateAppBean;
