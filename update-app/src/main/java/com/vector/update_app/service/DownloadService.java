@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.vector.update_app.HttpManager;
 import com.vector.update_app.R;
 import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.utils.Md5Util;
 import com.vector.update_app.utils.Utils;
 
 import java.io.File;
@@ -80,6 +81,7 @@ public class DownloadService extends Service {
                 .setSmallIcon(R.mipmap.lib_update_app_update_icon)
                 .setLargeIcon(Utils.drawableToBitmap(Utils.getAppIcon(DownloadService.this)))
                 .setOngoing(true)
+                .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis());
         mNotificationManager.notify(NOTIFY_ID, mBuilder.build());
     }
@@ -88,7 +90,7 @@ public class DownloadService extends Service {
      * 下载模块
      */
     private void startDownload(UpdateAppBean updateApp, final DownloadCallback callback) {
-        String apkUrl = updateApp.getApk_file_url();
+        String apkUrl = updateApp.getApkFileUrl();
         if (TextUtils.isEmpty(apkUrl)) {
             String contentText = "新版本下载路径错误";
             stop(contentText);
@@ -106,10 +108,33 @@ public class DownloadService extends Service {
             appDir.mkdirs();
         }
 
-        String target = appDir + File.separator + updateApp.getNew_version();
+        String target = appDir + File.separator + updateApp.getNewVersion();
 
-//        //可以利用md5验证是否重复下载
-        updateApp.getHttpManager().download(apkUrl, target, appName, new FileDownloadCallBack(callback));
+        File appFile = new File(target.concat(File.separator + appName));
+        //有md5值
+        //已下载
+        //并且md5正确
+        if (!TextUtils.isEmpty(updateApp.getNewMd5())
+                && appFile.exists()
+                && Md5Util.getFileMD5(appFile).equals(updateApp.getNewMd5().toLowerCase())) {
+
+            Uri fileUri = FileProvider.getUriForFile(DownloadService.this, getApplicationContext().getPackageName() + ".fileProvider", appFile);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
+            }
+            if (getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+                startActivity(intent);
+            }
+            //安装完自杀
+            close();
+        } else {
+            updateApp.getHttpManager().download(apkUrl, target, appName, new FileDownloadCallBack(callback));
+        }
 
     }
 
@@ -149,8 +174,9 @@ public class DownloadService extends Service {
     public class DownloadBinder extends Binder {
         /**
          * 开始下载
+         *
          * @param updateApp 新app信息
-         * @param callback 下载回调
+         * @param callback  下载回调
          */
         public void start(UpdateAppBean updateApp, DownloadCallback callback) {
             //初始化通知栏
@@ -186,7 +212,9 @@ public class DownloadService extends Service {
                     .setContentText(rate + "%")
                     .setProgress(100, rate, false)
                     .setWhen(System.currentTimeMillis());
-            mNotificationManager.notify(NOTIFY_ID, mBuilder.build());
+            Notification notification = mBuilder.build();
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+            mNotificationManager.notify(NOTIFY_ID, notification);
         }
 
         @Override
@@ -240,9 +268,11 @@ public class DownloadService extends Service {
                         .setContentTitle(Utils.getAppName(DownloadService.this))
                         .setContentText("下载完成，请点击安装")
                         .setProgress(0, 0, false)
-                        .setAutoCancel(true)
+//                        .setAutoCancel(true)
                         .setDefaults((Notification.DEFAULT_ALL));
-                mNotificationManager.notify(NOTIFY_ID, mBuilder.build());
+                Notification notification = mBuilder.build();
+                notification.flags = Notification.FLAG_AUTO_CANCEL;
+                mNotificationManager.notify(NOTIFY_ID, notification);
             }
             //下载完自杀
             close();

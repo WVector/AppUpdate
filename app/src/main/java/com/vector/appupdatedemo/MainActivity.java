@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 //添加自定义参数
                 .setParams(params)
                 //设置头部
-                .setTopPic(R.mipmap.top_4)
+                .setTopPic(R.mipmap.top_8)
                 //设置主题色
 //                .setThemeColor(0xff034ea0)
                 .build()
@@ -246,13 +246,13 @@ public class MainActivity extends AppCompatActivity {
                                     //是否更新Yes,No
                                     .setUpdate(jsonObject.getString("update"))
                                     //新版本号
-                                    .setNew_version(jsonObject.getString("new_version"))
+                                    .setNewVersion(jsonObject.getString("new_version"))
                                     //下载地址
-                                    .setApk_file_url(jsonObject.getString("apk_file_url"))
+                                    .setApkFileUrl(jsonObject.getString("apk_file_url"))
                                     //大小
-                                    .setTarget_size(jsonObject.getString("target_size"))
+                                    .setTargetSize(jsonObject.getString("target_size"))
                                     //更新内容
-                                    .setUpdate_log(jsonObject.getString("update_log"))
+                                    .setUpdateLog(jsonObject.getString("update_log"))
                                     //是否强制更新
                                     .setConstraint(true);
                         } catch (JSONException e) {
@@ -269,6 +269,11 @@ public class MainActivity extends AppCompatActivity {
                      */
                     @Override
                     public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        if (updateApp.isConstraint()) {
+
+                        } else {
+
+                        }
                         updateAppManager.showDialog();
                     }
 
@@ -296,6 +301,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
     }
 }

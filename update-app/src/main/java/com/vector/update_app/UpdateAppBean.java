@@ -81,29 +81,30 @@ public class UpdateAppBean implements Serializable {
         return this;
     }
 
-    public String getNew_version() {
+    public String getNewVersion() {
         return new_version;
     }
 
-    public UpdateAppBean setNew_version(String new_version) {
+    public UpdateAppBean setNewVersion(String new_version) {
         this.new_version = new_version;
         return this;
     }
 
-    public String getApk_file_url() {
+    public String getApkFileUrl() {
         return apk_file_url;
     }
 
-    public UpdateAppBean setApk_file_url(String apk_file_url) {
+
+    public UpdateAppBean setApkFileUrl(String apk_file_url) {
         this.apk_file_url = apk_file_url;
         return this;
     }
 
-    public String getUpdate_log() {
+    public String getUpdateLog() {
         return update_log;
     }
 
-    public UpdateAppBean setUpdate_log(String update_log) {
+    public UpdateAppBean setUpdateLog(String update_log) {
         this.update_log = update_log;
         return this;
     }
@@ -116,19 +117,19 @@ public class UpdateAppBean implements Serializable {
         this.delta = delta;
     }
 
-    public String getNew_md5() {
+    public String getNewMd5() {
         return new_md5;
     }
 
-    public void setNew_md5(String new_md5) {
+    public void setNewMd5(String new_md5) {
         this.new_md5 = new_md5;
     }
 
-    public String getTarget_size() {
+    public String getTargetSize() {
         return target_size;
     }
 
-    public UpdateAppBean setTarget_size(String target_size) {
+    public UpdateAppBean setTargetSize(String target_size) {
         this.target_size = target_size;
         return this;
     }

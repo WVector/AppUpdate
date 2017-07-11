@@ -19,10 +19,10 @@ public abstract class UpdateCallback {
         try {
             JSONObject jsonObject = new JSONObject(json);
             updateAppBean.setUpdate(jsonObject.getString("update"))
-                    .setNew_version(jsonObject.getString("new_version"))
-                    .setApk_file_url(jsonObject.getString("apk_file_url"))
-                    .setTarget_size(jsonObject.getString("target_size"))
-                    .setUpdate_log(jsonObject.getString("update_log"))
+                    .setNewVersion(jsonObject.getString("new_version"))
+                    .setApkFileUrl(jsonObject.getString("apk_file_url"))
+                    .setTargetSize(jsonObject.getString("target_size"))
+                    .setUpdateLog(jsonObject.getString("update_log"))
                     .setConstraint(jsonObject.getBoolean("constraint"));
         } catch (JSONException e) {
             e.printStackTrace();

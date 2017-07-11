@@ -89,9 +89,9 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
         if (mUpdateApp != null) {
             //弹出对话框
-            String newVersion = mUpdateApp.getNew_version();
-            String targetSize = mUpdateApp.getTarget_size();
-            String updateLog = mUpdateApp.getUpdate_log();
+            String newVersion = mUpdateApp.getNewVersion();
+            String targetSize = mUpdateApp.getTargetSize();
+            String updateLog = mUpdateApp.getUpdateLog();
 
             String msg = "";
 
