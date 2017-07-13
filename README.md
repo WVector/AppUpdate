@@ -44,7 +44,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.2.6'
+    compile 'com.qianwen:update-app:3.2.7'
 }
 ```
 
@@ -77,6 +77,8 @@ dependencies {
                 .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
                 //添加自定义参数
                 .setParams(params)
+ 				//设置点击升级后，消失对话框
+                .hideDialogOnDownloading(true)
                 //设置头部
                 .setTopPic(R.mipmap.top_5)
                 //设置主题色
@@ -177,7 +179,9 @@ dependencies {
 
 ```
 
-	3, 服务器app后台管理界面(下次放出服务器的代码)
+	3, 服务器app后台管理界面 
+
+[点击下载后台代码](https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/web/AppVersionManger.rar) 
 
 <img src="https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/image/example_04.png?raw=true" width="1000">
 

@@ -43,6 +43,16 @@ public class UpdateAppBean implements Serializable {
     private HttpManager httpManager;
     //目标地址，内部使用
     private String targetPath;
+    private boolean mHideDialog;
+
+    //是否隐藏对话框下载进度条,内部使用
+    public boolean isHideDialog() {
+        return mHideDialog;
+    }
+
+    public void setHideDialog(boolean hideDialog) {
+        mHideDialog = hideDialog;
+    }
 
     public boolean isUpdate() {
         return !TextUtils.isEmpty(this.update) && "Yes".equals(this.update);

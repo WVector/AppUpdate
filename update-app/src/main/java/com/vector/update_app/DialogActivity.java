@@ -222,6 +222,10 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             onBackPressed();
         } else {
             downloadApp();
+            if (mUpdateApp.isHideDialog()) {
+                onBackPressed();
+            }
+
         }
     }
 

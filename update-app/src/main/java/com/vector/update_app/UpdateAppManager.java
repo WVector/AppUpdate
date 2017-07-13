@@ -36,6 +36,7 @@ public class UpdateAppManager {
     private UpdateAppBean mUpdateApp;
     private String mTargetPath;
     private boolean isPost;
+    private boolean mHideDialog;
     //自定义参数
 
     private UpdateAppManager(Builder builder) {
@@ -50,6 +51,7 @@ public class UpdateAppManager {
         mTargetPath = builder.getTargetPath();
         isPost = builder.isPost();
         mParams = builder.getParams();
+        mHideDialog = builder.isHideDialog();
     }
 
     /**
@@ -71,6 +73,7 @@ public class UpdateAppManager {
             Intent updateIntent = new Intent(mActivity, DialogActivity.class);
             mUpdateApp.setTargetPath(mTargetPath);
             mUpdateApp.setHttpManager(mHttpManager);
+            mUpdateApp.setHideDialog(mHideDialog);
             updateIntent.putExtra(INTENT_KEY, mUpdateApp);
             if (mThemeColor != 0) {
                 updateIntent.putExtra(THEME_KEY, mThemeColor);
@@ -192,6 +195,8 @@ public class UpdateAppManager {
 
         //自定义参数
         private Map<String, String> params;
+        //是否隐藏对话框下载进度条
+        private boolean mHideDialog;
 
         public Map<String, String> getParams() {
             return params;
@@ -297,6 +302,14 @@ public class UpdateAppManager {
             return new UpdateAppManager(this);
         }
 
+        public Builder hideDialogOnDownloading(boolean b) {
+            mHideDialog = b;
+            return this;
+        }
+
+        public boolean isHideDialog() {
+            return mHideDialog;
+        }
     }
 
 }
