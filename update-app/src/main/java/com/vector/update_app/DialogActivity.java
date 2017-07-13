@@ -206,8 +206,6 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         if (!TextUtils.isEmpty(mUpdateApp.getNewMd5())
                 && appFile.exists()
                 && Md5Util.getFileMD5(appFile).equalsIgnoreCase(mUpdateApp.getNewMd5())) {
-
-
             Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".fileProvider", appFile);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

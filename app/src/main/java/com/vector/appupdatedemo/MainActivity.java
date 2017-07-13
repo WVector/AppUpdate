@@ -251,10 +251,15 @@ public class MainActivity extends AppCompatActivity {
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
                                     //大小
                                     .setTargetSize(jsonObject.optString("target_size"))
-                                    //更新内容
-                                    .setUpdateLog(jsonObject.optString("update_log"))
+                                    //更新内容 测试更新内容过多
+                                    .setUpdateLog("1，添加删除信用卡接口\n2，添加vip认证\n3，区分自定义消费，一个小时不限制。\n4，添加放弃任务接口，小时内不生成。\n5，消费任务手动生成。" +
+                                            "1，添加删除信用卡接口\n2，添加vip认证\n3，区分自定义消费，一个小时不限制。\n4，添加放弃任务接口，小时内不生成。\n5，消费任务手动生成。" +
+                                            "1，添加删除信用卡接口\n2，添加vip认证\n3，区分自定义消费，一个小时不限制。\n4，添加放弃任务接口，小时内不生成。\n5，消费任务手动生成。" +
+                                            "1，添加删除信用卡接口\n2，添加vip认证\n3，区分自定义消费，一个小时不限制。\n4，添加放弃任务接口，小时内不生成。\n5，消费任务手动生成。" +
+                                            "1，添加删除信用卡接口\n2，添加vip认证\n3，区分自定义消费，一个小时不限制。\n4，添加放弃任务接口，小时内不生成。\n5，消费任务手动生成。" +
+                                            "1，添加删除信用卡接口\n2，添加vip认证\n3，区分自定义消费，一个小时不限制。\n4，添加放弃任务接口，小时内不生成。\n5，消费任务手动生成。")
                                     //是否强制更新
-                                    .setConstraint(true);
+                                    .setConstraint(false);
                             //设置md5
 //                                    .setNewMd5(jsonObject.optString("new_md5ddfdfdf"));
                         } catch (JSONException e) {

@@ -34,15 +34,22 @@
                 android:textColor="@android:color/black"
                 android:textSize="15sp"/>
 
-            <TextView
-                android:id="@+id/tv_update_info"
+            <com.vector.update_app.view.AutoScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="1，xxxxxxxx\n2，ooooooooo"
-                android:textColor="#666"
-                android:textSize="14sp"/>
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/tv_update_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1，xxxxxxxx\n2，ooooooooo"
+                    android:textColor="#666"
+                    android:textSize="14sp"/>
+            </com.vector.update_app.view.AutoScrollView>
+
 
             <Button
                 android:id="@+id/btn_ok"
