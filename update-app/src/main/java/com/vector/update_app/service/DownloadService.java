@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
@@ -131,9 +132,9 @@ public class DownloadService extends Service {
     public interface DownloadCallback {
         void onStart();
 
-        void onProgress(float progress);
+        void onProgress(long progress);
 
-        void setMax(float total);
+        void setMax(long total);
 
         void onFinish();
 
@@ -163,7 +164,7 @@ public class DownloadService extends Service {
     class FileDownloadCallBack implements HttpManager.FileCallback {
         private final DownloadCallback mCallBack;
 
-        public FileDownloadCallBack(DownloadCallback callback) {
+        public FileDownloadCallBack(@Nullable DownloadCallback callback) {
             super();
             this.mCallBack = callback;
         }
@@ -180,7 +181,7 @@ public class DownloadService extends Service {
             int rate = Math.round(progress * 100);
             if (mCallBack != null) {
                 mCallBack.setMax(total);
-                mCallBack.onProgress(progress * total);
+                mCallBack.onProgress((long) (progress * total));
             }
             mBuilder.setContentTitle("正在下载：" + Utils.getAppName(DownloadService.this))
                     .setContentText(rate + "%")

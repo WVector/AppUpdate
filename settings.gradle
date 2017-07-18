@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':update-app-kotlin'
 include ':update-app'

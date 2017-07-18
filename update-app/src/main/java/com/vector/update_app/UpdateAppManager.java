@@ -1,10 +1,14 @@
 package com.vector.update_app;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Environment;
+import android.os.IBinder;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -88,6 +92,13 @@ public class UpdateAppManager {
     }
 
     /**
+     * 最简方式
+     */
+    public void update() {
+        checkNewApp(new UpdateCallback());
+    }
+
+    /**
      * 检测是否有新版本
      *
      * @param callback 更新回调
@@ -103,8 +114,8 @@ public class UpdateAppManager {
             Toast.makeText(mActivity, "app正在更新", Toast.LENGTH_SHORT).show();
             return;
         }
-        //拼接参数
 
+        //拼接参数
         Map<String, String> params = new HashMap<String, String>();
 
         params.put("appKey", mAppKey);
@@ -117,6 +128,8 @@ public class UpdateAppManager {
 
         //添加自定义参数，其实可以实现HttManager中添加
         if (mParams != null && !mParams.isEmpty()) {
+            //清空，那就使用自定参数
+            params.clear();
             params.putAll(mParams);
         }
 
@@ -156,6 +169,36 @@ public class UpdateAppManager {
         }
     }
 
+    /**
+     * 后台下载
+     *
+     * @param downloadCallback 后台下载回调
+     */
+    public void download(@Nullable final DownloadService.DownloadCallback downloadCallback) {
+        if (mUpdateApp == null) {
+            throw new NullPointerException("updateApp 不能为空");
+        }
+        mUpdateApp.setTargetPath(mTargetPath);
+        mUpdateApp.setHttpManager(mHttpManager);
+        DownloadService.bindService(mActivity.getApplicationContext(), new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                ((DownloadService.DownloadBinder) service).start(mUpdateApp, downloadCallback);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        });
+    }
+
+    /**
+     * 后台下载
+     */
+    public void download() {
+        download(null);
+    }
 
     /**
      * 解析
@@ -185,23 +228,33 @@ public class UpdateAppManager {
         //必须有
         private String mUpdateUrl;
 
+        //1，设置按钮，进度条的颜色
         private int mThemeColor = 0;
+        //2，顶部的图片
         private
         @DrawableRes
         int mTopPic = 0;
+        //3,唯一的appkey
         private String mAppKey;
+        //4,apk的下载路径
         private String mTargetPath;
+        //5,是否是post请求，默认是get
         private boolean isPost;
-
-        //自定义参数
+        //6,自定义参数
         private Map<String, String> params;
-        //是否隐藏对话框下载进度条
+        //7,是否隐藏对话框下载进度条
         private boolean mHideDialog;
 
         public Map<String, String> getParams() {
             return params;
         }
 
+        /**
+         * 自定义请求参数
+         *
+         * @param params 自定义请求参数
+         * @return Builder
+         */
         public Builder setParams(Map<String, String> params) {
             this.params = params;
             return this;
@@ -211,6 +264,12 @@ public class UpdateAppManager {
             return isPost;
         }
 
+        /**
+         * 是否是post请求，默认是get
+         *
+         * @param post 是否是post请求，默认是get
+         * @return Builder
+         */
         public Builder setPost(boolean post) {
             isPost = post;
             return this;
@@ -220,6 +279,12 @@ public class UpdateAppManager {
             return mTargetPath;
         }
 
+        /**
+         * apk的下载路径，
+         *
+         * @param targetPath apk的下载路径，
+         * @return Builder
+         */
         public Builder setTargetPath(String targetPath) {
             mTargetPath = targetPath;
             return this;
@@ -229,6 +294,12 @@ public class UpdateAppManager {
             return mAppKey;
         }
 
+        /**
+         * 唯一的appkey
+         *
+         * @param appKey 唯一的appkey
+         * @return Builder
+         */
         public Builder setAppKey(String appKey) {
             mAppKey = appKey;
             return this;
@@ -238,6 +309,12 @@ public class UpdateAppManager {
             return mActivity;
         }
 
+        /**
+         * 是否是post请求，默认是get
+         *
+         * @param activity 当前提示的Activity
+         * @return Builder
+         */
         public Builder setActivity(Activity activity) {
             mActivity = activity;
             return this;
@@ -247,6 +324,12 @@ public class UpdateAppManager {
             return mHttpManager;
         }
 
+        /**
+         * 设置网络工具
+         *
+         * @param httpManager 自己实现的网络对象
+         * @return Builder
+         */
         public Builder setHttpManager(HttpManager httpManager) {
             mHttpManager = httpManager;
             return this;
@@ -256,6 +339,12 @@ public class UpdateAppManager {
             return mUpdateUrl;
         }
 
+        /**
+         * 更新地址
+         *
+         * @param updateUrl 更新地址
+         * @return Builder
+         */
         public Builder setUpdateUrl(String updateUrl) {
             mUpdateUrl = updateUrl;
             return this;
@@ -265,6 +354,12 @@ public class UpdateAppManager {
             return mThemeColor;
         }
 
+        /**
+         * 设置按钮，进度条的颜色
+         *
+         * @param themeColor 设置按钮，进度条的颜色
+         * @return Builder
+         */
         public Builder setThemeColor(int themeColor) {
             mThemeColor = themeColor;
             return this;
@@ -274,6 +369,12 @@ public class UpdateAppManager {
             return mTopPic;
         }
 
+        /**
+         * 顶部的图片
+         *
+         * @param topPic 顶部的图片
+         * @return Builder
+         */
         public Builder setTopPic(int topPic) {
             mTopPic = topPic;
             return this;
@@ -294,7 +395,6 @@ public class UpdateAppManager {
             if (TextUtils.isEmpty(getAppKey())) {
                 String appKey = Utils.getManifestString(getActivity(), UPDATE_APP_KEY);
                 if (TextUtils.isEmpty(appKey)) {
-//                    throw new NullPointerException("appKey 为空");
                 } else {
                     setAppKey(appKey);
                 }
@@ -302,6 +402,12 @@ public class UpdateAppManager {
             return new UpdateAppManager(this);
         }
 
+        /**
+         * 是否隐藏对话框下载进度条
+         *
+         * @param b 是否隐藏对话框下载进度条
+         * @return Builder
+         */
         public Builder hideDialogOnDownloading(boolean b) {
             mHideDialog = b;
             return this;

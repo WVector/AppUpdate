@@ -254,14 +254,14 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
                 }
 
                 @Override
-                public void onProgress(float progress) {
+                public void onProgress(long progress) {
                     if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setProgress((int) progress);
                     }
                 }
 
                 @Override
-                public void setMax(float total) {
+                public void setMax(long total) {
                     if (!DialogActivity.this.isFinishing()) {
                         mNumberProgressBar.setMax((int) total);
                     }

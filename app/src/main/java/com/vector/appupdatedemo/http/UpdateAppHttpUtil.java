@@ -1,4 +1,4 @@
-package com.vector.appupdatedemo;
+package com.vector.appupdatedemo.http;
 
 import android.support.annotation.NonNull;
 
@@ -19,7 +19,7 @@ import okhttp3.Response;
  * on 2017/6/19 0019.
  */
 
-class UpdateAppHttpUtil implements HttpManager {
+public class UpdateAppHttpUtil implements HttpManager {
     /**
      * 异步get
      *

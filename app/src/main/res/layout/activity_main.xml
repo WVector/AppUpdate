@@ -4,71 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
     android:orientation="vertical"
-    tools:context="com.vector.appupdatedemo.MainActivity">
+    tools:context="com.vector.appupdatedemo.ui.MainActivity">
 
     <Button
-        android:id="@+id/btn_get_permission"
+        android:id="@+id/btn_java"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:onClick="getPermission"
-        android:text="获取权限"
+        android:onClick="updateJava"
+        android:text="java用法"
         />
 
     <Button
-        android:id="@+id/btn_update_app"
+        android:id="@+id/btn_kotlin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:onClick="updateApp"
-        android:text="更新App(默认)"
+        android:onClick="updateKotlin"
+        android:text="kotlin用法"
         />
-
-    <Button
-        android:id="@+id/btn_update_app_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="updateApp2"
-        android:text="更新App(颜色e939dc)"
-        />
-
-    <Button
-        android:id="@+id/btn_update_app_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="updateApp3"
-        android:text="更新App(颜色39c1e9)"
-        />
-
-    <Button
-        android:id="@+id/btn_update_app_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="updateApp4"
-        android:text="自定义接口协议"
-        />
-
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="test"
-        android:text="测试"
-        android:visibility="gone"
-        />
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

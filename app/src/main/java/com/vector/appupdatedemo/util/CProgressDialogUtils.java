@@ -1,4 +1,4 @@
-package com.vector.appupdatedemo;
+package com.vector.appupdatedemo.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
