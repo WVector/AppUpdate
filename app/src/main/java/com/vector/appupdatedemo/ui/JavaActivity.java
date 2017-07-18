@@ -39,6 +39,7 @@ public class JavaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_java);
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_2));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_3));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default), 0xffe94339);
 
     }
@@ -92,7 +93,7 @@ public class JavaActivity extends AppCompatActivity {
                 //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
                 .setParams(params)
                 //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
-                .hideDialogOnDownloading(true)
+                .hideDialogOnDownloading(false)
                 //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
                 .setTopPic(R.mipmap.top_8)
                 //为按钮，进度条设置颜色，默认从顶部图片自动识别。
@@ -271,12 +272,6 @@ public class JavaActivity extends AppCompatActivity {
                 .setPost(false)
                 //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
                 .setParams(params)
-                //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
-                .hideDialogOnDownloading(true)
-                //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
-                .setTopPic(R.mipmap.top_8)
-                //为按钮，进度条设置颜色，默认从顶部图片自动识别。
-//                .setThemeColor(ColorUtil.getRandomColor())
                 //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
                 .setTargetPath(path)
                 //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
