@@ -89,7 +89,6 @@ public class UpdateAppHttpUtil implements HttpManager {
                 .execute(new FileCallBack(path, fileName) {
                     @Override
                     public void inProgress(float progress, long total, int id) {
-                        super.inProgress(progress, total, id);
                         callback.onProgress(progress, total);
                     }
 

@@ -199,8 +199,8 @@ public class JavaActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onProgress(long progress) {
-                                    HProgressDialogUtils.setProgress(progress);
+                                public void onProgress(float progress, long totalSize) {
+                                    HProgressDialogUtils.setProgress((long) (progress * totalSize));
                                 }
 
                                 @Override

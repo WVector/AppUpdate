@@ -130,14 +130,36 @@ public class DownloadService extends Service {
      * 进度条回调接口
      */
     public interface DownloadCallback {
+        /**
+         * 开始
+         */
         void onStart();
 
-        void onProgress(long progress);
+        /**
+         * 进度
+         *
+         * @param progress  进度 0.00 -1.00 ，总大小
+         * @param totalSize 总大小 单位B
+         */
+        void onProgress(float progress, long totalSize);
 
-        void setMax(long total);
+        /**
+         * 总大小
+         *
+         * @param totalSize 单位B
+         */
+        void setMax(long totalSize);
 
+        /**
+         * 下载完
+         */
         void onFinish();
 
+        /**
+         * 下载异常
+         *
+         * @param msg 异常信息
+         */
         void onError(String msg);
     }
 
@@ -181,7 +203,7 @@ public class DownloadService extends Service {
             int rate = Math.round(progress * 100);
             if (mCallBack != null) {
                 mCallBack.setMax(total);
-                mCallBack.onProgress((long) (progress * total));
+                mCallBack.onProgress(progress, total);
             }
             mBuilder.setContentTitle("正在下载：" + Utils.getAppName(DownloadService.this))
                     .setContentText(rate + "%")
