@@ -267,6 +267,11 @@ public class UpdateAppManager {
             mUpdateApp = callback.parseJson(result);
             if (mUpdateApp.isUpdate()) {
                 callback.hasNewApp(mUpdateApp, this);
+                //假如是静默下载，可能需要判断，
+                // 是否wifi,
+                //是否已经下载，如果已经下载直接提示安装
+                //没有则进行下载，监听下载完成，弹出安装对话框
+
             } else {
                 callback.noNewApp();
             }
