@@ -7,13 +7,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.Uri;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -36,7 +33,7 @@ public class DownloadService extends Service {
     private NotificationManager mNotificationManager;
     private DownloadBinder binder = new DownloadBinder();
     private NotificationCompat.Builder mBuilder;
-//    /**
+    //    /**
 //     * 开启服务方法
 //     *
 //     * @param context
@@ -45,7 +42,7 @@ public class DownloadService extends Service {
 //        Intent intent = new Intent(context, DownloadService.class);
 //        context.startService(intent);
 //    }
-private boolean mDismissNotificationProgress = false;
+    private boolean mDismissNotificationProgress = false;
 
     public static void bindService(Context context, ServiceConnection connection) {
         Intent intent = new Intent(context, DownloadService.class);
@@ -229,7 +226,6 @@ private boolean mDismissNotificationProgress = false;
                     mNotificationManager.notify(NOTIFY_ID, notification);
                 }
 
-
                 //重新赋值
                 oldRate = rate;
             }
@@ -258,33 +254,15 @@ private boolean mDismissNotificationProgress = false;
                 mCallBack.onFinish();
             }
 
-            Uri fileUri = FileProvider.getUriForFile(DownloadService.this, getApplicationContext().getPackageName() + ".fileProvider", file);
             if (Utils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
-
                 //App前台运行
                 mNotificationManager.cancel(NOTIFY_ID);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
-                } else {
-                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                }
-                if (getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
-                    startActivity(intent);
-                }
+                Utils.installApp(DownloadService.this, file);
             } else {
                 //App后台运行
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
-                } else {
-                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                }
                 //更新参数,注意flags要使用FLAG_UPDATE_CURRENT
-                PendingIntent contentIntent = PendingIntent.getActivity(DownloadService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent installAppIntent = Utils.getInstallAppIntent(DownloadService.this, file);
+                PendingIntent contentIntent = PendingIntent.getActivity(DownloadService.this, 0, installAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 mBuilder.setContentIntent(contentIntent)
                         .setContentTitle(Utils.getAppName(DownloadService.this))
                         .setContentText("下载完成，请点击安装")

@@ -2,6 +2,7 @@ package com.vector.update_app.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -10,8 +11,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import com.vector.update_app.UpdateAppBean;
+
+import java.io.File;
 import java.util.List;
 
 /**
@@ -21,8 +29,65 @@ import java.util.List;
 
 public class Utils {
 
+
     public static final String IGNORE_VERSION = "ignore_version";
     private static final String PREFS_FILE = "update_app_config.xml";
+
+    public static File getAppFile(UpdateAppBean updateAppBean) {
+        String apkUrl = updateAppBean.getApkFileUrl();
+        final String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1, apkUrl.length());
+        return new File(updateAppBean.getTargetPath()
+                .concat(File.separator + updateAppBean.getNewVersion())
+                .concat(File.separator + appName));
+    }
+
+    public static boolean appIsDownloaded(UpdateAppBean updateAppBean) {
+        //md5不为空
+        //文件存在
+        //md5只一样
+        File appFile = getAppFile(updateAppBean);
+        return !TextUtils.isEmpty(updateAppBean.getNewMd5())
+                && appFile.exists()
+                && Md5Util.getFileMD5(appFile).equalsIgnoreCase(updateAppBean.getNewMd5());
+    }
+
+    public static boolean installApp(Context context, File appFile) {
+        try {
+            Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", appFile);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
+            }
+            if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+                context.startActivity(intent);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static Intent getInstallAppIntent(Context context, File appFile) {
+        try {
+            Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", appFile);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
+            }
+            return intent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static String getVersionName(Context context) {
         PackageInfo packageInfo = getPackageInfo(context);

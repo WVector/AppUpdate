@@ -4,13 +4,10 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,11 +19,8 @@ import android.widget.TextView;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.ColorUtil;
 import com.vector.update_app.utils.DrawableUtil;
-import com.vector.update_app.utils.Md5Util;
 import com.vector.update_app.utils.Utils;
 import com.vector.update_app.view.NumberProgressBar;
-
-import java.io.File;
 
 /**
  * 新版本提交对话框
@@ -206,29 +200,8 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     }
 
     private void installApp() {
-        String apkUrl = mUpdateApp.getApkFileUrl();
-        final String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1, apkUrl.length());
-        File appFile = new File(mUpdateApp.getTargetPath()
-                .concat(File.separator + mUpdateApp.getNewVersion())
-                .concat(File.separator + appName));
-        //md5不为空
-        //文件存在
-        //md5只一样
-        if (!TextUtils.isEmpty(mUpdateApp.getNewMd5())
-                && appFile.exists()
-                && Md5Util.getFileMD5(appFile).equalsIgnoreCase(mUpdateApp.getNewMd5())) {
-            Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".fileProvider", appFile);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
-            } else {
-                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
-            }
-            if (getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
-                startActivity(intent);
-            }
+        if (Utils.appIsDownloaded(mUpdateApp)) {
+            Utils.installApp(this, Utils.getAppFile(mUpdateApp));
             //安装完自杀
             onBackPressed();
         } else {
