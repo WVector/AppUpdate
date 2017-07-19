@@ -16,14 +16,15 @@ public class HProgressDialogUtils {
     }
 
     @SuppressLint("NewApi")
-    public static void showHorizontalProgressDialog(Activity context, String msg) {
+    public static void showHorizontalProgressDialog(Activity context, String msg, boolean isShowSize) {
         cancel();
 
         if (sHorizontalProgressDialog == null) {
             sHorizontalProgressDialog = new ProgressDialog(context);
             sHorizontalProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             sHorizontalProgressDialog.setCanceledOnTouchOutside(false);
-            sHorizontalProgressDialog.setProgressNumberFormat("%2dMB/%1dMB");
+            if (isShowSize)
+                sHorizontalProgressDialog.setProgressNumberFormat("%2dMB/%1dMB");
 
         }
         if (!TextUtils.isEmpty(msg)) {
@@ -41,6 +42,17 @@ public class HProgressDialogUtils {
 
     public static void cancel() {
         if (sHorizontalProgressDialog != null) {
+            sHorizontalProgressDialog.dismiss();
+            sHorizontalProgressDialog = null;
+        }
+    }
+
+    public static void setProgress(int current) {
+        if (sHorizontalProgressDialog == null) {
+            return;
+        }
+        sHorizontalProgressDialog.setProgress(current);
+        if (sHorizontalProgressDialog.getProgress() >= sHorizontalProgressDialog.getMax()) {
             sHorizontalProgressDialog.dismiss();
             sHorizontalProgressDialog = null;
         }

@@ -63,7 +63,7 @@ public class JavaActivity extends AppCompatActivity {
     }
 
     /**
-     * 自定义
+     * 自定义接口协议
      *
      * @param view
      */
@@ -196,17 +196,26 @@ public class JavaActivity extends AppCompatActivity {
                             updateAppManager.download(new DownloadService.DownloadCallback() {
                                 @Override
                                 public void onStart() {
-                                    HProgressDialogUtils.showHorizontalProgressDialog(JavaActivity.this, "下载进度");
+                                    HProgressDialogUtils.showHorizontalProgressDialog(JavaActivity.this, "下载进度", false);
                                 }
 
+                                /**
+                                 * 进度
+                                 *
+                                 * @param progress  进度 0.00 -1.00 ，总大小
+                                 * @param totalSize 总大小 单位B
+                                 */
                                 @Override
                                 public void onProgress(float progress, long totalSize) {
-                                    HProgressDialogUtils.setProgress((long) (progress * totalSize));
+                                    HProgressDialogUtils.setProgress(Math.round(progress * 100));
                                 }
 
+                                /**
+                                 *
+                                 * @param total 总大小 单位B
+                                 */
                                 @Override
                                 public void setMax(long total) {
-                                    HProgressDialogUtils.setMax(total);
 
                                 }
 
@@ -241,6 +250,11 @@ public class JavaActivity extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * 自定义接口协议+自定义对话框
+     *
+     * @param view
+     */
     public void updateDiy2(View view) {
         //不显示下载进度
         isShowDownloadProgress = false;
@@ -356,9 +370,13 @@ public class JavaActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * 自定义接口协议+自定义对话框+显示进度对话框
+     *
+     * @param view
+     */
     public void updateDiy3(View view) {
 //        显示下载进度
-
         isShowDownloadProgress = true;
         diyUpdate();
 

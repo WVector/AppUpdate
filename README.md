@@ -6,20 +6,23 @@
 * [功能介绍](#功能介绍)
 * [效果图与示例 apk](#效果图与示例-apk)
 * [Gradle 依赖](#Gradle依赖)
-* [自定义接口协议](#自定义接口协议)
+* [简单实例](#简单实例)
+* [自定义](#自定义)
 * [使用默认的接口协议](#使用默认的接口协议)
 * [License](#license)
 
 ## 功能介绍
 
-- [x] 实现app版本更新
+- [x] 实现android版本更新
+- [x] 对kotlin适配，调用更简单
 - [x] 自定义接口协议，可以不改变现有项目的协议就能使用
 - [x] 支持get,post请求
 - [x] 支持进度显示，对话框进度条，和通知栏进度条展示
 - [x] 支持后台下载
 - [x] 支持强制更新
 - [x] 支持简单主题色配置(可以自动从顶部图片提取主色)
-- [x] 完美支持android7.0
+- [x] 支持自定义对话框（可以监听下载进度）
+- [x] 支持android7.0
 
 ## 效果图与示例 apk
 
@@ -44,45 +47,79 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.2.7'
+    compile 'com.qianwen:update-app:3.2.9'
 }
 ```
 
-[![Download](https://api.bintray.com/packages/qianwen/maven/update-app/images/download.svg) ](https://bintray.com/qianwen/maven/update-app/_latestVersion) [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Download](https://api.bintray.com/packages/qianwen/maven/update-app/images/download.svg) ](https://bintray.com/qianwen/maven/update-app/_latestVersion) [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![GitHub stars](https://img.shields.io/github/stars/WVector/AppUpdate.svg?style=plastic&label=Star) ](https://github.com/WVector/AppUpdate)
 
-
-## 自定义接口协议
-
-自定义接口协议，根据自己项目的接口，自己实现 parseJson 方法
+## 简单实例
 
 ```java
 
-        Map<String, String> params = new HashMap<String, String>();
+1,java
 
-        params.put("key1", "value1");
-        params.put("key2", "value2");
-        params.put("key3", "value3");
-        params.put("key4", "value4");
-
-
-        new UpdateAppManager
+	//最简方式
+	new UpdateAppManager
                 .Builder()
                 //当前Activity
                 .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl)
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
-                //设置请求方式 默认get,
+                .build()
+                .update();
+
+2,kotlin
+
+	updateApp(mUpdateUrl, UpdateAppHttpUtil()).update()
+
+```
+
+
+
+
+## 自定义
+
+1，自定义接口协议，根据自己项目的接口，自己实现 parseJson 方法
+
+```java
+
+ 		String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("appKey", "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f");
+        params.put("appVersion", Utils.getVersionName(this));
+        params.put("key1", "value2");
+        params.put("key2", "value3");
+
+        new UpdateAppManager
+                .Builder()
+                //必须设置，当前Activity
+                .setActivity(this)
+                //必须设置，实现httpManager接口的对象
+                .setHttpManager(new OkGoUpdateHttpUtil())
+                //必须设置，更新地址
+                .setUpdateUrl(mUpdateUrl)
+
+                //以下设置，都是可选
+                //设置请求方式，默认get
                 .setPost(false)
-                //更新地址
-                .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt")
-                //添加自定义参数
+                //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
                 .setParams(params)
- 				//设置点击升级后，消失对话框
-                .hideDialogOnDownloading(true)
-                //设置头部
-                .setTopPic(R.mipmap.top_5)
-                //设置主题色
-                .setThemeColor(0xff034ea0)
+                //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
+                .hideDialogOnDownloading(false)
+                //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
+                .setTopPic(R.mipmap.top_8)
+                //为按钮，进度条设置颜色，默认从顶部图片自动识别。
+                //.setThemeColor(ColorUtil.getRandomColor())
+                //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
+                .setTargetPath(path)
+                //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
+                //.setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
+
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {
@@ -98,18 +135,20 @@ dependencies {
                         try {
                             JSONObject jsonObject = new JSONObject(json);
                             updateAppBean
-                                    //是否更新Yes,No
-                                    .setUpdate(jsonObject.getString("update"))
-                                    //新版本号
-                                    .setNew_version(jsonObject.getString("new_version"))
-                                    //下载地址
-                                    .setApk_file_url(jsonObject.getString("apk_file_url"))
-                                    //大小
-                                    .setTarget_size(jsonObject.getString("target_size"))
-                                    //更新内容
-                                    .setUpdate_log(jsonObject.getString("update_log"))
-                                    //是否强制更新
-                                    .setConstraint(jsonObject.getBoolean("constraint"));
+                                    //（必须）是否更新Yes,No
+                                    .setUpdate(jsonObject.optString("update"))
+                                    //（必须）新版本号，
+                                    .setNewVersion(jsonObject.optString("new_version"))
+                                    //（必须）下载地址
+                                    .setApkFileUrl(jsonObject.optString("apk_file_url"))
+                                    //（必须）更新内容
+                                    .setUpdateLog(jsonObject.optString("update_log"))
+                                    //大小，不设置不显示大小，可以不设置
+                                    .setTargetSize(jsonObject.optString("target_size"))
+                                    //是否强制更新，可以不设置
+                                    .setConstraint(false)
+                                    //设置md5，可以不设置
+                                    .setNewMd5(jsonObject.optString("new_md51"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -117,22 +156,11 @@ dependencies {
                     }
 
                     /**
-                     * 有新版本
-                     *
-                     * @param updateApp        新版本信息
-                     * @param updateAppManager app更新管理器
-                     */
-                    @Override
-                    public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-                        updateAppManager.showDialog();
-                    }
-
-                    /**
                      * 网络请求之前
                      */
                     @Override
                     public void onBefore() {
-                        CProgressDialogUtils.showProgressDialog(MainActivity.this);
+                        CProgressDialogUtils.showProgressDialog(JavaActivity.this);
                     }
 
                     /**
@@ -140,7 +168,7 @@ dependencies {
                      */
                     @Override
                     public void onAfter() {
-                        CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+                        CProgressDialogUtils.cancelProgressDialog(JavaActivity.this);
                     }
 
                     /**
@@ -148,10 +176,120 @@ dependencies {
                      */
                     @Override
                     public void noNewApp() {
-                        Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JavaActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
 
+
+```
+
+2，自定义接口协议+自定义对话框+显示下载进度对话框
+
+```java
+
+			其他代码和上面一样，只需重写UpdateCallback 的 hasNewApp方法，然后调用自己的对话框
+
+				/**
+             * 有新版本
+             *
+             * @param updateApp        新版本信息
+             * @param updateAppManager app更新管理器
+             */
+            @Override
+            public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                //自定义对话框
+                showDiyDialog(updateApp, updateAppManager);
+            }
+
+
+
+
+
+		下面是简单的对话框，新版本信息从  updateApp 对象获取，updateAppManager 可以控制后台开始下载，也可以监听下载进度。
+
+	    /**
+	     * 自定义对话框
+	     *
+	     * @param updateApp
+	     * @param updateAppManager
+	     */
+	    private void showDiyDialog(final UpdateAppBean updateApp, final UpdateAppManager updateAppManager) {
+	        String targetSize = updateApp.getTargetSize();
+	        String updateLog = updateApp.getUpdateLog();
+	
+	        String msg = "";
+	
+	        if (!TextUtils.isEmpty(targetSize)) {
+	            msg = "新版本大小：" + targetSize + "\n\n";
+	        }
+	
+	        if (!TextUtils.isEmpty(updateLog)) {
+	            msg += updateLog;
+	        }
+	
+	        new AlertDialog.Builder(this)
+	                .setTitle(String.format("是否升级到%s版本？", updateApp.getNewVersion()))
+	                .setMessage(msg)
+	                .setPositiveButton("升级", new DialogInterface.OnClickListener() {
+	                    @Override
+	                    public void onClick(DialogInterface dialog, int which) {
+	                        //显示下载进度
+	                        if (isShowDownloadProgress) {
+	                            updateAppManager.download(new DownloadService.DownloadCallback() {
+	                                @Override
+	                                public void onStart() {
+	                                    HProgressDialogUtils.showHorizontalProgressDialog(JavaActivity.this, "下载进度", false);
+	                                }
+	
+	                                /**
+	                                 * 进度
+	                                 * @param progress  进度 0.00 -1.00 ，总大小
+	                                 * @param totalSize 总大小 单位B
+	                                 */
+	                                @Override
+	                                public void onProgress(float progress, long totalSize) {
+	                                    HProgressDialogUtils.setProgress(Math.round(progress * 100));
+	                                }
+	
+	                                /**
+	                                 *
+	                                 * @param total 总大小 单位B
+	                                 */
+	                                @Override
+	                                public void setMax(long total) {
+	
+	                                }
+	
+	                                @Override
+	                                public void onFinish() {
+	                                    HProgressDialogUtils.cancel();
+	                                }
+	
+	                                @Override
+	                                public void onError(String msg) {
+	                                    Toast.makeText(JavaActivity.this, msg, Toast.LENGTH_SHORT).show();
+	                                    HProgressDialogUtils.cancel();
+	
+	                                }
+	                            });
+	                        } else {
+	                            //不显示下载进度
+	                            updateAppManager.download();
+	                        }
+	
+	
+	                        dialog.dismiss();
+	                    }
+	                })
+	                .setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {
+	                    @Override
+	                    public void onClick(DialogInterface dialog, int which) {
+	                        dialog.dismiss();
+	                    }
+	                })
+	                .create()
+	                .show();
+	    }
 
 ```
 
@@ -161,6 +299,9 @@ dependencies {
 ### 接口说明
 
 #### 1，和服务器交互请求参数
+
+	例如：https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt?appKey=ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f&version=0.1.0 
+
 	1,appkey app的唯一标志
 	appkey可以在manifest文件中配置，也可以在代码中添加
 	xml配置如下：
@@ -319,53 +460,17 @@ dependencies {
 
 ```java
 
-	String updateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
+	//最简方式
 	new UpdateAppManager
-	        .Builder()
-	        //当前Activity
-	        .setActivity(this)
-	        //实现httpManager接口的对象
-	        .setHttpManager(new UpdateAppHttpUtil())
-	        //更新地址
-	        .setUpdateUrl(updateUrl)
-	        .build()
-	        //检测是否有新版本
-	        .checkNewApp(new UpdateCallback() {
-	            /**
-	             * 有新版本
-	             * @param updateApp 新版本信息
-	             * @param updateAppManager app更新管理器
-	             */
-	            @Override
-	            public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-	                updateAppManager.showDialog();
-	            }
-	
-	            /**
-	             * 网络请求之前
-	             */
-	            @Override
-	            public void onBefore() {
-	                CProgressDialogUtils.showProgressDialog(MainActivity.this);
-	            }
-	
-	            /**
-	             * 网路请求之后
-	             */
-	            @Override
-	            public void onAfter() {
-	                CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
-	            }
-	
-	            /**
-	             * 没有新版本
-	             */
-	
-	            @Override
-	            public void noNewApp() {
-	                Toast.makeText(MainActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
-	            }
-	        });
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .build()
+                .update();
 
    	            
 ```

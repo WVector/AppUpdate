@@ -13,13 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="更新（默认方式）"/>
+        android:onClick="updateApp"
+        android:text="更新App(默认)"
+        />
 
     <Button
         android:id="@+id/btn_diy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="更新（自定义）"/>
+        android:onClick="updateDiy"
+        android:text="自定义接口协议"
+        />
+
+    <Button
+        android:id="@+id/btn_diy_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="updateDiy2"
+        android:text="自定义接口协议+自定义对话框"
+        />
+
+    <Button
+        android:id="@+id/btn_diy_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="updateDiy3"
+        android:text="自定义接口协议+自定义对话框+显示进度对话框"
+        />
 
 </LinearLayout>
