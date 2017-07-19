@@ -44,6 +44,8 @@ public class UpdateAppBean implements Serializable {
     //目标地址，内部使用
     private String targetPath;
     private boolean mHideDialog;
+    private boolean mShowIgnoreVersion;
+    private boolean mDismissNotificationProgress;
 
     //是否隐藏对话框下载进度条,内部使用
     public boolean isHideDialog() {
@@ -144,5 +146,21 @@ public class UpdateAppBean implements Serializable {
     public UpdateAppBean setTargetSize(String target_size) {
         this.target_size = target_size;
         return this;
+    }
+
+    public boolean isShowIgnoreVersion() {
+        return mShowIgnoreVersion;
+    }
+
+    public void showIgnoreVersion(boolean showIgnoreVersion) {
+        mShowIgnoreVersion = showIgnoreVersion;
+    }
+
+    public void dismissNotificationProgress(boolean dismissNotificationProgress) {
+        mDismissNotificationProgress = dismissNotificationProgress;
+    }
+
+    public boolean isDismissNotificationProgress() {
+        return mDismissNotificationProgress;
     }
 }

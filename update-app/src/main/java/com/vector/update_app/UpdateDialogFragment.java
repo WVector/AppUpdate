@@ -1,6 +1,7 @@
 package com.vector.update_app;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
@@ -9,11 +10,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,11 +34,11 @@ import com.vector.update_app.view.NumberProgressBar;
 import java.io.File;
 
 /**
- * 新版本提交对话框
+ * Created by Vector
+ * on 2017/7/19 0019.
  */
-public class DialogActivity extends FragmentActivity implements View.OnClickListener {
 
-
+public class UpdateDialogFragment extends DialogFragment implements View.OnClickListener {
     public static boolean isShow = false;
     private TextView mContentTextView;
     private Button mUpdateOkButton;
@@ -63,35 +68,83 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     private TextView mIgnore;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isShow = true;
-        setContentView(R.layout.lib_update_app_dialog);
-        initView();
+//        setStyle(DialogFragment.STYLE_NO_TITLE | DialogFragment.STYLE_NO_FRAME, 0);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.UpdateAppDialog);
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //点击window外的区域 是否消失
+        getDialog().setCanceledOnTouchOutside(false);
+        //是否可以取消,会影响上面那条属性
+//        setCancelable(false);
+        //window外可以点击,不拦截窗口外的事件
+        getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+
+        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    //禁用
+                    if (mUpdateApp != null && mUpdateApp.isConstraint()) {
+                        //返回桌面
+                        startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.lib_update_app_dialog, container);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
+    }
+
+    private void initView(View view) {
+        //提示内容
+        mContentTextView = (TextView) view.findViewById(R.id.tv_update_info);
+        //标题
+        mTitleTextView = (TextView) view.findViewById(R.id.tv_title);
+        //更新按钮
+        mUpdateOkButton = (Button) view.findViewById(R.id.btn_ok);
+        //进度条
+        mNumberProgressBar = (NumberProgressBar) view.findViewById(R.id.npb);
+        //关闭按钮
+        mIvClose = (ImageView) view.findViewById(R.id.iv_close);
+        //关闭按钮+线 的整个布局
+        mLlClose = (LinearLayout) view.findViewById(R.id.ll_close);
+        //顶部图片
+        mTopIv = (ImageView) view.findViewById(R.id.iv_top);
+        //忽略
+        mIgnore = (TextView) view.findViewById(R.id.tv_ignore);
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initData();
     }
 
-    private void initView() {
-        //提示内容
-        mContentTextView = (TextView) findViewById(R.id.tv_update_info);
-        //标题
-        mTitleTextView = (TextView) findViewById(R.id.tv_title);
-        //更新按钮
-        mUpdateOkButton = (Button) findViewById(R.id.btn_ok);
-        //进度条
-        mNumberProgressBar = (NumberProgressBar) findViewById(R.id.npb);
-        //关闭按钮
-        mIvClose = (ImageView) findViewById(R.id.iv_close);
-        //关闭按钮+线 的整个布局
-        mLlClose = (LinearLayout) findViewById(R.id.ll_close);
-        //顶部图片
-        mTopIv = (ImageView) findViewById(R.id.iv_top);
-        //忽略
-        mIgnore = (TextView) findViewById(R.id.tv_ignore);
-    }
-
     private void initData() {
-        mUpdateApp = (UpdateAppBean) getIntent().getSerializableExtra(UpdateAppManager.INTENT_KEY);
+        mUpdateApp = (UpdateAppBean) getArguments().getSerializable(UpdateAppManager.INTENT_KEY);
         //设置主题色
         initTheme();
 
@@ -136,9 +189,9 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     private void initTheme() {
 
 
-        final int color = getIntent().getIntExtra(UpdateAppManager.THEME_KEY, -1);
+        final int color = getArguments().getInt(UpdateAppManager.THEME_KEY, -1);
 
-        final int topResId = getIntent().getIntExtra(UpdateAppManager.TOP_IMAGE_KEY, -1);
+        final int topResId = getArguments().getInt(UpdateAppManager.TOP_IMAGE_KEY, -1);
 
 
         if (-1 == topResId) {
@@ -176,7 +229,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
      */
     private void setDialogTheme(int color, int topResId) {
         mTopIv.setImageResource(topResId);
-        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, this), color));
+        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, getActivity()), color));
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
         //随背景颜色变化
@@ -186,6 +239,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
     private void initEvents() {
         mUpdateOkButton.setOnClickListener(this);
         mIvClose.setOnClickListener(this);
+        mIgnore.setOnClickListener(this);
     }
 
     @Override
@@ -198,10 +252,10 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
 //                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
 //            }
-            onBackPressed();
+            dismiss();
         } else if (i == R.id.tv_ignore) {
-            Utils.saveIgnoreVersion(this, mUpdateApp.getNewVersion());
-            onBackPressed();
+            Utils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
+            dismiss();
         }
     }
 
@@ -217,7 +271,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         if (!TextUtils.isEmpty(mUpdateApp.getNewMd5())
                 && appFile.exists()
                 && Md5Util.getFileMD5(appFile).equalsIgnoreCase(mUpdateApp.getNewMd5())) {
-            Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".fileProvider", appFile);
+            Uri fileUri = FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".fileProvider", appFile);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -226,15 +280,15 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             } else {
                 intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
             }
-            if (getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+            if (getActivity().getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
                 startActivity(intent);
             }
             //安装完自杀
-            onBackPressed();
+            dismiss();
         } else {
             downloadApp();
             if (mUpdateApp.isHideDialog()) {
-                onBackPressed();
+                dismiss();
             }
 
         }
@@ -246,7 +300,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
      */
     private void downloadApp() {
         //使用ApplicationContext延长他的生命周期
-        DownloadService.bindService(getApplicationContext(), conn);
+        DownloadService.bindService(getActivity().getApplicationContext(), conn);
     }
 
     /**
@@ -259,14 +313,14 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
             binder.start(mUpdateApp, new DownloadService.DownloadCallback() {
                 @Override
                 public void onStart() {
-                    if (!DialogActivity.this.isFinishing()) {
+                    if (!UpdateDialogFragment.this.isRemoving()) {
                         mNumberProgressBar.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
                 public void onProgress(float progress, long totalSize) {
-                    if (!DialogActivity.this.isFinishing()) {
+                    if (!UpdateDialogFragment.this.isRemoving()) {
                         mNumberProgressBar.setProgress(Math.round(progress * 100));
                         mNumberProgressBar.setMax(100);
                     }
@@ -279,38 +333,25 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 
                 @Override
                 public void onFinish() {
-                    if (!DialogActivity.this.isFinishing()) {
-                        DialogActivity.this.finish();
+                    if (!UpdateDialogFragment.this.isRemoving()) {
+                        dismiss();
                     }
                 }
 
                 @Override
                 public void onError(String msg) {
-                    if (!DialogActivity.this.isFinishing()) {
-                        DialogActivity.this.finish();
+                    if (!UpdateDialogFragment.this.isRemoving()) {
+                        dismiss();
                     }
                 }
             });
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        //禁用
-        if (mUpdateApp != null && mUpdateApp.isConstraint()) {
-//          ActManager.getInstance().finishAllActivity();
-//            android.os.Process.killProcess(android.os.Process.myPid());
-            //返回桌面
-            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
-            return;
-        }
-        super.onBackPressed();
-    }
-
 
     @Override
-    protected void onDestroy() {
+    public void onDestroyView() {
         isShow = false;
-        super.onDestroy();
+        super.onDestroyView();
     }
 }

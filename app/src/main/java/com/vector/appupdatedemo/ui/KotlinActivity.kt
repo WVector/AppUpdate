@@ -137,7 +137,10 @@ class KotlinActivity : AppCompatActivity() {
                         onStart { HProgressDialogUtils.showHorizontalProgressDialog(this@KotlinActivity, "下载进度", false) }
                         onProgress { progress, _ -> HProgressDialogUtils.setProgress(Math.round(progress * 100)) }
                         onFinish { HProgressDialogUtils.cancel() }
-                        onError { toast(it) }
+                        onError {
+                            toast(it)
+                            HProgressDialogUtils.cancel()
+                        }
                     }
 
                 } else {

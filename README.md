@@ -9,6 +9,7 @@
 * [简单实例](#简单实例)
 * [自定义](#自定义)
 * [使用默认的接口协议](#使用默认的接口协议)
+* [版本](#版本)
 * [License](#license)
 
 ## 功能介绍
@@ -479,6 +480,13 @@ dependencies {
 
 
 #### 进度条使用的是代码家的「[NumberProgressBar](https://github.com/daimajia/NumberProgressBar)」
+
+## 版本
+
+> V3.2.9 
+>> 1，新增自定义对话框。
+>> 2，适配kotlin，写法更简单。 
+
 
 ## License
 

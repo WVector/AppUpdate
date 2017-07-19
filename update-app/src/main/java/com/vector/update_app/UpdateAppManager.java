@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -41,6 +43,8 @@ public class UpdateAppManager {
     private String mTargetPath;
     private boolean isPost;
     private boolean mHideDialog;
+    private boolean mShowIgnoreVersion;
+    private boolean mDismissNotificationProgress;
     //自定义参数
 
     private UpdateAppManager(Builder builder) {
@@ -56,12 +60,19 @@ public class UpdateAppManager {
         isPost = builder.isPost();
         mParams = builder.getParams();
         mHideDialog = builder.isHideDialog();
+        mShowIgnoreVersion = builder.isShowIgnoreVersion();
+        mDismissNotificationProgress = builder.isDismissNotificationProgress();
     }
 
     /**
      * 跳转到更新页面
      */
     public void showDialog() {
+
+        //版本忽略
+        if (mShowIgnoreVersion && Utils.isNeedIgnore(mActivity, mUpdateApp.getNewVersion())) {
+            return;
+        }
 
         String preSuffix = "/storage/emulated";
 
@@ -78,6 +89,8 @@ public class UpdateAppManager {
             mUpdateApp.setTargetPath(mTargetPath);
             mUpdateApp.setHttpManager(mHttpManager);
             mUpdateApp.setHideDialog(mHideDialog);
+            mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
+            mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
             updateIntent.putExtra(INTENT_KEY, mUpdateApp);
             if (mThemeColor != 0) {
                 updateIntent.putExtra(THEME_KEY, mThemeColor);
@@ -87,6 +100,49 @@ public class UpdateAppManager {
                 updateIntent.putExtra(TOP_IMAGE_KEY, mTopPic);
             }
             mActivity.startActivity(updateIntent);
+        }
+
+    }
+
+    /**
+     * 跳转到更新页面
+     */
+    public void showDialogFragment() {
+
+        //版本忽略
+        if (mShowIgnoreVersion && Utils.isNeedIgnore(mActivity, mUpdateApp.getNewVersion())) {
+            return;
+        }
+
+        String preSuffix = "/storage/emulated";
+
+        if (TextUtils.isEmpty(mTargetPath) || !mTargetPath.startsWith(preSuffix)) {
+            Log.e(TAG, "下载路径错误:" + mTargetPath);
+            return;
+        }
+        if (mUpdateApp == null) {
+            return;
+        }
+
+        if (mActivity != null && !mActivity.isFinishing()) {
+            Bundle bundle = new Bundle();
+            mUpdateApp.setTargetPath(mTargetPath);
+            mUpdateApp.setHttpManager(mHttpManager);
+            mUpdateApp.setHideDialog(mHideDialog);
+            mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
+            mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
+            bundle.putSerializable(INTENT_KEY, mUpdateApp);
+            if (mThemeColor != 0) {
+                bundle.putInt(THEME_KEY, mThemeColor);
+            }
+
+            if (mTopPic != 0) {
+                bundle.putInt(TOP_IMAGE_KEY, mTopPic);
+            }
+
+            UpdateDialogFragment updateDialogFragment = new UpdateDialogFragment();
+            updateDialogFragment.setArguments(bundle);
+            updateDialogFragment.show(((FragmentActivity) mActivity).getSupportFragmentManager(), "dialog");
         }
 
     }
@@ -109,7 +165,7 @@ public class UpdateAppManager {
         }
         callback.onBefore();
 
-        if (DialogActivity.isShow || DownloadService.isRunning) {
+        if (DialogActivity.isShow || DownloadService.isRunning || UpdateDialogFragment.isShow) {
             callback.onAfter();
             Toast.makeText(mActivity, "app正在更新", Toast.LENGTH_SHORT).show();
             return;
@@ -244,6 +300,8 @@ public class UpdateAppManager {
         private Map<String, String> params;
         //7,是否隐藏对话框下载进度条
         private boolean mHideDialog;
+        private boolean mShowIgnoreVersion;
+        private boolean dismissNotificationProgress;
 
         public Map<String, String> getParams() {
             return params;
@@ -415,6 +473,34 @@ public class UpdateAppManager {
 
         public boolean isHideDialog() {
             return mHideDialog;
+        }
+
+        /**
+         * 显示忽略版本
+         *
+         * @return
+         */
+        public Builder showIgnoreVersion() {
+            mShowIgnoreVersion = true;
+            return this;
+        }
+
+        public boolean isShowIgnoreVersion() {
+            return mShowIgnoreVersion;
+        }
+
+        /**
+         * 不显示通知栏进度条
+         *
+         * @return
+         */
+        public Builder dismissNotificationProgress() {
+            dismissNotificationProgress = true;
+            return this;
+        }
+
+        public boolean isDismissNotificationProgress() {
+            return dismissNotificationProgress;
         }
     }
 

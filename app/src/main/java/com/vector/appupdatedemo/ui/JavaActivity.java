@@ -78,6 +78,7 @@ public class JavaActivity extends AppCompatActivity {
         params.put("key1", "value2");
         params.put("key2", "value3");
 
+
         new UpdateAppManager
                 .Builder()
                 //必须设置，当前Activity
@@ -90,6 +91,10 @@ public class JavaActivity extends AppCompatActivity {
                 //以下设置，都是可选
                 //设置请求方式，默认get
                 .setPost(false)
+                //不显示通知栏进度条
+                .dismissNotificationProgress()
+                //是否忽略版本
+//                .showIgnoreVersion()
                 //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
                 .setParams(params)
                 //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
@@ -126,6 +131,8 @@ public class JavaActivity extends AppCompatActivity {
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
                                     //（必须）更新内容
                                     .setUpdateLog(jsonObject.optString("update_log"))
+                                    //测试内容过度
+//                                    .setUpdateLog("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16")
                                     //大小，不设置不显示大小，可以不设置
                                     .setTargetSize(jsonObject.optString("target_size"))
                                     //是否强制更新，可以不设置
@@ -136,6 +143,11 @@ public class JavaActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialogFragment();
                     }
 
                     /**
@@ -314,6 +326,7 @@ public class JavaActivity extends AppCompatActivity {
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
                                     //（必须）更新内容
                                     .setUpdateLog(jsonObject.optString("update_log"))
+
                                     //大小，不设置不显示大小，可以不设置
                                     .setTargetSize(jsonObject.optString("target_size"))
                                     //是否强制更新，可以不设置
@@ -381,4 +394,5 @@ public class JavaActivity extends AppCompatActivity {
         diyUpdate();
 
     }
+
 }

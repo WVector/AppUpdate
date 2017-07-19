@@ -45,6 +45,7 @@ public class DownloadService extends Service {
 //        Intent intent = new Intent(context, DownloadService.class);
 //        context.startService(intent);
 //    }
+private boolean mDismissNotificationProgress = false;
 
     public static void bindService(Context context, ServiceConnection connection) {
         Intent intent = new Intent(context, DownloadService.class);
@@ -75,6 +76,10 @@ public class DownloadService extends Service {
      * 创建通知
      */
     private void setUpNotification() {
+        if (mDismissNotificationProgress) {
+            return;
+        }
+
         mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setContentTitle("开始下载")
                 .setContentText("正在连接服务器")
@@ -90,6 +95,9 @@ public class DownloadService extends Service {
      * 下载模块
      */
     private void startDownload(UpdateAppBean updateApp, final DownloadCallback callback) {
+
+        mDismissNotificationProgress = updateApp.isDismissNotificationProgress();
+
         String apkUrl = updateApp.getApkFileUrl();
         if (TextUtils.isEmpty(apkUrl)) {
             String contentText = "新版本下载路径错误";
@@ -114,10 +122,12 @@ public class DownloadService extends Service {
     }
 
     private void stop(String contentText) {
-        mBuilder.setContentTitle(Utils.getAppName(DownloadService.this)).setContentText(contentText);
-        Notification notification = mBuilder.build();
-        notification.flags = Notification.FLAG_AUTO_CANCEL;
-        mNotificationManager.notify(NOTIFY_ID, notification);
+        if (mBuilder != null) {
+            mBuilder.setContentTitle(Utils.getAppName(DownloadService.this)).setContentText(contentText);
+            Notification notification = mBuilder.build();
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+            mNotificationManager.notify(NOTIFY_ID, notification);
+        }
         close();
     }
 
@@ -176,8 +186,6 @@ public class DownloadService extends Service {
          * @param callback  下载回调
          */
         public void start(UpdateAppBean updateApp, DownloadCallback callback) {
-            //初始化通知栏
-            setUpNotification();
             //下载
             startDownload(updateApp, callback);
         }
@@ -185,6 +193,7 @@ public class DownloadService extends Service {
 
     class FileDownloadCallBack implements HttpManager.FileCallback {
         private final DownloadCallback mCallBack;
+        int oldRate = 0;
 
         public FileDownloadCallBack(@Nullable DownloadCallback callback) {
             super();
@@ -193,6 +202,8 @@ public class DownloadService extends Service {
 
         @Override
         public void onBefore() {
+            //初始化通知栏
+            setUpNotification();
             if (mCallBack != null) {
                 mCallBack.onStart();
             }
@@ -200,18 +211,30 @@ public class DownloadService extends Service {
 
         @Override
         public void onProgress(float progress, long total) {
+            //做一下判断，防止自回调过于频繁，造成更新通知栏进度过于频繁，而出现卡顿的问题。
             int rate = Math.round(progress * 100);
-            if (mCallBack != null) {
-                mCallBack.setMax(total);
-                mCallBack.onProgress(progress, total);
+            if (oldRate != rate) {
+                if (mCallBack != null) {
+                    mCallBack.setMax(total);
+                    mCallBack.onProgress(progress, total);
+                }
+
+                if (mBuilder != null) {
+                    mBuilder.setContentTitle("正在下载：" + Utils.getAppName(DownloadService.this))
+                            .setContentText(rate + "%")
+                            .setProgress(100, rate, false)
+                            .setWhen(System.currentTimeMillis());
+                    Notification notification = mBuilder.build();
+                    notification.flags = Notification.FLAG_AUTO_CANCEL;
+                    mNotificationManager.notify(NOTIFY_ID, notification);
+                }
+
+
+                //重新赋值
+                oldRate = rate;
             }
-            mBuilder.setContentTitle("正在下载：" + Utils.getAppName(DownloadService.this))
-                    .setContentText(rate + "%")
-                    .setProgress(100, rate, false)
-                    .setWhen(System.currentTimeMillis());
-            Notification notification = mBuilder.build();
-            notification.flags = Notification.FLAG_AUTO_CANCEL;
-            mNotificationManager.notify(NOTIFY_ID, notification);
+
+
         }
 
         @Override
@@ -236,7 +259,8 @@ public class DownloadService extends Service {
             }
 
             Uri fileUri = FileProvider.getUriForFile(DownloadService.this, getApplicationContext().getPackageName() + ".fileProvider", file);
-            if (Utils.isAppOnForeground(DownloadService.this)) {
+            if (Utils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
+
                 //App前台运行
                 mNotificationManager.cancel(NOTIFY_ID);
                 Intent intent = new Intent(Intent.ACTION_VIEW);

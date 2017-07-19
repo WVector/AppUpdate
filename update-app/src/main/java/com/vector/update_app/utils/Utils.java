@@ -2,6 +2,7 @@ package com.vector.update_app.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -19,6 +20,10 @@ import java.util.List;
  */
 
 public class Utils {
+
+    public static final String IGNORE_VERSION = "ignore_version";
+    private static final String PREFS_FILE = "update_app_config.xml";
+
     public static String getVersionName(Context context) {
         PackageInfo packageInfo = getPackageInfo(context);
         if (packageInfo != null) {
@@ -127,4 +132,15 @@ public class Utils {
         return null;
     }
 
+    private static SharedPreferences getSP(Context context) {
+        return context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+    }
+
+    public static void saveIgnoreVersion(Context context, String newVersion) {
+        getSP(context).edit().putString(IGNORE_VERSION, newVersion).apply();
+    }
+
+    public static boolean isNeedIgnore(Context context, String newVersion) {
+        return getSP(context).getString(IGNORE_VERSION, "").equals(newVersion);
+    }
 }
