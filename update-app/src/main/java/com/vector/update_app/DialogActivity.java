@@ -17,10 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vector.update_app.service.DownloadService;
+import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.ColorUtil;
 import com.vector.update_app.utils.DrawableUtil;
-import com.vector.update_app.utils.Utils;
 import com.vector.update_app.view.NumberProgressBar;
+
+import java.io.File;
 
 /**
  * 新版本提交对话框
@@ -146,7 +148,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
         } else {
             if (-1 == color) {
                 //自动提色
-                Palette.from(Utils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
+                Palette.from(AppUpdateUtils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
                     @Override
                     public void onGenerated(Palette palette) {
                         int mDominantColor = palette.getDominantColor(mDefaultColor);
@@ -170,7 +172,7 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
      */
     private void setDialogTheme(int color, int topResId) {
         mTopIv.setImageResource(topResId);
-        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, this), color));
+        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(AppUpdateUtils.dip2px(4, this), color));
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
         //随背景颜色变化
@@ -194,14 +196,14 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
 //            }
             onBackPressed();
         } else if (i == R.id.tv_ignore) {
-            Utils.saveIgnoreVersion(this, mUpdateApp.getNewVersion());
+            AppUpdateUtils.saveIgnoreVersion(this, mUpdateApp.getNewVersion());
             onBackPressed();
         }
     }
 
     private void installApp() {
-        if (Utils.appIsDownloaded(mUpdateApp)) {
-            Utils.installApp(this, Utils.getAppFile(mUpdateApp));
+        if (AppUpdateUtils.appIsDownloaded(mUpdateApp)) {
+            AppUpdateUtils.installApp(this, AppUpdateUtils.getAppFile(mUpdateApp));
             //安装完自杀
             onBackPressed();
         } else {
@@ -251,10 +253,11 @@ public class DialogActivity extends FragmentActivity implements View.OnClickList
                 }
 
                 @Override
-                public void onFinish() {
+                public boolean onFinish(File file) {
                     if (!DialogActivity.this.isFinishing()) {
                         DialogActivity.this.finish();
                     }
+                    return true;
                 }
 
                 @Override

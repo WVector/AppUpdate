@@ -27,7 +27,7 @@ import java.util.List;
  * on 2017/6/6 0006.
  */
 
-public class Utils {
+public class AppUpdateUtils {
 
 
     public static final String IGNORE_VERSION = "ignore_version";

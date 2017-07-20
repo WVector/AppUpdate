@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.vector.appupdatedemo.R;
+import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
-import com.vector.update_app.utils.Utils;
 
 import rx.functions.Action1;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView im = (ImageView) findViewById(R.id.iv);
 
-        im.setImageBitmap(Utils.drawableToBitmap(Utils.getAppIcon(this)));
+        im.setImageBitmap(AppUpdateUtils.drawableToBitmap(AppUpdateUtils.getAppIcon(this)));
 
         getPermission();
 

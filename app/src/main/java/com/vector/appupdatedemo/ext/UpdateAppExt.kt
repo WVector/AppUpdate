@@ -6,6 +6,7 @@ import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
 import com.vector.update_app.UpdateCallback
 import com.vector.update_app.service.DownloadService
+import java.io.File
 
 /**
  * Created by Vector
@@ -86,7 +87,7 @@ inline fun UpdateAppManager.download(init: DownloadCallback.() -> Unit) {
 
 class DownloadCallback : DownloadService.DownloadCallback {
     private var _onStart: (() -> Unit)? = null
-    private var _onFinish: (() -> Unit)? = null
+    private var _onFinish: (() -> Boolean)? = null
     private var _onError: ((msg: String) -> Unit)? = null
     private var _setMax: ((totalSize: Long) -> Unit)? = null
     private var _onProgress: ((progress: Float, totalSize: Long) -> Unit)? = null
@@ -103,8 +104,13 @@ class DownloadCallback : DownloadService.DownloadCallback {
         _setMax?.invoke(totalSize)
     }
 
-    override fun onFinish() {
-        _onFinish?.invoke()
+
+    override fun onFinish(file: File?): Boolean {
+        if (_onFinish != null) {
+            return _onFinish!!.invoke()
+        } else {
+            return true
+        }
     }
 
     override fun onError(msg: String) {
@@ -116,7 +122,7 @@ class DownloadCallback : DownloadService.DownloadCallback {
         _onStart = listener
     }
 
-    fun onFinish(listener: () -> Unit) {
+    fun onFinish(listener: () -> Boolean) {
         _onFinish = listener
     }
 

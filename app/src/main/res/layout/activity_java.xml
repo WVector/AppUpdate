@@ -19,6 +19,15 @@
         />
 
     <Button
+        android:id="@+id/btn_default_silence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="silenceUpdateApp"
+        android:text="更新App(默认下载)"
+        />
+
+    <Button
         android:id="@+id/btn_diy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

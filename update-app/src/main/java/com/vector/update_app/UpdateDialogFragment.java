@@ -22,10 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vector.update_app.service.DownloadService;
+import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.ColorUtil;
 import com.vector.update_app.utils.DrawableUtil;
-import com.vector.update_app.utils.Utils;
 import com.vector.update_app.view.NumberProgressBar;
+
+import java.io.File;
 
 /**
  * Created by Vector
@@ -199,7 +201,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         } else {
             if (-1 == color) {
                 //自动提色
-                Palette.from(Utils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
+                Palette.from(AppUpdateUtils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
                     @Override
                     public void onGenerated(Palette palette) {
                         int mDominantColor = palette.getDominantColor(mDefaultColor);
@@ -223,7 +225,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
      */
     private void setDialogTheme(int color, int topResId) {
         mTopIv.setImageResource(topResId);
-        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(Utils.dip2px(4, getActivity()), color));
+        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(AppUpdateUtils.dip2px(4, getActivity()), color));
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
         //随背景颜色变化
@@ -248,14 +250,14 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 //            }
             dismiss();
         } else if (i == R.id.tv_ignore) {
-            Utils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
+            AppUpdateUtils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
             dismiss();
         }
     }
 
     private void installApp() {
-        if (Utils.appIsDownloaded(mUpdateApp)) {
-            Utils.installApp(getActivity(), Utils.getAppFile(mUpdateApp));
+        if (AppUpdateUtils.appIsDownloaded(mUpdateApp)) {
+            AppUpdateUtils.installApp(getActivity(), AppUpdateUtils.getAppFile(mUpdateApp));
             //安装完自杀
             dismiss();
         } else {
@@ -305,10 +307,11 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 }
 
                 @Override
-                public void onFinish() {
+                public boolean onFinish(File file) {
                     if (!UpdateDialogFragment.this.isRemoving()) {
                         dismiss();
                     }
+                    return true;
                 }
 
                 @Override

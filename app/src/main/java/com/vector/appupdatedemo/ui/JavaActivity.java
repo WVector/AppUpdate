@@ -19,12 +19,13 @@ import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
 import com.vector.update_app.service.DownloadService;
+import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
-import com.vector.update_app.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class JavaActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<String, String>();
 
         params.put("appKey", "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f");
-        params.put("appVersion", Utils.getVersionName(this));
+        params.put("appVersion", AppUpdateUtils.getVersionName(this));
         params.put("key1", "value2");
         params.put("key2", "value3");
 
@@ -231,9 +232,11 @@ public class JavaActivity extends AppCompatActivity {
 
                                 }
 
+
                                 @Override
-                                public void onFinish() {
+                                public boolean onFinish(File file) {
                                     HProgressDialogUtils.cancel();
+                                    return true;
                                 }
 
                                 @Override
@@ -280,7 +283,7 @@ public class JavaActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<String, String>();
 
         params.put("appKey", "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f");
-        params.put("appVersion", Utils.getVersionName(this));
+        params.put("appVersion", AppUpdateUtils.getVersionName(this));
         params.put("key1", "value2");
         params.put("key2", "value3");
 
@@ -395,4 +398,16 @@ public class JavaActivity extends AppCompatActivity {
 
     }
 
+    public void silenceUpdateApp(View view) {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .build()
+                .silenceUpdate();
+    }
 }

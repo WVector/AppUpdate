@@ -11,7 +11,7 @@ import com.vector.appupdatedemo.http.UpdateAppHttpUtil
 import com.vector.appupdatedemo.util.HProgressDialogUtils
 import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
-import com.vector.update_app.utils.Utils
+import com.vector.update_app.utils.AppUpdateUtils
 import com.vector.update_app_kotlin.*
 import com.yimiao.app.ext.dialog
 import kotlinx.android.synthetic.main.activity_kotlin.*
@@ -75,7 +75,7 @@ class KotlinActivity : AppCompatActivity() {
         //自定义参数
         val params = HashMap<String, String>()
         params.put("appKey", "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
-        params.put("appVersion", Utils.getVersionName(this))
+        params.put("appVersion", AppUpdateUtils.getVersionName(this))
         params.put("key1", "value2")
         params.put("key2", "value3")
 
@@ -136,7 +136,10 @@ class KotlinActivity : AppCompatActivity() {
                     updateAppManager.download {
                         onStart { HProgressDialogUtils.showHorizontalProgressDialog(this@KotlinActivity, "下载进度", false) }
                         onProgress { progress, _ -> HProgressDialogUtils.setProgress(Math.round(progress * 100)) }
-                        onFinish { HProgressDialogUtils.cancel() }
+                        onFinish {
+                            HProgressDialogUtils.cancel()
+                            true
+                        }
                         onError {
                             toast(it)
                             HProgressDialogUtils.cancel()
@@ -168,7 +171,7 @@ class KotlinActivity : AppCompatActivity() {
         //自定义参数
         val params = HashMap<String, String>()
         params.put("appKey", "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
-        params.put("appVersion", Utils.getVersionName(this))
+        params.put("appVersion", AppUpdateUtils.getVersionName(this))
         params.put("key1", "value2")
         params.put("key2", "value3")
 

@@ -2,6 +2,7 @@ package com.vector.update_app;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -16,8 +17,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.vector.update_app.service.DownloadService;
-import com.vector.update_app.utils.Utils;
+import com.vector.update_app.utils.AppUpdateUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,32 +67,41 @@ public class UpdateAppManager {
     }
 
     /**
+     * 可以直接利用下载功能，
+     *
+     * @param context          上下文
+     * @param updateAppBean    下载信息配置
+     * @param downloadCallback 下载回调
+     */
+    public static void download(final Context context, @NonNull final UpdateAppBean updateAppBean, @Nullable final DownloadService.DownloadCallback downloadCallback) {
+
+        if (updateAppBean == null) {
+            throw new NullPointerException("updateApp 不能为空");
+        }
+
+        DownloadService.bindService(context.getApplicationContext(), new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                ((DownloadService.DownloadBinder) service).start(updateAppBean, downloadCallback);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        });
+    }
+
+    /**
      * 跳转到更新页面
      */
     public void showDialog() {
+        if (verify()) return;
 
-        //版本忽略
-        if (mShowIgnoreVersion && Utils.isNeedIgnore(mActivity, mUpdateApp.getNewVersion())) {
-            return;
-        }
-
-        String preSuffix = "/storage/emulated";
-
-        if (TextUtils.isEmpty(mTargetPath) || !mTargetPath.startsWith(preSuffix)) {
-            Log.e(TAG, "下载路径错误:" + mTargetPath);
-            return;
-        }
-        if (mUpdateApp == null) {
-            return;
-        }
 
         if (mActivity != null && !mActivity.isFinishing()) {
             Intent updateIntent = new Intent(mActivity, DialogActivity.class);
-            mUpdateApp.setTargetPath(mTargetPath);
-            mUpdateApp.setHttpManager(mHttpManager);
-            mUpdateApp.setHideDialog(mHideDialog);
-            mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
-            mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
+            fillUpdateAppData();
             updateIntent.putExtra(INTENT_KEY, mUpdateApp);
             if (mThemeColor != 0) {
                 updateIntent.putExtra(THEME_KEY, mThemeColor);
@@ -104,33 +115,41 @@ public class UpdateAppManager {
 
     }
 
-    /**
-     * 跳转到更新页面
-     */
-    public void showDialogFragment() {
+    private void fillUpdateAppData() {
+        mUpdateApp.setTargetPath(mTargetPath);
+        mUpdateApp.setHttpManager(mHttpManager);
+        mUpdateApp.setHideDialog(mHideDialog);
+        mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
+        mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
+    }
 
+    private boolean verify() {
         //版本忽略
-        if (mShowIgnoreVersion && Utils.isNeedIgnore(mActivity, mUpdateApp.getNewVersion())) {
-            return;
+        if (mShowIgnoreVersion && AppUpdateUtils.isNeedIgnore(mActivity, mUpdateApp.getNewVersion())) {
+            return true;
         }
 
         String preSuffix = "/storage/emulated";
 
         if (TextUtils.isEmpty(mTargetPath) || !mTargetPath.startsWith(preSuffix)) {
             Log.e(TAG, "下载路径错误:" + mTargetPath);
-            return;
+            return true;
         }
-        if (mUpdateApp == null) {
-            return;
-        }
+        return mUpdateApp == null;
+    }
+
+    /**
+     * 跳转到更新页面
+     */
+    public void showDialogFragment() {
+
+        //校验
+        if (verify()) return;
 
         if (mActivity != null && !mActivity.isFinishing()) {
             Bundle bundle = new Bundle();
-            mUpdateApp.setTargetPath(mTargetPath);
-            mUpdateApp.setHttpManager(mHttpManager);
-            mUpdateApp.setHideDialog(mHideDialog);
-            mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
-            mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
+            //添加信息，
+            fillUpdateAppData();
             bundle.putSerializable(INTENT_KEY, mUpdateApp);
             if (mThemeColor != 0) {
                 bundle.putInt(THEME_KEY, mThemeColor);
@@ -145,6 +164,51 @@ public class UpdateAppManager {
             updateDialogFragment.show(((FragmentActivity) mActivity).getSupportFragmentManager(), "dialog");
         }
 
+    }
+
+    /**
+     * 静默更新
+     */
+    public void silenceUpdate() {
+        checkNewApp(new UpdateCallback() {
+            @Override
+            protected void hasNewApp(final UpdateAppBean updateApp, final UpdateAppManager updateAppManager) {
+                //添加信息
+                fillUpdateAppData();
+                if (AppUpdateUtils.appIsDownloaded(updateApp)) {
+                    super.hasNewApp(updateApp, updateAppManager);
+                } else {
+                    updateAppManager.download(new DownloadService.DownloadCallback() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onProgress(float progress, long totalSize) {
+
+                        }
+
+                        @Override
+                        public void setMax(long totalSize) {
+
+                        }
+
+                        @Override
+                        public boolean onFinish(File file) {
+                            hasNewApp(updateApp, updateAppManager);
+                            return false;
+                        }
+
+
+                        @Override
+                        public void onError(String msg) {
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     /**
@@ -175,7 +239,7 @@ public class UpdateAppManager {
         Map<String, String> params = new HashMap<String, String>();
 
         params.put("appKey", mAppKey);
-        String versionName = Utils.getVersionName(mActivity);
+        String versionName = AppUpdateUtils.getVersionName(mActivity);
         if (versionName.endsWith("-debug")) {
             versionName = versionName.substring(0, versionName.lastIndexOf('-'));
         }
@@ -268,7 +332,7 @@ public class UpdateAppManager {
             if (mUpdateApp.isUpdate()) {
                 callback.hasNewApp(mUpdateApp, this);
                 //假如是静默下载，可能需要判断，
-                // 是否wifi,
+                //是否wifi,
                 //是否已经下载，如果已经下载直接提示安装
                 //没有则进行下载，监听下载完成，弹出安装对话框
 
@@ -456,7 +520,7 @@ public class UpdateAppManager {
                 setTargetPath(path);
             }
             if (TextUtils.isEmpty(getAppKey())) {
-                String appKey = Utils.getManifestString(getActivity(), UPDATE_APP_KEY);
+                String appKey = AppUpdateUtils.getManifestString(getActivity(), UPDATE_APP_KEY);
                 if (TextUtils.isEmpty(appKey)) {
                 } else {
                     setAppKey(appKey);

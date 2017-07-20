@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.vector.update_app.HttpManager;
 import com.vector.update_app.R;
 import com.vector.update_app.UpdateAppBean;
-import com.vector.update_app.utils.Utils;
+import com.vector.update_app.utils.AppUpdateUtils;
 
 import java.io.File;
 
@@ -81,7 +81,7 @@ public class DownloadService extends Service {
         mBuilder.setContentTitle("开始下载")
                 .setContentText("正在连接服务器")
                 .setSmallIcon(R.mipmap.lib_update_app_update_icon)
-                .setLargeIcon(Utils.drawableToBitmap(Utils.getAppIcon(DownloadService.this)))
+                .setLargeIcon(AppUpdateUtils.drawableToBitmap(AppUpdateUtils.getAppIcon(DownloadService.this)))
                 .setOngoing(true)
                 .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis());
@@ -120,7 +120,7 @@ public class DownloadService extends Service {
 
     private void stop(String contentText) {
         if (mBuilder != null) {
-            mBuilder.setContentTitle(Utils.getAppName(DownloadService.this)).setContentText(contentText);
+            mBuilder.setContentTitle(AppUpdateUtils.getAppName(DownloadService.this)).setContentText(contentText);
             Notification notification = mBuilder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
             mNotificationManager.notify(NOTIFY_ID, notification);
@@ -158,9 +158,11 @@ public class DownloadService extends Service {
         void setMax(long totalSize);
 
         /**
-         * 下载完
+         * 下载完了
+         * @param file 下载的app
+         * @return true ：下载完自动跳到安装界面，false：则不进行安装
          */
-        void onFinish();
+        boolean onFinish(File file);
 
         /**
          * 下载异常
@@ -217,7 +219,7 @@ public class DownloadService extends Service {
                 }
 
                 if (mBuilder != null) {
-                    mBuilder.setContentTitle("正在下载：" + Utils.getAppName(DownloadService.this))
+                    mBuilder.setContentTitle("正在下载：" + AppUpdateUtils.getAppName(DownloadService.this))
                             .setContentText(rate + "%")
                             .setProgress(100, rate, false)
                             .setWhen(System.currentTimeMillis());
@@ -251,20 +253,22 @@ public class DownloadService extends Service {
         @Override
         public void onResponse(File file) {
             if (mCallBack != null) {
-                mCallBack.onFinish();
+                if (!mCallBack.onFinish(file)) {
+                    return;
+                }
             }
 
-            if (Utils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
+            if (AppUpdateUtils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
                 //App前台运行
                 mNotificationManager.cancel(NOTIFY_ID);
-                Utils.installApp(DownloadService.this, file);
+                AppUpdateUtils.installApp(DownloadService.this, file);
             } else {
                 //App后台运行
                 //更新参数,注意flags要使用FLAG_UPDATE_CURRENT
-                Intent installAppIntent = Utils.getInstallAppIntent(DownloadService.this, file);
+                Intent installAppIntent = AppUpdateUtils.getInstallAppIntent(DownloadService.this, file);
                 PendingIntent contentIntent = PendingIntent.getActivity(DownloadService.this, 0, installAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 mBuilder.setContentIntent(contentIntent)
-                        .setContentTitle(Utils.getAppName(DownloadService.this))
+                        .setContentTitle(AppUpdateUtils.getAppName(DownloadService.this))
                         .setContentText("下载完成，请点击安装")
                         .setProgress(0, 0, false)
 //                        .setAutoCancel(true)
