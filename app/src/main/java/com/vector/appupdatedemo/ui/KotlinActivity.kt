@@ -217,9 +217,6 @@ class KotlinActivity : AppCompatActivity() {
                                 .setNewMd5(jsonObject.optString("new_md5"))
 
                     }
-                    hasNewApp { _, updateAppManager ->
-                        updateAppManager.showDialog()
-                    }
                     noNewApp { toast("没有新版本") }
                     onAfter { cancelProgressDialog() }
                 }

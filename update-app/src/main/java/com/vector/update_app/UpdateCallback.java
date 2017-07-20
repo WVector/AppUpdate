@@ -37,7 +37,7 @@ public class UpdateCallback {
      * @param updateAppManager app更新管理器
      */
     protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-        updateAppManager.showDialog();
+        updateAppManager.showDialogFragment();
     }
 
     /**

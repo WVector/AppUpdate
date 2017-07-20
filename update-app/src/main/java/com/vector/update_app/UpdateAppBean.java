@@ -33,19 +33,17 @@ public class UpdateAppBean implements Serializable {
     private boolean constraint;
     //md5
     private String new_md5;
-
-
     //是否增量 暂时不用
     private boolean delta;
-
+    /**********以下是内部使用的数据**********/
 
     //网络工具，内部使用
     private HttpManager httpManager;
-    //目标地址，内部使用
     private String targetPath;
     private boolean mHideDialog;
     private boolean mShowIgnoreVersion;
     private boolean mDismissNotificationProgress;
+    private boolean mOnlyWifi;
 
     //是否隐藏对话框下载进度条,内部使用
     public boolean isHideDialog() {
@@ -163,4 +161,13 @@ public class UpdateAppBean implements Serializable {
     public boolean isDismissNotificationProgress() {
         return mDismissNotificationProgress;
     }
+
+    public boolean isOnlyWifi() {
+        return mOnlyWifi;
+    }
+
+    public void setOnlyWifi(boolean onlyWifi) {
+        mOnlyWifi = onlyWifi;
+    }
+
 }

@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
@@ -32,6 +34,12 @@ public class AppUpdateUtils {
 
     public static final String IGNORE_VERSION = "ignore_version";
     private static final String PREFS_FILE = "update_app_config.xml";
+
+    public static boolean isWifi(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        return info != null && info.getType() == ConnectivityManager.TYPE_WIFI;
+    }
 
     public static File getAppFile(UpdateAppBean updateAppBean) {
         String apkUrl = updateAppBean.getApkFileUrl();

@@ -3,7 +3,6 @@ package com.vector.update_app;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +45,7 @@ public class UpdateAppManager {
     private boolean mHideDialog;
     private boolean mShowIgnoreVersion;
     private boolean mDismissNotificationProgress;
+    private boolean mOnlyWifi;
     //自定义参数
 
     private UpdateAppManager(Builder builder) {
@@ -64,6 +63,7 @@ public class UpdateAppManager {
         mHideDialog = builder.isHideDialog();
         mShowIgnoreVersion = builder.isShowIgnoreVersion();
         mDismissNotificationProgress = builder.isDismissNotificationProgress();
+        mOnlyWifi = builder.isOnlyWifi();
     }
 
     /**
@@ -92,36 +92,46 @@ public class UpdateAppManager {
         });
     }
 
+    public Context getContext() {
+        return mActivity;
+    }
+
     /**
      * 跳转到更新页面
      */
-    public void showDialog() {
-        if (verify()) return;
-
-
-        if (mActivity != null && !mActivity.isFinishing()) {
-            Intent updateIntent = new Intent(mActivity, DialogActivity.class);
-            fillUpdateAppData();
-            updateIntent.putExtra(INTENT_KEY, mUpdateApp);
-            if (mThemeColor != 0) {
-                updateIntent.putExtra(THEME_KEY, mThemeColor);
-            }
-
-            if (mTopPic != 0) {
-                updateIntent.putExtra(TOP_IMAGE_KEY, mTopPic);
-            }
-            mActivity.startActivity(updateIntent);
+//    public void showDialog() {
+//        if (verify()) return;
+//
+//
+//        if (mActivity != null && !mActivity.isFinishing()) {
+//            Intent updateIntent = new Intent(mActivity, DialogActivity.class);
+//            fillUpdateAppData();
+//            updateIntent.putExtra(INTENT_KEY, mUpdateApp);
+//            if (mThemeColor != 0) {
+//                updateIntent.putExtra(THEME_KEY, mThemeColor);
+//            }
+//
+//            if (mTopPic != 0) {
+//                updateIntent.putExtra(TOP_IMAGE_KEY, mTopPic);
+//            }
+//            mActivity.startActivity(updateIntent);
+//        }
+//
+//    }
+    public UpdateAppBean fillUpdateAppData() {
+        if (mUpdateApp != null) {
+            mUpdateApp.setTargetPath(mTargetPath);
+            mUpdateApp.setHttpManager(mHttpManager);
+            mUpdateApp.setHideDialog(mHideDialog);
+            mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
+            mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
+            mUpdateApp.setOnlyWifi(mOnlyWifi);
+            return mUpdateApp;
         }
 
+        return null;
     }
 
-    private void fillUpdateAppData() {
-        mUpdateApp.setTargetPath(mTargetPath);
-        mUpdateApp.setHttpManager(mHttpManager);
-        mUpdateApp.setHideDialog(mHideDialog);
-        mUpdateApp.showIgnoreVersion(mShowIgnoreVersion);
-        mUpdateApp.dismissNotificationProgress(mDismissNotificationProgress);
-    }
 
     private boolean verify() {
         //版本忽略
@@ -170,50 +180,13 @@ public class UpdateAppManager {
      * 静默更新
      */
     public void silenceUpdate() {
-        checkNewApp(new UpdateCallback() {
-            @Override
-            protected void hasNewApp(final UpdateAppBean updateApp, final UpdateAppManager updateAppManager) {
-                //添加信息
-                fillUpdateAppData();
-                if (AppUpdateUtils.appIsDownloaded(updateApp)) {
-                    super.hasNewApp(updateApp, updateAppManager);
-                } else {
-                    updateAppManager.download(new DownloadService.DownloadCallback() {
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onProgress(float progress, long totalSize) {
-
-                        }
-
-                        @Override
-                        public void setMax(long totalSize) {
-
-                        }
-
-                        @Override
-                        public boolean onFinish(File file) {
-                            hasNewApp(updateApp, updateAppManager);
-                            return false;
-                        }
-
-
-                        @Override
-                        public void onError(String msg) {
-
-                        }
-                    });
-                }
-            }
-        });
+        checkNewApp(new SilenceUpdateCallback());
     }
 
     /**
      * 最简方式
      */
+
     public void update() {
         checkNewApp(new UpdateCallback());
     }
@@ -371,6 +344,7 @@ public class UpdateAppManager {
         private boolean mHideDialog;
         private boolean mShowIgnoreVersion;
         private boolean dismissNotificationProgress;
+        private boolean mOnlyWifi;
 
         public Map<String, String> getParams() {
             return params;
@@ -570,6 +544,15 @@ public class UpdateAppManager {
 
         public boolean isDismissNotificationProgress() {
             return dismissNotificationProgress;
+        }
+
+        public Builder setOnlyWifi() {
+            mOnlyWifi = true;
+            return this;
+        }
+
+        public boolean isOnlyWifi() {
+            return mOnlyWifi;
         }
     }
 

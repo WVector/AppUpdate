@@ -15,6 +15,7 @@ import com.vector.appupdatedemo.http.OkGoUpdateHttpUtil;
 import com.vector.appupdatedemo.http.UpdateAppHttpUtil;
 import com.vector.appupdatedemo.util.CProgressDialogUtils;
 import com.vector.appupdatedemo.util.HProgressDialogUtils;
+import com.vector.update_app.SilenceUpdateCallback;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
@@ -41,6 +42,8 @@ public class JavaActivity extends AppCompatActivity {
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_2));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_3));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence_diy_dialog));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default), 0xffe94339);
 
     }
@@ -398,6 +401,11 @@ public class JavaActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 静默下载，下载完才弹出升级界面
+     *
+     * @param view
+     */
     public void silenceUpdateApp(View view) {
         new UpdateAppManager
                 .Builder()
@@ -407,7 +415,75 @@ public class JavaActivity extends AppCompatActivity {
                 .setUpdateUrl(mUpdateUrl)
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
+                //只有wifi下进行，静默下载(只对静默下载有效)
+                .setOnlyWifi()
                 .build()
                 .silenceUpdate();
     }
+
+    /**
+     * 静默下载，并且自定义对话框
+     *
+     * @param view
+     */
+    public void silenceUpdateAppAndDiyDialog(View view) {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                //只有wifi下进行，静默下载(只对静默下载有效)
+                .setOnlyWifi()
+                .build()
+                .checkNewApp(new SilenceUpdateCallback() {
+                    @Override
+                    protected void showDialog(UpdateAppBean updateApp, UpdateAppManager updateAppManager, File appFile) {
+                        showSilenceDiyDialog(updateApp, appFile);
+                    }
+                });
+    }
+
+    /**
+     * 静默下载自定义对话框
+     *
+     * @param updateApp
+     * @param appFile
+     */
+    private void showSilenceDiyDialog(final UpdateAppBean updateApp, final File appFile) {
+        String targetSize = updateApp.getTargetSize();
+        String updateLog = updateApp.getUpdateLog();
+
+        String msg = "";
+
+        if (!TextUtils.isEmpty(targetSize)) {
+            msg = "新版本大小：" + targetSize + "\n\n";
+        }
+
+        if (!TextUtils.isEmpty(updateLog)) {
+            msg += updateLog;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(String.format("是否升级到%s版本？", updateApp.getNewVersion()))
+                .setMessage(msg)
+                .setPositiveButton("安装", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppUpdateUtils.installApp(JavaActivity.this, appFile);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
 }

@@ -23,6 +23,7 @@
 - [x] 支持强制更新
 - [x] 支持简单主题色配置(可以自动从顶部图片提取主色)
 - [x] 支持自定义对话框（可以监听下载进度）
+- [x] 支持静默下载（可以设置wifi状态下）
 - [x] 支持android7.0
 
 ## 效果图与示例 apk
@@ -48,7 +49,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.2.9'
+    compile 'com.qianwen:update-app:3.3.0'
 }
 ```
 
@@ -180,6 +181,7 @@ dependencies {
                         Toast.makeText(JavaActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
+
 
 
 ```
@@ -473,6 +475,91 @@ dependencies {
                 .build()
                 .update();
 
+	/**
+     * 静默下载，下载完才弹出升级界面
+     *
+     * @param view
+     */
+    public void silenceUpdateApp(View view) {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                //只有wifi下进行，静默下载(只对静默下载有效)
+                .setOnlyWifi()
+                .build()
+                .silenceUpdate();
+    }
+
+ 	/**
+     * 静默下载，并且自定义对话框
+     *
+     * @param view
+     */
+    public void silenceUpdateAppAndDiyDialog(View view) {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                //只有wifi下进行，静默下载(只对静默下载有效)
+                .setOnlyWifi()
+                .build()
+                .checkNewApp(new SilenceUpdateCallback() {
+                    @Override
+                    protected void showDialog(UpdateAppBean updateApp, UpdateAppManager updateAppManager, File appFile) {
+                        showSilenceDiyDialog(updateApp, appFile);
+                    }
+                });
+    }
+
+
+  	/**
+     * 静默下载自定义对话框
+     *
+     * @param updateApp
+     * @param appFile
+     */
+    private void showSilenceDiyDialog(final UpdateAppBean updateApp, final File appFile) {
+        String targetSize = updateApp.getTargetSize();
+        String updateLog = updateApp.getUpdateLog();
+
+        String msg = "";
+
+        if (!TextUtils.isEmpty(targetSize)) {
+            msg = "新版本大小：" + targetSize + "\n\n";
+        }
+
+        if (!TextUtils.isEmpty(updateLog)) {
+            msg += updateLog;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(String.format("是否升级到%s版本？", updateApp.getNewVersion()))
+                .setMessage(msg)
+                .setPositiveButton("安装", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppUpdateUtils.installApp(JavaActivity.this, appFile);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
    	            
 ```
 
@@ -482,6 +569,11 @@ dependencies {
 #### 进度条使用的是代码家的「[NumberProgressBar](https://github.com/daimajia/NumberProgressBar)」
 
 ## 版本
+> V3.3.0 
+>> 1，可以设置不显示通知栏进度条。
+>> 2，可以设置忽略版本。 
+>> 3，优化下载时页面卡的问题（由于下载进度回调调用频繁，造成ui线程阻塞。）
+>> 4，可以静默下载，类似网易云音乐，并且设置wifi状态下
 
 > V3.2.9 
 >> 1，新增自定义对话框。
