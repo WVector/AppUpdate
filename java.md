@@ -1,5 +1,5 @@
 
-###目录
+### 目录
 
 * [默认接口协议](#默认接口协议)
 * [自定义接口协议](#自定义接口协议)
@@ -9,7 +9,7 @@
 * [静默下载+自定义对话框](#静默下载+自定义对话框)
 * [实现HttpManager接口](#实现HttpManager接口)
 
-###1， 默认接口协议 
+### 1， 默认接口协议 
 
 #### 1，Request 请求参数
 
@@ -93,7 +93,7 @@ GET：[https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.
    	            
 ```
 
-###2，自定义接口协议
+### 2，自定义接口协议
 
 根据自己项目的接口，自己传参数给服务器，实现parseJson方法，解析json，设置新版本app信息。
 
@@ -214,7 +214,7 @@ GET：[https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.
 
 ```
 
-###3，自定义接口协议+自定义对话框
+### 3，自定义接口协议+自定义对话框
 
 其他代码和上面一样，只需重写UpdateCallback 的 hasNewApp方法，然后调用自己的对话框
 
@@ -286,7 +286,7 @@ GET：[https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.
 
 ```
 
-###4，自定义接口协议+自定义对话框+显示进度对话框
+### 4，自定义接口协议+自定义对话框+显示进度对话框
 
 和上面的例子只有在控制下载有区别，传个回调，监听到下载进度。
 
@@ -341,7 +341,7 @@ onFinish() 当返回 true ：下载完自动跳到安装界面，false：则不�
 
 ```
 
-###5，静默下载
+### 5，静默下载
 以下是使用默认协议的例子，
 ```java
 
@@ -368,7 +368,7 @@ onFinish() 当返回 true ：下载完自动跳到安装界面，false：则不�
 
 ```
 
-###6，静默下载+自定义对话框
+### 6，静默下载+自定义对话框
 
 以下是使用默认协议的例子，也可以使用自定义协议（请参考自定义协议例子）
 
@@ -442,7 +442,7 @@ onFinish() 当返回 true ：下载完自动跳到安装界面，false：则不�
 
 ```
 
-###7，实现HttpManager接口
+### 7，实现HttpManager接口
 
 根据自己项目使用的网络框架，自己实现HttpManager接口
 
