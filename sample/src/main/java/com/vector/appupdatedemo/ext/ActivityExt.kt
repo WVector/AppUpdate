@@ -16,7 +16,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package com.pawegio.kandroid
+package com.vector.appupdatedemo.ext
 
 import android.app.Activity
 import android.support.annotation.IdRes

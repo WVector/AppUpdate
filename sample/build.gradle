@@ -31,9 +31,10 @@ dependencies {
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile project(':update-app')
+//    compile project(':update-app')
 //    compile project(':update-app-kotlin')
 
+    compile 'com.qianwen:update-app-kotlin:1.0.1'
     //okgo
     //rxjava 1
 
@@ -46,8 +47,6 @@ dependencies {
 
     compile 'com.lzy.net:okgo:3.0.4'
 
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
     compile 'io.reactivex:rxjava:1.2.9'
 
     compile 'io.reactivex:rxandroid:1.2.0'

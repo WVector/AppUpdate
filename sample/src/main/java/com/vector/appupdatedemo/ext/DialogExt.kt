@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yimiao.app.ext
+package com.vector.appupdatedemo.ext
 
 import android.app.ProgressDialog
 import android.content.Context

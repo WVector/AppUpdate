@@ -5,6 +5,7 @@ buildscript {
     ext.novoda_version = '0.4.0'
     repositories {
         jcenter()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -18,6 +19,8 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+
+//        maven{url 'https://dl.bintray.com/qianwen/maven/'}
         maven { url "https://www.jitpack.io" }
     }
     tasks.withType(Javadoc) {
@@ -28,7 +31,8 @@ allprojects {
         }
     }
 }
-
+//防止上传kotlin是报错,
+tasks.getByPath(":update-app-kotlin:releaseAndroidJavadocs").enabled = false
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
