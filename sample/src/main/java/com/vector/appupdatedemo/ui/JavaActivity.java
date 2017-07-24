@@ -39,7 +39,7 @@ public class JavaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java);
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_1));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_2));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_3));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence));

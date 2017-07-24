@@ -10,12 +10,14 @@ import com.vector.appupdatedemo.ext.showProgressDialog
 import com.vector.appupdatedemo.ext.toast
 import com.vector.appupdatedemo.http.UpdateAppHttpUtil
 import com.vector.appupdatedemo.util.HProgressDialogUtils
+import com.vector.update_app.SilenceUpdateCallback
 import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
 import com.vector.update_app.utils.AppUpdateUtils
 import com.vector.update_app_kotlin.*
 import kotlinx.android.synthetic.main.activity_kotlin.*
 import org.json.JSONObject
+import java.io.File
 import java.util.*
 
 class KotlinActivity : AppCompatActivity() {
@@ -24,15 +26,17 @@ class KotlinActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin)
         btn_default.setSolidTheme()
-        btn_diy.setStrokeTheme()
+        btn_diy_1.setStrokeTheme()
         btn_diy_2.setStrokeTheme()
         btn_diy_3.setStrokeTheme()
+        btn_diy_4.setStrokeTheme()
+        btn_diy_5.setStrokeTheme()
 
         btn_default.setOnClickListener {
             defaultUpdate()
         }
-        btn_diy.setOnClickListener {
-            diyUpdate()
+        btn_diy_1.setOnClickListener {
+            updateDiy1()
         }
 
         btn_diy_2.setOnClickListener {
@@ -41,7 +45,14 @@ class KotlinActivity : AppCompatActivity() {
         btn_diy_3.setOnClickListener {
             updateDiy3()
         }
+        btn_diy_4.setOnClickListener {
+            updateDiy4()
+        }
+        btn_diy_5.setOnClickListener {
+            updateDiy5()
+        }
     }
+
 
     private var isShowDownloadProgress: Boolean = false
     /**
@@ -65,7 +76,6 @@ class KotlinActivity : AppCompatActivity() {
      */
     private fun updateDiy3() {
         isShowDownloadProgress = true
-
         diy()
     }
 
@@ -163,9 +173,9 @@ class KotlinActivity : AppCompatActivity() {
 
 
     /**
-     * 自定义
+     * 自定义接口协议
      */
-    private fun diyUpdate() {
+    private fun updateDiy1() {
         //下载路径
         val path = Environment.getExternalStorageDirectory().absolutePath
         //自定义参数
@@ -221,6 +231,49 @@ class KotlinActivity : AppCompatActivity() {
                     onAfter { cancelProgressDialog() }
                 }
 
+    }
+
+    /**
+     * 静默下载
+     */
+    private fun updateDiy4() {
+        updateApp(mUpdateUrl, UpdateAppHttpUtil())
+        {
+            setOnlyWifi()
+        }.silenceUpdate()
+    }
+
+    /**
+     * 静默下载+自定义对话框
+     */
+    private fun updateDiy5() {
+        updateApp(mUpdateUrl, UpdateAppHttpUtil())
+        {
+            setOnlyWifi()
+        }.checkNewApp(object : SilenceUpdateCallback() {
+            override fun showDialog(updateApp: UpdateAppBean, updateAppManager: UpdateAppManager?, appFile: File) {
+                showSilenceDiyDialog(updateApp, appFile)
+            }
+        })
+    }
+
+    /**
+     * 自定义对话框
+     */
+    private fun showSilenceDiyDialog(updateApp: UpdateAppBean, appFile: File?) {
+        dialog("是否升级到${updateApp.newVersion}版本？"
+                , "新版本大小：${updateApp.targetSize}\n\n${updateApp.updateLog}")
+        {
+            positiveButton("升级") {
+                AppUpdateUtils.installApp(this@KotlinActivity, appFile)
+                dismiss()
+
+            }
+            negativeButton("暂不升级") {
+                dismiss()
+            }
+            show()
+        }
     }
 
 

@@ -18,11 +18,10 @@
         />
 
     <Button
-        android:id="@+id/btn_diy"
+        android:id="@+id/btn_diy_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:onClick="updateDiy"
         android:text="自定义接口协议"
         />
 
@@ -31,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:onClick="updateDiy2"
         android:text="自定义接口协议+自定义对话框"
         />
 
@@ -40,8 +38,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:onClick="updateDiy3"
         android:text="自定义接口协议+自定义对话框+显示进度对话框"
         />
 
+    <Button
+        android:id="@+id/btn_diy_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="静默下载"
+        />
+
+    <Button
+        android:id="@+id/btn_diy_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="静默下载+自定义对话框"
+        />
 </LinearLayout>
