@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.0'
+    compile 'com.qianwen:update-app:3.3.1'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.1'
+    compile 'com.qianwen:update-app-kotlin:1.0.2'
 }
 ```
 
@@ -99,6 +99,12 @@ dependencies {
 #### 进度条使用的是代码家的「[NumberProgressBar](https://github.com/daimajia/NumberProgressBar)」
 
 ## 更新日志
+
+kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+V3.3.1
+
+	1，修复对话框外可以点击的问题
 
 V3.3.0 
 

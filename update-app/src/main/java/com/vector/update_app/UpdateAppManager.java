@@ -118,6 +118,10 @@ public class UpdateAppManager {
 //        }
 //
 //    }
+
+    /**
+     * @return 新版本信息
+     */
     public UpdateAppBean fillUpdateAppData() {
         if (mUpdateApp != null) {
             mUpdateApp.setTargetPath(mTargetPath);
@@ -514,6 +518,9 @@ public class UpdateAppManager {
             return this;
         }
 
+        /**
+         * @return 是否影藏对话框
+         */
         public boolean isHideDialog() {
             return mHideDialog;
         }
@@ -521,7 +528,7 @@ public class UpdateAppManager {
         /**
          * 显示忽略版本
          *
-         * @return
+         * @return 是否忽略版本
          */
         public Builder showIgnoreVersion() {
             mShowIgnoreVersion = true;

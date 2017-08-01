@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'com.novoda.bintray-release'//添加
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -37,14 +37,14 @@ dependencies {
 }
 
 //添加
-//publish {
-//    userOrg = 'qianwen'//bintray.com用户名
-//    groupId = 'com.qianwen'//jcenter上的路径
-//    artifactId = 'update-app'//项目名称
-//    publishVersion = '3.3.0'//版本号
-//    desc = 'a library for android version update'
-//    website = 'https://github.com/WVector/AppUpdate'
-//}
+publish {
+    userOrg = 'qianwen'//bintray.com用户名
+    groupId = 'com.qianwen'//jcenter上的路径
+    artifactId = 'update-app'//项目名称
+    publishVersion = '3.3.1'//版本号
+    desc = 'a library for android version update'
+    website = 'https://github.com/WVector/AppUpdate'
+}
 repositories {
     mavenCentral()
 }

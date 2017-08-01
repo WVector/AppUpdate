@@ -15,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,8 +79,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         getDialog().setCanceledOnTouchOutside(false);
         //是否可以取消,会影响上面那条属性
 //        setCancelable(false);
-        //window外可以点击,不拦截窗口外的事件
-        getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+//        //window外可以点击,不拦截窗口外的事件
+//        getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
