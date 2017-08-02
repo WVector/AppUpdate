@@ -35,7 +35,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile 'com.qianwen:update-app:3.3.1'
+    compile 'com.qianwen:update-app:+'
+
 //    compile project(':update-app')
 }
 //添加
@@ -43,7 +44,7 @@ publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
     artifactId = 'update-app-kotlin'//项目名称
-    publishVersion = '1.0.2'//版本号
+    publishVersion = '1.0.3'//版本号
     desc = 'a library for android version update'
     website = 'https://github.com/WVector/AppUpdate'
 }

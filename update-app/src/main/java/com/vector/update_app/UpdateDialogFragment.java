@@ -308,7 +308,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 @Override
                 public boolean onFinish(File file) {
                     if (!UpdateDialogFragment.this.isRemoving()) {
-                        dismiss();
+                        dismissAllowingStateLoss();
                     }
                     return true;
                 }
@@ -316,7 +316,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 @Override
                 public void onError(String msg) {
                     if (!UpdateDialogFragment.this.isRemoving()) {
-                        dismiss();
+                        dismissAllowingStateLoss();
                     }
                 }
             });
