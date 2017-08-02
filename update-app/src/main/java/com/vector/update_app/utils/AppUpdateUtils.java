@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -41,12 +42,22 @@ public class AppUpdateUtils {
         return info != null && info.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
+
     public static File getAppFile(UpdateAppBean updateAppBean) {
-        String apkUrl = updateAppBean.getApkFileUrl();
-        final String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1, apkUrl.length());
+        String appName = getApkName(updateAppBean);
         return new File(updateAppBean.getTargetPath()
                 .concat(File.separator + updateAppBean.getNewVersion())
                 .concat(File.separator + appName));
+    }
+
+    @NonNull
+    public static String getApkName(UpdateAppBean updateAppBean) {
+        String apkUrl = updateAppBean.getApkFileUrl();
+        String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1, apkUrl.length());
+        if (!appName.endsWith(".apk")) {
+            appName = "temp.apk";
+        }
+        return appName;
     }
 
     public static boolean appIsDownloaded(UpdateAppBean updateAppBean) {

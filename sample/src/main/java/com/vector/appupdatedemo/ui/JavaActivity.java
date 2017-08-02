@@ -96,7 +96,7 @@ public class JavaActivity extends AppCompatActivity {
                 //设置请求方式，默认get
                 .setPost(false)
                 //不显示通知栏进度条
-                .dismissNotificationProgress()
+//                .dismissNotificationProgress()
                 //是否忽略版本
 //                .showIgnoreVersion()
                 //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
@@ -133,6 +133,8 @@ public class JavaActivity extends AppCompatActivity {
                                     .setNewVersion(jsonObject.optString("new_version"))
                                     //（必须）下载地址
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
+                                    //测试下载路径是重定向路径
+//                                    .setApkFileUrl("http://openbox.mobilem.360.cn/index/d/sid/3282847")
                                     //（必须）更新内容
                                     .setUpdateLog(jsonObject.optString("update_log"))
                                     //测试内容过度
@@ -330,6 +332,7 @@ public class JavaActivity extends AppCompatActivity {
                                     .setNewVersion(jsonObject.optString("new_version"))
                                     //（必须）下载地址
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
+
                                     //（必须）更新内容
                                     .setUpdateLog(jsonObject.optString("update_log"))
 

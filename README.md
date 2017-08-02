@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.1'
+    compile 'com.qianwen:update-app:3.3.3'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.2'
+    compile 'com.qianwen:update-app-kotlin:1.0.4'
 }
 ```
 
@@ -101,6 +101,15 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+V3.3.3
+
+	1，修复下载路径是重定向路径不能下载的问题
+
+V3.3.2
+
+	1，修复正在下载时，返回桌面报错的问题
+[https://github.com/WVector/AppUpdate/issues/14](https://github.com/WVector/AppUpdate/issues/14)
 
 V3.3.1
 

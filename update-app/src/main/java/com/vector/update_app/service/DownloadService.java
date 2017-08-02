@@ -101,13 +101,8 @@ public class DownloadService extends Service {
             stop(contentText);
             return;
         }
-        final String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1, apkUrl.length());
+        String appName = AppUpdateUtils.getApkName(updateApp);
 
-        if (!appName.endsWith(".apk")) {
-            String contentText = "下载包有错误";
-            stop(contentText);
-            return;
-        }
         File appDir = new File(updateApp.getTargetPath());
         if (!appDir.exists()) {
             appDir.mkdirs();
