@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -98,6 +101,15 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 return false;
             }
         });
+
+        Window dialogWindow = getDialog().getWindow();
+        dialogWindow.setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.x = 0;
+        lp.y = 0;
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        lp.height = (int) (displayMetrics.heightPixels * 0.8f);
+        dialogWindow.setAttributes(lp);
     }
 
     @Nullable
@@ -200,13 +212,14 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         } else {
             if (-1 == color) {
                 //自动提色
-                Palette.from(AppUpdateUtils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
-                    @Override
-                    public void onGenerated(Palette palette) {
-                        int mDominantColor = palette.getDominantColor(mDefaultColor);
-                        setDialogTheme(mDominantColor, topResId);
-                    }
-                });
+//                Palette.from(AppUpdateUtils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
+//                    @Override
+//                    public void onGenerated(Palette palette) {
+//                        int mDominantColor = palette.getDominantColor(mDefaultColor);
+//                        setDialogTheme(mDominantColor, topResId);
+//                    }
+//                });
+                setDialogTheme(mDefaultColor, topResId);
             } else {
                 //更加指定的上色
                 setDialogTheme(color, topResId);

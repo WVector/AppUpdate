@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.3'
+    compile 'com.qianwen:update-app:3.3.4'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.4'
+    compile 'com.qianwen:update-app-kotlin:1.0.5'
 }
 ```
 
@@ -101,6 +101,12 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+V3.3.4
+
+	1，修复对话框更新内容过多，升级按钮被挤压的问题。
+	2，去掉自动从图片提取颜色的功能， 通过.setThemeColor()设置按钮和精度条颜色，
+	3，兼容compileSdkVersion <25
 
 V3.3.3
 

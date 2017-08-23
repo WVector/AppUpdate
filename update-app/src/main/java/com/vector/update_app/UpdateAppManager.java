@@ -206,7 +206,7 @@ public class UpdateAppManager {
         }
         callback.onBefore();
 
-        if (DialogActivity.isShow || DownloadService.isRunning || UpdateDialogFragment.isShow) {
+        if (DownloadService.isRunning || UpdateDialogFragment.isShow) {
             callback.onAfter();
             Toast.makeText(mActivity, "app正在更新", Toast.LENGTH_SHORT).show();
             return;

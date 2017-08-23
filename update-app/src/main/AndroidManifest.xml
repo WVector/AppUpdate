@@ -7,16 +7,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application>
-        <service android:name=".service.DownloadService"/>
-        <activity
-            android:name=".DialogActivity"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/UpdateAppDialog"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+        <service android:name="com.vector.update_app.service.DownloadService"/>
         <provider
-            android:name=".UpdateFileProvider"
+            android:name="com.vector.update_app.UpdateFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -72,10 +72,11 @@ public class AppUpdateUtils {
 
     public static boolean installApp(Context context, File appFile) {
         try {
-            Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", appFile);
+
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", appFile);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
             } else {
@@ -93,10 +94,11 @@ public class AppUpdateUtils {
 
     public static Intent getInstallAppIntent(Context context, File appFile) {
         try {
-            Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", appFile);
+
             Intent intent = new Intent(Intent.ACTION_VIEW);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", appFile);
                 intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
             } else {
                 intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");

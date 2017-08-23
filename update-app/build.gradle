@@ -31,8 +31,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:palette-v7:25.3.1'
+    provided 'com.android.support:appcompat-v7:25.3.1'
+//    compile 'com.android.support:palette-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 }
 
@@ -41,7 +41,7 @@ publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
     artifactId = 'update-app'//项目名称
-    publishVersion = '3.3.3'//版本号
+    publishVersion = '3.3.4'//版本号
     desc = 'a library for android version update'
     website = 'https://github.com/WVector/AppUpdate'
 }

@@ -21,7 +21,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@drawable/lib_update_app_info_bg"
             android:orientation="vertical"
             android:padding="16dp">
@@ -34,9 +35,10 @@
                 android:textColor="@android:color/black"
                 android:textSize="15sp"/>
 
-            <com.vector.update_app.view.AutoScrollView
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:scrollbars="none">
@@ -48,7 +50,7 @@
                     android:text="1，xxxxxxxx\n2，ooooooooo"
                     android:textColor="#666"
                     android:textSize="14sp"/>
-            </com.vector.update_app.view.AutoScrollView>
+            </ScrollView>
 
 
             <Button
@@ -81,30 +83,31 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/line"
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:background="#d8d8d8"
-            android:visibility="visible"/>
-
-        <ImageView
-            android:id="@+id/iv_close"
+        <LinearLayout
+            android:id="@+id/ll_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/lib_update_app_close"
-            />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#d8d8d8"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/lib_update_app_close"
+                />
 
 
+        </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>

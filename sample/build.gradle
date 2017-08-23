@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 android {
-    compileSdkVersion 25
+    compileSdkVersion 23
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.vector.appupdatedemo"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 23
         versionCode 1
         versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -34,12 +34,12 @@ dependencies {
 //    compile project(':update-app')
     compile project(':update-app-kotlin')
 
-//    compile 'com.qianwen:update-app-kotlin:1.0.1'
+//    compile 'com.qianwen:update-app-kotlin:1.0.4'
     //okgo
     //rxjava 1
-
+    compile 'com.android.support:palette-v7:23.4.0'
     //权限引导
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
