@@ -143,9 +143,11 @@ public class UpdateAppManager {
             return true;
         }
 
-        String preSuffix = "/storage/emulated";
+//        String preSuffix = "/storage/emulated";
 
-        if (TextUtils.isEmpty(mTargetPath) || !mTargetPath.startsWith(preSuffix)) {
+        if (TextUtils.isEmpty(mTargetPath)
+//                || !mTargetPath.startsWith(preSuffix)
+                ) {
             Log.e(TAG, "下载路径错误:" + mTargetPath);
             return true;
         }
@@ -542,7 +544,7 @@ public class UpdateAppManager {
         /**
          * 不显示通知栏进度条
          *
-         * @return
+         * @return 是否显示进度条
          */
         public Builder dismissNotificationProgress() {
             dismissNotificationProgress = true;

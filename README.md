@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.5'
+    compile 'com.qianwen:update-app:3.3.6'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.6'
+    compile 'com.qianwen:update-app-kotlin:1.0.7'
 }
 ```
 
@@ -101,6 +101,11 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+V3.3.6
+	
+	1,去掉对下载路径前缀的校验。
+[https://github.com/WVector/AppUpdate/issues/26](https://github.com/WVector/AppUpdate/issues/26)
 
 V3.3.5
 
