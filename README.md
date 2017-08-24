@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.4'
+    compile 'com.qianwen:update-app:3.3.5'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.5'
+    compile 'com.qianwen:update-app-kotlin:1.0.6'
 }
 ```
 
@@ -101,6 +101,12 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+V3.3.5
+
+	1，修复升级对话框布局中的问题。
+	2，修复静默下载，关闭更新弹窗 再点击更新 一直显示的问题。
+[https://github.com/WVector/AppUpdate/issues/21](https://github.com/WVector/AppUpdate/issues/21)
 
 V3.3.4
 

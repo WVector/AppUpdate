@@ -249,6 +249,7 @@ public class DownloadService extends Service {
         public void onResponse(File file) {
             if (mCallBack != null) {
                 if (!mCallBack.onFinish(file)) {
+                    close();
                     return;
                 }
             }
