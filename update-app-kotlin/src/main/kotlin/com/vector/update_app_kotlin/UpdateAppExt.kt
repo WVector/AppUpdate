@@ -48,7 +48,11 @@ class Callback : UpdateCallback() {
     }
 
     override fun hasNewApp(updateApp: UpdateAppBean, updateAppManager: UpdateAppManager) {
-        _hasNewApp?.invoke(updateApp, updateAppManager)
+        if (_hasNewApp != null) {
+            _hasNewApp?.invoke(updateApp, updateAppManager)
+        } else {
+            super.hasNewApp(updateApp, updateAppManager)
+        }
     }
 
     override fun noNewApp() {

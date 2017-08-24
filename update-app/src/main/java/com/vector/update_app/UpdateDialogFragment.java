@@ -105,8 +105,6 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         Window dialogWindow = getDialog().getWindow();
         dialogWindow.setGravity(Gravity.CENTER);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.x = 0;
-        lp.y = 0;
         DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
         lp.height = (int) (displayMetrics.heightPixels * 0.8f);
         dialogWindow.setAttributes(lp);

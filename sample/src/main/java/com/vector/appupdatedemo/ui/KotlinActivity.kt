@@ -197,8 +197,9 @@ class KotlinActivity : AppCompatActivity() {
             hideDialogOnDownloading(true)
             //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
             topPic = R.mipmap.top_8
-            //为按钮，进度条设置颜色，默认从顶部图片自动识别。
-//                setThemeColor(ColorUtil.getRandomColor())
+
+            //为按钮，进度条设置颜色。
+            themeColor = 0xffffac5d.toInt()
             //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
             targetPath = path
             //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
