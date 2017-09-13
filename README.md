@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.6'
+    compile 'com.qianwen:update-app:3.3.7'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.7'
+    compile 'com.qianwen:update-app-kotlin:1.0.9'
 }
 ```
 
@@ -101,6 +101,12 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+V3.3.7
+	
+	1,修改默认安装包下载路径为download/packageName
+
+感谢[bean-liu](https://github.com/bean-liu)对项目的维护
 
 V3.3.6
 	
