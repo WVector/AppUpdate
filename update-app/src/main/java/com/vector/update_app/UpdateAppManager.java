@@ -18,8 +18,11 @@ import android.widget.Toast;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.text.TextUtils.concat;
 
 /**
  * 版本更新管理器
@@ -497,6 +500,9 @@ public class UpdateAppManager {
             }
             if (TextUtils.isEmpty(getTargetPath())) {
                 String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+                if(mActivity != null) {
+                    path = path.concat(File.separator).concat(mActivity.getPackageName());
+                }
                 setTargetPath(path);
             }
             if (TextUtils.isEmpty(getAppKey())) {
