@@ -1,14 +1,17 @@
 package com.vector.update_app;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -24,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
@@ -39,6 +43,7 @@ import java.io.File;
  */
 
 public class UpdateDialogFragment extends DialogFragment implements View.OnClickListener {
+    public static final String TIPS = "请授权访问存储空间权限，否则App无法更新";
     public static boolean isShow = false;
     private TextView mContentTextView;
     private Button mUpdateOkButton;
@@ -254,8 +259,23 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.btn_ok) {
-            installApp();
-            mUpdateOkButton.setVisibility(View.GONE);
+
+            //权限判断是否有访问外部存储空间权限
+            int flag = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (flag != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    // 用户拒绝过这个权限了，应该提示用户，为什么需要这个权限。
+                    Toast.makeText(getActivity(), TIPS, Toast.LENGTH_LONG).show();
+                } else {
+                    // 申请授权。
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                }
+
+            } else {
+                installApp();
+                mUpdateOkButton.setVisibility(View.GONE);
+            }
+
         } else if (i == R.id.iv_close) {
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
 //                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
@@ -281,6 +301,23 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //升级
+                installApp();
+                mUpdateOkButton.setVisibility(View.GONE);
+            } else {
+                //提示，并且关闭
+                Toast.makeText(getActivity(), TIPS, Toast.LENGTH_LONG).show();
+                dismiss();
+
+            }
+        }
+
+    }
 
     /**
      * 开启后台服务下载

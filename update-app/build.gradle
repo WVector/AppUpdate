@@ -40,7 +40,7 @@ publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
     artifactId = 'update-app'//项目名称
-    publishVersion = '3.3.7'//版本号
+    publishVersion = '3.3.8'//版本号
     desc = 'a library for android version update'
     website = 'https://github.com/WVector/AppUpdate'
 }

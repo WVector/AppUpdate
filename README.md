@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.7'
+    compile 'com.qianwen:update-app:3.3.8'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.0.9'
+    compile 'com.qianwen:update-app-kotlin:1.1.0'
 }
 ```
 
@@ -101,6 +101,10 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
+v3.3.8
+
+	1,增加存储空间权限申请
 
 V3.3.7
 	
