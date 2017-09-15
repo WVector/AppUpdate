@@ -154,6 +154,7 @@ public class DownloadService extends Service {
 
         /**
          * 下载完了
+         *
          * @param file 下载的app
          * @return true ：下载完自动跳到安装界面，false：则不进行安装
          */
@@ -254,27 +255,34 @@ public class DownloadService extends Service {
                 }
             }
 
-            if (AppUpdateUtils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
-                //App前台运行
-                mNotificationManager.cancel(NOTIFY_ID);
-                AppUpdateUtils.installApp(DownloadService.this, file);
-            } else {
-                //App后台运行
-                //更新参数,注意flags要使用FLAG_UPDATE_CURRENT
-                Intent installAppIntent = AppUpdateUtils.getInstallAppIntent(DownloadService.this, file);
-                PendingIntent contentIntent = PendingIntent.getActivity(DownloadService.this, 0, installAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mBuilder.setContentIntent(contentIntent)
-                        .setContentTitle(AppUpdateUtils.getAppName(DownloadService.this))
-                        .setContentText("下载完成，请点击安装")
-                        .setProgress(0, 0, false)
-//                        .setAutoCancel(true)
-                        .setDefaults((Notification.DEFAULT_ALL));
-                Notification notification = mBuilder.build();
-                notification.flags = Notification.FLAG_AUTO_CANCEL;
-                mNotificationManager.notify(NOTIFY_ID, notification);
+            try {
+
+                if (AppUpdateUtils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
+                    //App前台运行
+                    mNotificationManager.cancel(NOTIFY_ID);
+                    AppUpdateUtils.installApp(DownloadService.this, file);
+                } else {
+                    //App后台运行
+                    //更新参数,注意flags要使用FLAG_UPDATE_CURRENT
+                    Intent installAppIntent = AppUpdateUtils.getInstallAppIntent(DownloadService.this, file);
+                    PendingIntent contentIntent = PendingIntent.getActivity(DownloadService.this, 0, installAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    mBuilder.setContentIntent(contentIntent)
+                            .setContentTitle(AppUpdateUtils.getAppName(DownloadService.this))
+                            .setContentText("下载完成，请点击安装")
+                            .setProgress(0, 0, false)
+                            //                        .setAutoCancel(true)
+                            .setDefaults((Notification.DEFAULT_ALL));
+                    Notification notification = mBuilder.build();
+                    notification.flags = Notification.FLAG_AUTO_CANCEL;
+                    mNotificationManager.notify(NOTIFY_ID, notification);
+                }
+                //下载完自杀
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                close();
             }
-            //下载完自杀
-            close();
         }
     }
 }

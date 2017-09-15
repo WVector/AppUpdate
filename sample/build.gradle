@@ -34,7 +34,7 @@ dependencies {
 //    compile project(':update-app')
     compile project(':update-app-kotlin')
 
-//    compile 'com.qianwen:update-app-kotlin:1.0.6'
+//    compile 'com.qianwen:update-app-kotlin:1.0.9'
     //okgo
     //rxjava 1
     compile 'com.android.support:palette-v7:23.4.0'

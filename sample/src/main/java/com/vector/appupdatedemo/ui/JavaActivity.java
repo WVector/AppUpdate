@@ -74,7 +74,7 @@ public class JavaActivity extends AppCompatActivity {
      */
     public void updateDiy(View view) {
 
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+//        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
         Map<String, String> params = new HashMap<String, String>();
 
@@ -109,7 +109,7 @@ public class JavaActivity extends AppCompatActivity {
                 //为按钮，进度条设置颜色。
                 .setThemeColor(0xffffac5d)
                 //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
-                .setTargetPath(path)
+//                .setTargetPath(path)
                 //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
 //                .setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
 

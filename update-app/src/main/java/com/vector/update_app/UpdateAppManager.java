@@ -18,11 +18,8 @@ import android.widget.Toast;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.text.TextUtils.concat;
 
 /**
  * 版本更新管理器
@@ -499,16 +496,25 @@ public class UpdateAppManager {
                 throw new NullPointerException("必要参数不能为空");
             }
             if (TextUtils.isEmpty(getTargetPath())) {
-                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-                if(mActivity != null) {
-                    path = path.concat(File.separator).concat(mActivity.getPackageName());
+                //sd卡是否存在
+                String path = "";
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) || !Environment.isExternalStorageRemovable()) {
+                    try {
+                        path = getActivity().getExternalCacheDir().getAbsolutePath();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (TextUtils.isEmpty(path)) {
+                        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+                    }
+                } else {
+                    path = getActivity().getCacheDir().getAbsolutePath();
                 }
                 setTargetPath(path);
             }
             if (TextUtils.isEmpty(getAppKey())) {
                 String appKey = AppUpdateUtils.getManifestString(getActivity(), UPDATE_APP_KEY);
-                if (TextUtils.isEmpty(appKey)) {
-                } else {
+                if (!TextUtils.isEmpty(appKey)) {
                     setAppKey(appKey);
                 }
             }
