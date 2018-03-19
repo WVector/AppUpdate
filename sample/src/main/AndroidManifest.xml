@@ -12,9 +12,17 @@
         android:allowBackup="true"
         android:icon="@mipmap/app_update_logo"
         android:label="@string/app_name"
-
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+
+        <meta-data
+            android:name="UPDATE_APP_KEY"
+            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
+
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,10 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="UPDATE_APP_KEY"
-            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
 
         <activity android:name=".ui.KotlinActivity">
         </activity>

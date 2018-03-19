@@ -356,9 +356,22 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 }
 
                 @Override
-                public boolean onFinish(File file) {
+                public boolean onFinish(final File file) {
                     if (!UpdateDialogFragment.this.isRemoving()) {
-                        dismissAllowingStateLoss();
+                        if (mUpdateApp.isConstraint()) {
+                            mNumberProgressBar.setVisibility(View.GONE);
+                            mUpdateOkButton.setText("安装");
+                            mUpdateOkButton.setVisibility(View.VISIBLE);
+                            mUpdateOkButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    AppUpdateUtils.installApp(getActivity(), file);
+                                }
+                            });
+                        }
+                        else {
+                            dismissAllowingStateLoss();
+                        }
                     }
                     return true;
                 }
