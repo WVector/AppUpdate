@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.3.8'
+    compile 'com.qianwen:update-app:3.3.9'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.1.0'
+    compile 'com.qianwen:update-app-kotlin:1.1.1'
 }
 ```
 
@@ -101,6 +101,11 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+v3.3.9
+
+	1,适配android8.0的通知和安装未知来源的app
+
+感谢[typ0520](https://github.com/typ0520)对项目的维护
 
 v3.3.8
 

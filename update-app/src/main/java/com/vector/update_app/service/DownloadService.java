@@ -1,6 +1,7 @@
 package com.vector.update_app.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -29,6 +30,9 @@ public class DownloadService extends Service {
 
     private static final int NOTIFY_ID = 0;
     private static final String TAG = DownloadService.class.getSimpleName();
+    private static final String CHANNEL_ID = "app_update_id";
+    private static final CharSequence CHANNEL_NAME = "app_update_channel";
+
     public static boolean isRunning = false;
     private NotificationManager mNotificationManager;
     private DownloadBinder binder = new DownloadBinder();
@@ -77,7 +81,24 @@ public class DownloadService extends Service {
             return;
         }
 
-        mBuilder = new NotificationCompat.Builder(this);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            //设置绕过免打扰模式
+//            channel.setBypassDnd(true);
+//            //检测是否绕过免打扰模式
+//            channel.canBypassDnd();
+//            //设置在锁屏界面上显示这条通知
+//            channel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
+//            channel.setLightColor(Color.GREEN);
+//            channel.setShowBadge(true);
+//            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+//            channel.enableVibration(true);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+
+        mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
         mBuilder.setContentTitle("开始下载")
                 .setContentText("正在连接服务器")
                 .setSmallIcon(R.mipmap.lib_update_app_update_icon)
