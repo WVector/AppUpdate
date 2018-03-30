@@ -181,7 +181,7 @@ public class JavaActivity extends AppCompatActivity {
                      * 没有新版本
                      */
                     @Override
-                    public void noNewApp() {
+                    public void noNewApp(String error) {
                         Toast.makeText(JavaActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -391,7 +391,7 @@ public class JavaActivity extends AppCompatActivity {
                      * 没有新版本
                      */
                     @Override
-                    public void noNewApp() {
+                    public void noNewApp(String error) {
                         Toast.makeText(JavaActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });

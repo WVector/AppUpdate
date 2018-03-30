@@ -128,8 +128,9 @@ public class UpdateAppBean implements Serializable {
         return update_def_dialog_title;
     }
 
-    public void setUpdateDefDialogTitle(String updateDefDialogTitle) {
+    public UpdateAppBean setUpdateDefDialogTitle(String updateDefDialogTitle) {
         this.update_def_dialog_title = updateDefDialogTitle;
+        return this;
     }
 
     public boolean isDelta() {
@@ -186,7 +187,8 @@ public class UpdateAppBean implements Serializable {
         return origin_res;
     }
 
-    public void setOriginRes(String originRes) {
+    public UpdateAppBean setOriginRes(String originRes) {
         this.origin_res = originRes;
+        return this;
     }
 }

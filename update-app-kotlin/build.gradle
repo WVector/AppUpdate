@@ -43,7 +43,7 @@ publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
     artifactId = 'update-app-kotlin'//项目名称
-    publishVersion = '1.1.1'//版本号
+    publishVersion = '1.1.2'//版本号
     desc = 'a library for android version update'
     website = 'https://github.com/WVector/AppUpdate'
 }

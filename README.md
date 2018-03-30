@@ -102,6 +102,13 @@ dependencies {
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
 
+v3.4.0
+
+	1,修复  
+[issues#59](https://github.com/WVector/AppUpdate/issues/59)
+
+
+
 v3.3.9
 
 	1,适配android8.0的通知和安装未知来源的app
