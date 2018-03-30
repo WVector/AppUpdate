@@ -24,7 +24,7 @@ import android.support.annotation.StringRes
 import android.view.View
 import android.widget.Toast
 
-inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id)
 
 inline fun Activity.toast(text: CharSequence): Unit = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 
