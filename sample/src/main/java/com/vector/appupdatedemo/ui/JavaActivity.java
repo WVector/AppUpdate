@@ -145,7 +145,7 @@ public class JavaActivity extends AppCompatActivity {
                                     //大小，不设置不显示大小，可以不设置
                                     .setTargetSize(jsonObject.optString("target_size"))
                                     //是否强制更新，可以不设置
-                                    .setConstraint(false)
+                                    .setConstraint(true)
                                     //设置md5，可以不设置
                                     .setNewMd5(jsonObject.optString("new_md51"));
                         } catch (JSONException e) {
