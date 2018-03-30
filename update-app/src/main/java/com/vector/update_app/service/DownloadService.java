@@ -85,7 +85,7 @@ public class DownloadService extends Service {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
             //设置绕过免打扰模式
-//            channel.setBypassDnd(true);
+//            channel.setBypassDnd(false);
 //            //检测是否绕过免打扰模式
 //            channel.canBypassDnd();
 //            //设置在锁屏界面上显示这条通知
@@ -93,7 +93,9 @@ public class DownloadService extends Service {
 //            channel.setLightColor(Color.GREEN);
 //            channel.setShowBadge(true);
 //            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-//            channel.enableVibration(true);
+            channel.enableVibration(false);
+            channel.enableLights(false);
+
             mNotificationManager.createNotificationChannel(channel);
         }
 
@@ -241,7 +243,7 @@ public class DownloadService extends Service {
                             .setProgress(100, rate, false)
                             .setWhen(System.currentTimeMillis());
                     Notification notification = mBuilder.build();
-                    notification.flags = Notification.FLAG_AUTO_CANCEL;
+                    notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONLY_ALERT_ONCE;
                     mNotificationManager.notify(NOTIFY_ID, notification);
                 }
 
