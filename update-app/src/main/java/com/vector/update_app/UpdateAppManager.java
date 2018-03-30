@@ -246,7 +246,7 @@ public class UpdateAppManager {
                 @Override
                 public void onError(String error) {
                     callback.onAfter();
-                    callback.noNewApp();
+                    callback.noNewApp(error);
                 }
             });
         } else {
@@ -262,7 +262,7 @@ public class UpdateAppManager {
                 @Override
                 public void onError(String error) {
                     callback.onAfter();
-                    callback.noNewApp();
+                    callback.noNewApp(error);
                 }
             });
         }
@@ -316,11 +316,11 @@ public class UpdateAppManager {
                 //没有则进行下载，监听下载完成，弹出安装对话框
 
             } else {
-                callback.noNewApp();
+                callback.noNewApp("没有新版本");
             }
         } catch (Exception ignored) {
             ignored.printStackTrace();
-            callback.noNewApp();
+            callback.noNewApp(String.format("解析自定义更新配置消息出错[%s]", ignored.getMessage()));
         }
     }
 

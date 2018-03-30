@@ -49,8 +49,9 @@ public class UpdateCallback {
 
     /**
      * 没有新版本
+     * @param error HttpManager实现类请求出错返回的错误消息，交给使用者自己返回，有可能不同的应用错误内容需要提示给客户
      */
-    protected void noNewApp() {
+    protected void noNewApp(String error) {
     }
 
     /**

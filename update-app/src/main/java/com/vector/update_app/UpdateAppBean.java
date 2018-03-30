@@ -27,6 +27,8 @@ public class UpdateAppBean implements Serializable {
     private String apk_file_url;
     //更新日志
     private String update_log;
+    //配置默认更新dialog 的title
+    private String update_def_dialog_title;
     //新app大小
     private String target_size;
     //是否强制更新
@@ -35,6 +37,8 @@ public class UpdateAppBean implements Serializable {
     private String new_md5;
     //是否增量 暂时不用
     private boolean delta;
+    //服务器端的原生返回数据（json）,方便使用者在hasNewApp自定义渲染dialog的时候可以有别的控制，比如：#issues/59
+    private String origin_res;
     /**********以下是内部使用的数据**********/
 
     //网络工具，内部使用
@@ -120,6 +124,14 @@ public class UpdateAppBean implements Serializable {
         return this;
     }
 
+    public String getUpdateDefDialogTitle() {
+        return update_def_dialog_title;
+    }
+
+    public void setUpdateDefDialogTitle(String updateDefDialogTitle) {
+        this.update_def_dialog_title = updateDefDialogTitle;
+    }
+
     public boolean isDelta() {
         return delta;
     }
@@ -170,4 +182,11 @@ public class UpdateAppBean implements Serializable {
         mOnlyWifi = onlyWifi;
     }
 
+    public String getOriginRes() {
+        return origin_res;
+    }
+
+    public void setOriginRes(String originRes) {
+        this.origin_res = originRes;
+    }
 }

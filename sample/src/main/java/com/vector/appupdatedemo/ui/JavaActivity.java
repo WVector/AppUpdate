@@ -127,15 +127,17 @@ public class JavaActivity extends AppCompatActivity {
                         UpdateAppBean updateAppBean = new UpdateAppBean();
                         try {
                             JSONObject jsonObject = new JSONObject(json);
+                            final String newVersion = jsonObject.optString("new_version");
                             updateAppBean
                                     //（必须）是否更新Yes,No
                                     .setUpdate(jsonObject.optString("update"))
                                     //（必须）新版本号，
-                                    .setNewVersion(jsonObject.optString("new_version"))
+                                    .setNewVersion(newVersion)
                                     //（必须）下载地址
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
                                     //测试下载路径是重定向路径
 //                                    .setApkFileUrl("http://openbox.mobilem.360.cn/index/d/sid/3282847")
+//                                    .setUpdateDefDialogTitle(String.format("AppUpdate 是否升级到%s版本？", newVersion))
                                     //（必须）更新内容
 //                                    .setUpdateLog(jsonObject.optString("update_log"))
                                     //测试内容过度

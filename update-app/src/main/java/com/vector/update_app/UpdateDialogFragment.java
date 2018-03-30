@@ -163,9 +163,10 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
         if (mUpdateApp != null) {
             //弹出对话框
-            String newVersion = mUpdateApp.getNewVersion();
-            String targetSize = mUpdateApp.getTargetSize();
-            String updateLog = mUpdateApp.getUpdateLog();
+            final String dialogTitle = mUpdateApp.getUpdateDefDialogTitle();
+            final String newVersion = mUpdateApp.getNewVersion();
+            final String targetSize = mUpdateApp.getTargetSize();
+            final String updateLog = mUpdateApp.getUpdateLog();
 
             String msg = "";
 
@@ -180,7 +181,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             //更新内容
             mContentTextView.setText(msg);
             //标题
-            mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
+            mTitleTextView.setText(TextUtils.isEmpty(dialogTitle) ? String.format("是否升级到%s版本？", newVersion) : dialogTitle);
             //强制更新
             if (mUpdateApp.isConstraint()) {
                 mLlClose.setVisibility(View.GONE);
