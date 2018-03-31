@@ -1,7 +1,9 @@
 package com.vector.appupdatedemo.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -45,8 +47,22 @@ public class JavaActivity extends AppCompatActivity {
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence_diy_dialog));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default), 0xffe94339);
+    }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                switch (requestCode){
+                    case AppUpdateUtils.REQ_CODE_INSTALL_APP:
+                        Toast.makeText(this,"用户取消了安装包的更新", Toast.LENGTH_LONG).show();
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                break;
+            default:
+        }
     }
 
     /**
@@ -181,7 +197,7 @@ public class JavaActivity extends AppCompatActivity {
                      * 没有新版本
                      */
                     @Override
-                    public void noNewApp() {
+                    public void noNewApp(String error) {
                         Toast.makeText(JavaActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -391,7 +407,7 @@ public class JavaActivity extends AppCompatActivity {
                      * 没有新版本
                      */
                     @Override
-                    public void noNewApp() {
+                    public void noNewApp(String error) {
                         Toast.makeText(JavaActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });

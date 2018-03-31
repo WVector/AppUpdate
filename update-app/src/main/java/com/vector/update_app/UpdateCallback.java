@@ -18,6 +18,8 @@ public class UpdateCallback {
         try {
             JSONObject jsonObject = new JSONObject(json);
             updateAppBean.setUpdate(jsonObject.optString("update"))
+                    //存放json，方便自定义解析
+                    .setOriginRes(json)
                     .setNewVersion(jsonObject.optString("new_version"))
                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
                     .setTargetSize(jsonObject.optString("target_size"))

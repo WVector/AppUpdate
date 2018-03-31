@@ -56,6 +56,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateKotlin(View view) {
-        startActivity(new Intent(this, KotlinActivity.class));
+//        startActivity(new Intent(this, KotlinActivity.class));
     }
 }

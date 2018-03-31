@@ -290,7 +290,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     private void installApp() {
         if (AppUpdateUtils.appIsDownloaded(mUpdateApp)) {
-            AppUpdateUtils.installApp(getActivity(), AppUpdateUtils.getAppFile(mUpdateApp));
+            AppUpdateUtils.installApp(UpdateDialogFragment.this, AppUpdateUtils.getAppFile(mUpdateApp));
             //安装完自杀
             dismiss();
         } else {
@@ -366,11 +366,10 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                             mUpdateOkButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    AppUpdateUtils.installApp(getActivity(), file);
+                                    AppUpdateUtils.installApp(UpdateDialogFragment.this, file);
                                 }
                             });
-                        }
-                        else {
+                        } else {
                             dismissAllowingStateLoss();
                         }
                     }
