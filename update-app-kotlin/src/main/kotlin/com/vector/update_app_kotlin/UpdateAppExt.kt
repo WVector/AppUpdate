@@ -55,7 +55,7 @@ class Callback : UpdateCallback() {
         }
     }
 
-    override fun noNewApp() {
+    override fun noNewApp(error: String) {
         _noNewApp?.invoke()
     }
 
