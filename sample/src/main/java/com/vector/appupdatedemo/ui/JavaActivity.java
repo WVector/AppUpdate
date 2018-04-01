@@ -53,7 +53,10 @@ public class JavaActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Activity.RESULT_OK:
+                break;
+            case Activity.DEFAULT_KEYS_DIALER:
                 switch (requestCode){
+                    // 得到通过UpdateDialogFragment默认dialog方式安装，用户取消安装的回调通知，以便用户自己去判断，比如这个更新如果是强制的，但是用户下载之后取消了，在这里发起相应的操作
                     case AppUpdateUtils.REQ_CODE_INSTALL_APP:
                         Toast.makeText(this,"用户取消了安装包的更新", Toast.LENGTH_LONG).show();
                         break;
