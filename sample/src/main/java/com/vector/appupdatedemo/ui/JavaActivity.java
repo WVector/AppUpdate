@@ -21,6 +21,7 @@ import com.vector.update_app.SilenceUpdateCallback;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
+import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
@@ -79,6 +80,15 @@ public class JavaActivity extends AppCompatActivity {
                 .setUpdateUrl(mUpdateUrl)
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
+//                // 监听更新提示框相关事件
+//                .setUpdateDialogFragmentListener(new IUpdateDialogFragmentListener() {
+//                    @Override
+//                    public void onUpdateNotifyDialogCancel(UpdateAppBean updateApp) {
+//                        if(updateApp.isConstraint()){
+//                            // 处理强制更新，被用户cancel的情况
+//                        }
+//                    }
+//                })
                 .build()
                 .update();
     }
