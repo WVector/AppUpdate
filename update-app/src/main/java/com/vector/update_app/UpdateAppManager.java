@@ -31,6 +31,8 @@ public class UpdateAppManager {
     private final static String UPDATE_APP_KEY = "UPDATE_APP_KEY";
     private static final String TAG = UpdateAppManager.class.getSimpleName();
     private Map<String, String> mParams;
+    // 是否忽略默认参数，解决
+    private boolean mIgnoreDefParams = false;
     private Activity mActivity;
     private HttpManager mHttpManager;
     private String mUpdateUrl;
@@ -56,7 +58,10 @@ public class UpdateAppManager {
         mThemeColor = builder.getThemeColor();
         mTopPic = builder.getTopPic();
 
-        mAppKey = builder.getAppKey();
+        mIgnoreDefParams = builder.isIgnoreDefParams();
+        if(!mIgnoreDefParams) {
+            mAppKey = builder.getAppKey();
+        }
         mTargetPath = builder.getTargetPath();
         isPost = builder.isPost();
         mParams = builder.getParams();
@@ -216,14 +221,14 @@ public class UpdateAppManager {
 
         //拼接参数
         Map<String, String> params = new HashMap<String, String>();
-
-        params.put("appKey", mAppKey);
-        String versionName = AppUpdateUtils.getVersionName(mActivity);
-        if (versionName.endsWith("-debug")) {
-            versionName = versionName.substring(0, versionName.lastIndexOf('-'));
+        if(!mIgnoreDefParams) {
+            params.put("appKey", mAppKey);
+            String versionName = AppUpdateUtils.getVersionName(mActivity);
+            if (versionName.endsWith("-debug")) {
+                versionName = versionName.substring(0, versionName.lastIndexOf('-'));
+            }
+            params.put("version", versionName);
         }
-        params.put("version", versionName);
-
 
         //添加自定义参数，其实可以实现HttManager中添加
         if (mParams != null && !mParams.isEmpty()) {
@@ -346,6 +351,8 @@ public class UpdateAppManager {
         private boolean isPost;
         //6,自定义参数
         private Map<String, String> params;
+        // 是否忽略默认参数，解决
+        private boolean mIgnoreDefParams = false;
         //7,是否隐藏对话框下载进度条
         private boolean mHideDialog;
         private boolean mShowIgnoreVersion;
@@ -365,6 +372,18 @@ public class UpdateAppManager {
         public Builder setParams(Map<String, String> params) {
             this.params = params;
             return this;
+        }
+
+        /**
+         * 是否忽略默认的参数注入（appkey&&version）
+         * @param ignoreDefParams
+         */
+        public void setIgnoreDefParams(boolean ignoreDefParams) {
+            this.mIgnoreDefParams = ignoreDefParams;
+        }
+
+        public boolean isIgnoreDefParams() {
+            return mIgnoreDefParams;
         }
 
         public boolean isPost() {
@@ -578,3 +597,4 @@ public class UpdateAppManager {
     }
 
 }
+
