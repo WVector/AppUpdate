@@ -90,6 +90,7 @@ public class AppUpdateUtils {
             }
             return true;
         } catch (Exception e) {
+            // TODO 后续可以考虑这种情况应该通知应用开发者
             e.printStackTrace();
         }
         return false;
@@ -112,6 +113,7 @@ public class AppUpdateUtils {
             }
             return true;
         } catch (Exception e) {
+            // TODO 后续可以考虑这种情况应该通知应用开发者
             e.printStackTrace();
         }
         return false;
@@ -130,7 +132,7 @@ public class AppUpdateUtils {
             }
             return intent;
         } catch (Exception e) {
-            // TODO
+            // TODO 后续可以考虑这种情况应该通知应用开发者
             e.printStackTrace();
         }
         return null;
