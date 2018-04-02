@@ -1,7 +1,9 @@
 package com.vector.appupdatedemo.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.vector.update_app.SilenceUpdateCallback;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
+import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
@@ -45,8 +48,22 @@ public class JavaActivity extends AppCompatActivity {
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence_diy_dialog));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default), 0xffe94339);
+    }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                switch (requestCode){
+                    case AppUpdateUtils.REQ_CODE_INSTALL_APP:
+                        Toast.makeText(this,"用户取消了安装包的更新", Toast.LENGTH_LONG).show();
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                break;
+            default:
+        }
     }
 
     /**
@@ -63,6 +80,15 @@ public class JavaActivity extends AppCompatActivity {
                 .setUpdateUrl(mUpdateUrl)
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
+//                // 监听更新提示框相关事件
+//                .setUpdateDialogFragmentListener(new IUpdateDialogFragmentListener() {
+//                    @Override
+//                    public void onUpdateNotifyDialogCancel(UpdateAppBean updateApp) {
+//                        if(updateApp.isConstraint()){
+//                            // 处理强制更新，被用户cancel的情况
+//                        }
+//                    }
+//                })
                 .build()
                 .update();
     }

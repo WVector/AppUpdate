@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 
@@ -47,6 +48,7 @@ public class UpdateAppManager {
     private boolean mDismissNotificationProgress;
     private boolean mOnlyWifi;
     //自定义参数
+    private IUpdateDialogFragmentListener mUpdateDialogFragmentListener;
 
     private UpdateAppManager(Builder builder) {
         mActivity = builder.getActivity();
@@ -64,6 +66,7 @@ public class UpdateAppManager {
         mShowIgnoreVersion = builder.isShowIgnoreVersion();
         mDismissNotificationProgress = builder.isDismissNotificationProgress();
         mOnlyWifi = builder.isOnlyWifi();
+        mUpdateDialogFragmentListener = builder.getUpdateDialogFragmentListener();
     }
 
     /**
@@ -175,9 +178,10 @@ public class UpdateAppManager {
                 bundle.putInt(TOP_IMAGE_KEY, mTopPic);
             }
 
-            UpdateDialogFragment updateDialogFragment = new UpdateDialogFragment();
-            updateDialogFragment.setArguments(bundle);
-            updateDialogFragment.show(((FragmentActivity) mActivity).getSupportFragmentManager(), "dialog");
+            UpdateDialogFragment
+                    .newInstance(bundle)
+                    .setUpdateDialogFragmentListener(mUpdateDialogFragmentListener)
+                    .show(((FragmentActivity) mActivity).getSupportFragmentManager(), "dialog");
         }
 
     }
@@ -351,6 +355,7 @@ public class UpdateAppManager {
         private boolean mShowIgnoreVersion;
         private boolean dismissNotificationProgress;
         private boolean mOnlyWifi;
+        private IUpdateDialogFragmentListener mUpdateDialogFragmentListener;
 
         public Map<String, String> getParams() {
             return params;
@@ -484,6 +489,18 @@ public class UpdateAppManager {
          */
         public Builder setTopPic(int topPic) {
             mTopPic = topPic;
+            return this;
+        }
+
+        public IUpdateDialogFragmentListener getUpdateDialogFragmentListener() {
+            return mUpdateDialogFragmentListener;
+        }
+
+        /**
+         * 设置默认的UpdateDialogFragment监听器
+         */
+        public Builder setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {
+            this.mUpdateDialogFragmentListener = updateDialogFragmentListener;
             return this;
         }
 

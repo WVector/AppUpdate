@@ -1,6 +1,8 @@
 package com.vector.update_app.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +37,7 @@ public class AppUpdateUtils {
 
     public static final String IGNORE_VERSION = "ignore_version";
     private static final String PREFS_FILE = "update_app_config.xml";
+    public static final int REQ_CODE_INSTALL_APP = 99;
 
     public static boolean isWifi(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -70,9 +73,9 @@ public class AppUpdateUtils {
                 && Md5Util.getFileMD5(appFile).equalsIgnoreCase(updateAppBean.getNewMd5());
     }
 
+
     public static boolean installApp(Context context, File appFile) {
         try {
-
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -84,6 +87,28 @@ public class AppUpdateUtils {
             }
             if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
                 context.startActivity(intent);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean installApp(Fragment fragment, File appFile) {
+        try {
+            final Activity activity = fragment.getActivity();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri fileUri = FileProvider.getUriForFile(fragment.getContext(), activity.getApplicationContext().getPackageName() + ".fileProvider", appFile);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
+            }
+            if (activity.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+                activity.startActivityForResult(intent, REQ_CODE_INSTALL_APP);
             }
             return true;
         } catch (Exception e) {
@@ -105,6 +130,7 @@ public class AppUpdateUtils {
             }
             return intent;
         } catch (Exception e) {
+            // TODO
             e.printStackTrace();
         }
         return null;

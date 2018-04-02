@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.ColorUtil;
@@ -71,6 +72,20 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private int mDefaultPicResId = R.mipmap.lib_update_app_top_bg;
     private ImageView mTopIv;
     private TextView mIgnore;
+    private IUpdateDialogFragmentListener mUpdateDialogFragmentListener;
+
+    public UpdateDialogFragment setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {
+        this.mUpdateDialogFragmentListener = updateDialogFragmentListener;
+        return this;
+    }
+
+    public static UpdateDialogFragment newInstance(Bundle args) {
+        UpdateDialogFragment fragment = new UpdateDialogFragment();
+        if(args != null) {
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -278,9 +293,14 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             }
 
         } else if (i == R.id.iv_close) {
+            // TODO @WVector 这里是否要对UpdateAppBean的强制更新做处理？
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
 //                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
 //            }
+            if(mUpdateDialogFragmentListener != null){
+                // 通知用户
+                mUpdateDialogFragmentListener.onUpdateNotifyDialogCancel(mUpdateApp);
+            }
             dismiss();
         } else if (i == R.id.tv_ignore) {
             AppUpdateUtils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
@@ -290,7 +310,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     private void installApp() {
         if (AppUpdateUtils.appIsDownloaded(mUpdateApp)) {
-            AppUpdateUtils.installApp(getActivity(), AppUpdateUtils.getAppFile(mUpdateApp));
+            AppUpdateUtils.installApp(UpdateDialogFragment.this, AppUpdateUtils.getAppFile(mUpdateApp));
             //安装完自杀
             dismiss();
         } else {
@@ -366,11 +386,10 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                             mUpdateOkButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    AppUpdateUtils.installApp(getActivity(), file);
+                                    AppUpdateUtils.installApp(UpdateDialogFragment.this, file);
                                 }
                             });
-                        }
-                        else {
+                        } else {
                             dismissAllowingStateLoss();
                         }
                     }
