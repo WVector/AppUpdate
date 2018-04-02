@@ -379,16 +379,17 @@ public class UpdateAppManager {
             return this;
         }
 
-        /**
-         * 是否忽略默认的参数注入（appkey&&version）
-         * @param ignoreDefParams
-         */
-        public void setIgnoreDefParams(boolean ignoreDefParams) {
-            this.mIgnoreDefParams = ignoreDefParams;
-        }
-
         public boolean isIgnoreDefParams() {
             return mIgnoreDefParams;
+        }
+
+        /**
+         * @param ignoreDefParams 是否忽略默认的参数注入 appKey version
+         * @return Builder
+         */
+        public Builder setIgnoreDefParams(boolean ignoreDefParams) {
+            this.mIgnoreDefParams = ignoreDefParams;
+            return this;
         }
 
         public boolean isPost() {
@@ -516,7 +517,9 @@ public class UpdateAppManager {
         }
 
         /**
-         * 设置默认的UpdateDialogFragment监听器
+         *  设置默认的UpdateDialogFragment监听器
+         * @param updateDialogFragmentListener
+         * @return Builder
          */
         public Builder setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {
             this.mUpdateDialogFragmentListener = updateDialogFragmentListener;

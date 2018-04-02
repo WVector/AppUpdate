@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.4.0'
+    compile 'com.qianwen:update-app:3.4.1'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.1.2'
+    compile 'com.qianwen:update-app-kotlin:1.1.3'
 }
 ```
 
