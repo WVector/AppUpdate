@@ -96,6 +96,28 @@ public class AppUpdateUtils {
         return false;
     }
 
+    public static boolean installApp(Activity activity, File appFile) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri fileUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".fileProvider", appFile);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
+            }
+            if (activity.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+                activity.startActivityForResult(intent, REQ_CODE_INSTALL_APP);
+            }
+            return true;
+        } catch (Exception e) {
+            // TODO 后续可以考虑这种情况应该通知应用开发者
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean installApp(Fragment fragment, File appFile) {
         try {
             final Activity activity = fragment.getActivity();

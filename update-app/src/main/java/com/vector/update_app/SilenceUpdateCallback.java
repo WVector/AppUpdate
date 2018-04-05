@@ -53,6 +53,11 @@ public class SilenceUpdateCallback extends UpdateCallback {
                 public void onError(String msg) {
 
                 }
+
+                @Override
+                public boolean onInstallAppAndAppOnForeground(File file) {
+                    return false;
+                }
             });
         }
     }
