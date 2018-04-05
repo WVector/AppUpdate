@@ -189,6 +189,14 @@ public class DownloadService extends Service {
          * @param msg 异常信息
          */
         void onError(String msg);
+
+        /**
+         * 当应用处于前台，准备执行安装程序时候的回调，
+         *
+         * @param file
+         * @return
+         */
+        boolean onInstallAppAndAppOnForeground(File file);
     }
 
     /**
@@ -283,7 +291,10 @@ public class DownloadService extends Service {
                 if (AppUpdateUtils.isAppOnForeground(DownloadService.this) || mBuilder == null) {
                     //App前台运行
                     mNotificationManager.cancel(NOTIFY_ID);
-                    AppUpdateUtils.installApp(DownloadService.this, file);
+                    boolean temp = mCallBack.onInstallAppAndAppOnForeground(file);
+                    if (!temp) {
+                        AppUpdateUtils.installApp(DownloadService.this, file);
+                    }
                 } else {
                     //App后台运行
                     //更新参数,注意flags要使用FLAG_UPDATE_CURRENT

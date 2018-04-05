@@ -387,6 +387,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                                 @Override
                                 public void onClick(View v) {
                                     AppUpdateUtils.installApp(UpdateDialogFragment.this, file);
+                                    dismiss();
                                 }
                             });
                         } else {
@@ -401,6 +402,14 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                     if (!UpdateDialogFragment.this.isRemoving()) {
                         dismissAllowingStateLoss();
                     }
+                }
+
+                @Override
+                public boolean onInstallAppAndAppOnForeground(File file) {
+                    // 如果应用处于前台，那么就自行处理应用安装
+                    AppUpdateUtils.installApp(UpdateDialogFragment.this.getActivity(), file);
+                    dismiss();
+                    return true;
                 }
             });
         }
