@@ -81,7 +81,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     public static UpdateDialogFragment newInstance(Bundle args) {
         UpdateDialogFragment fragment = new UpdateDialogFragment();
-        if(args != null) {
+        if (args != null) {
             fragment.setArguments(args);
         }
         return fragment;
@@ -297,7 +297,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
 //                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
 //            }
-            if(mUpdateDialogFragmentListener != null){
+            stopDownloadService();
+            if (mUpdateDialogFragmentListener != null) {
                 // 通知用户
                 mUpdateDialogFragmentListener.onUpdateNotifyDialogCancel(mUpdateApp);
             }
@@ -306,6 +307,12 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             AppUpdateUtils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
             dismiss();
         }
+    }
+
+    public void stopDownloadService() {
+        getActivity().unbindService(conn);
+        Intent service = new Intent(getContext(), DownloadService.class);
+        getActivity().stopService(service);
     }
 
     private void installApp() {
@@ -419,8 +426,9 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     public void show(FragmentManager manager, String tag) {
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            if (manager.isDestroyed())
+            if (manager.isDestroyed()) {
                 return;
+            }
         }
 
         try {
@@ -433,6 +441,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     @Override
     public void onDestroyView() {
         isShow = false;
+        stopDownloadService();
         super.onDestroyView();
     }
 }
+
