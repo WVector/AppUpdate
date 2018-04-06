@@ -73,6 +73,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private ImageView mTopIv;
     private TextView mIgnore;
     private IUpdateDialogFragmentListener mUpdateDialogFragmentListener;
+    private DownloadService.DownloadBinder mDownloadBinder;
 
     public UpdateDialogFragment setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {
         this.mUpdateDialogFragmentListener = updateDialogFragmentListener;
@@ -297,7 +298,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
 //                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
 //            }
-            stopDownloadService();
+            cancelDownloadService();
             if (mUpdateDialogFragmentListener != null) {
                 // 通知用户
                 mUpdateDialogFragmentListener.onUpdateNotifyDialogCancel(mUpdateApp);
@@ -309,10 +310,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         }
     }
 
-    public void stopDownloadService() {
-        getActivity().unbindService(conn);
-        Intent service = new Intent(getContext(), DownloadService.class);
-        getActivity().stopService(service);
+    public void cancelDownloadService() {
+        mDownloadBinder.stop("取消下载");
     }
 
     private void installApp() {
@@ -361,6 +360,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private void startDownloadApp(DownloadService.DownloadBinder binder) {
         // 开始下载，监听下载进度，可以用对话框显示
         if (mUpdateApp != null) {
+
+            this.mDownloadBinder = binder;
 
             binder.start(mUpdateApp, new DownloadService.DownloadCallback() {
                 @Override
@@ -441,7 +442,6 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     @Override
     public void onDestroyView() {
         isShow = false;
-        stopDownloadService();
         super.onDestroyView();
     }
 }

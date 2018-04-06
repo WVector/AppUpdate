@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, JavaActivity.class));
     }
 
-    public void updateKotlin(View view) {
-        startActivity(new Intent(this, KotlinActivity.class));
-    }
+//    public void updateKotlin(View view) {
+//        startActivity(new Intent(this, KotlinActivity.class));
+//    }
 }

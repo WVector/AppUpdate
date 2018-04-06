@@ -285,6 +285,11 @@ public class JavaActivity extends AppCompatActivity {
                                     HProgressDialogUtils.cancel();
 
                                 }
+
+                                @Override
+                                public boolean onInstallAppAndAppOnForeground(File file) {
+                                    return false;
+                                }
                             });
                         } else {
                             //不显示下载进度

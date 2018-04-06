@@ -31,8 +31,8 @@ dependencies {
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-//    compile project(':update-app')
-    compile project(':update-app-kotlin')
+    compile project(':update-app')
+//    compile project(':update-app-kotlin')
 
     //compile 'com.qianwen:update-app-kotlin:1.1.0'
     //okgo
