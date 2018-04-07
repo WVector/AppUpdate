@@ -32,8 +32,8 @@
             </intent-filter>
         </activity>
 
-        <!--<activity android:name=".ui.KotlinActivity">-->
-        <!--</activity>-->
+        <activity android:name=".ui.KotlinActivity">
+        </activity>
         <activity android:name=".ui.JavaActivity">
         </activity>
 

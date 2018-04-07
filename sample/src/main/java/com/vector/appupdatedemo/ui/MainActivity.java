@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_java));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_kotlin));
 
-        ImageView im = (ImageView) findViewById(R.id.iv);
+        ImageView im = findViewById(R.id.iv);
 
         im.setImageBitmap(AppUpdateUtils.drawableToBitmap(AppUpdateUtils.getAppIcon(this)));
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, JavaActivity.class));
     }
 
-//    public void updateKotlin(View view) {
-//        startActivity(new Intent(this, KotlinActivity.class));
-//    }
+    public void updateKotlin(View view) {
+        startActivity(new Intent(this, KotlinActivity.class));
+    }
 }
