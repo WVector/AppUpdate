@@ -56,6 +56,12 @@ public class DownloadService extends Service {
     }
 
     @Override
+    public boolean onUnbind(Intent intent) {
+        isRunning = false;
+        return super.onUnbind(intent);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
@@ -214,6 +220,10 @@ public class DownloadService extends Service {
         public void start(UpdateAppBean updateApp, DownloadCallback callback) {
             //下载
             startDownload(updateApp, callback);
+        }
+
+        public void stop(String msg) {
+            DownloadService.this.stop(msg);
         }
     }
 

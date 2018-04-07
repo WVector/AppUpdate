@@ -73,6 +73,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private ImageView mTopIv;
     private TextView mIgnore;
     private IUpdateDialogFragmentListener mUpdateDialogFragmentListener;
+    private DownloadService.DownloadBinder mDownloadBinder;
 
     public UpdateDialogFragment setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {
         this.mUpdateDialogFragmentListener = updateDialogFragmentListener;
@@ -81,7 +82,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     public static UpdateDialogFragment newInstance(Bundle args) {
         UpdateDialogFragment fragment = new UpdateDialogFragment();
-        if(args != null) {
+        if (args != null) {
             fragment.setArguments(args);
         }
         return fragment;
@@ -297,7 +298,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
 //                Toast.makeText(getApplicationContext(), "后台更新app", Toast.LENGTH_LONG).show();
 //            }
-            if(mUpdateDialogFragmentListener != null){
+            cancelDownloadService();
+            if (mUpdateDialogFragmentListener != null) {
                 // 通知用户
                 mUpdateDialogFragmentListener.onUpdateNotifyDialogCancel(mUpdateApp);
             }
@@ -306,6 +308,10 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             AppUpdateUtils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
             dismiss();
         }
+    }
+
+    public void cancelDownloadService() {
+        mDownloadBinder.stop("取消下载");
     }
 
     private void installApp() {
@@ -354,6 +360,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private void startDownloadApp(DownloadService.DownloadBinder binder) {
         // 开始下载，监听下载进度，可以用对话框显示
         if (mUpdateApp != null) {
+
+            this.mDownloadBinder = binder;
 
             binder.start(mUpdateApp, new DownloadService.DownloadCallback() {
                 @Override
@@ -419,8 +427,9 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     public void show(FragmentManager manager, String tag) {
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            if (manager.isDestroyed())
+            if (manager.isDestroyed()) {
                 return;
+            }
         }
 
         try {
@@ -436,3 +445,4 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         super.onDestroyView();
     }
 }
+

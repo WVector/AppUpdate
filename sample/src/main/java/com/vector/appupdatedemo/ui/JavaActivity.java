@@ -80,6 +80,7 @@ public class JavaActivity extends AppCompatActivity {
                 .setActivity(this)
                 //更新地址
                 .setUpdateUrl(mUpdateUrl)
+                .dismissNotificationProgress()
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
 //                // 监听更新提示框相关事件
