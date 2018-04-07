@@ -21,7 +21,6 @@ import com.vector.update_app.SilenceUpdateCallback;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
-import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
@@ -283,6 +282,11 @@ public class JavaActivity extends AppCompatActivity {
                                     Toast.makeText(JavaActivity.this, msg, Toast.LENGTH_SHORT).show();
                                     HProgressDialogUtils.cancel();
 
+                                }
+
+                                @Override
+                                public boolean onInstallAppAndAppOnForeground(File file) {
+                                    return false;
                                 }
                             });
                         } else {

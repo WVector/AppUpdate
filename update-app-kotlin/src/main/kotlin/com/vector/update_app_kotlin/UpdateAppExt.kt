@@ -90,10 +90,13 @@ inline fun UpdateAppManager.download(init: DownloadCallback.() -> Unit) {
 }
 
 class DownloadCallback : DownloadService.DownloadCallback {
+
+
     private var _onStart: (() -> Unit)? = null
     private var _onFinish: (() -> Boolean)? = null
     private var _onError: ((msg: String) -> Unit)? = null
     private var _setMax: ((totalSize: Long) -> Unit)? = null
+    private var _onInstallAppAndAppOnForeground: ((file: File) -> Boolean)? = null
     private var _onProgress: ((progress: Float, totalSize: Long) -> Unit)? = null
 
     override fun onStart() {
@@ -121,6 +124,10 @@ class DownloadCallback : DownloadService.DownloadCallback {
         _onError?.invoke(msg)
     }
 
+    override fun onInstallAppAndAppOnForeground(file: File?): Boolean {
+
+        return _onInstallAppAndAppOnForeground?.invoke(file!!)!!
+    }
 
     fun onStart(listener: () -> Unit) {
         _onStart = listener
@@ -140,5 +147,9 @@ class DownloadCallback : DownloadService.DownloadCallback {
 
     fun onProgress(listener: (progress: Float, totalSize: Long) -> Unit) {
         _onProgress = listener
+    }
+
+    fun onInstallAppAndAppOnForeground(listener: (file: File) -> Boolean) {
+        _onInstallAppAndAppOnForeground = listener
     }
 }
