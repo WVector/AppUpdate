@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.4.2'
+    compile 'com.qianwen:update-app:3.4.3'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.1.4'
+    compile 'com.qianwen:update-app-kotlin:1.1.5'
 }
 ```
 
@@ -102,6 +102,10 @@ dependencies {
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
 
+v3.4.3
+
+   1,修复[bug](https://github.com/WVector/AppUpdate/pull/67)
+   
 v3.4.2
 
    1,修复[bug](https://github.com/WVector/AppUpdate/pull/66)
