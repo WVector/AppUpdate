@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.4.3'
+    compile 'com.qianwen:update-app:3.4.4'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.1.5'
+    compile 'com.qianwen:update-app-kotlin:1.1.6'
 }
 ```
 
@@ -102,6 +102,10 @@ dependencies {
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
 
+v3.4.4
+
+   1,修复[bug](https://github.com/WVector/AppUpdate/pull/68)
+
 v3.4.3
 
    1,修复[bug](https://github.com/WVector/AppUpdate/pull/67)
@@ -112,7 +116,7 @@ v3.4.2
 
 v3.4.1
 
-    1,给插件使用者更多的配置和开启一些钩子方便适配不同的业务需求
+   	1,给插件使用者更多的配置和开启一些钩子方便适配不同的业务需求
 	2,适配android8.0
 
 感谢[Jiiiiiin](https://github.com/Jiiiiiin)对项目的维护
