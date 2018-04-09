@@ -39,8 +39,16 @@ allprojects {
         }
     }
 }
+
+ext {
+    update_app_version = '3.4.5'
+    update_app_kotlin_version = '1.1.7'
+}
+
+
 //防止上传kotlin是报错,
 tasks.getByPath(":update-app-kotlin:releaseAndroidJavadocs").enabled = false
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+

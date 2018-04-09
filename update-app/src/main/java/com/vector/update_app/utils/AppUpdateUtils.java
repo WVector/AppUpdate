@@ -2,7 +2,6 @@ package com.vector.update_app.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,11 +17,14 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.listener.ExceptionHandler;
+import com.vector.update_app.listener.ExceptionHandlerHelper;
 
 import java.io.File;
 import java.util.List;
@@ -90,8 +92,10 @@ public class AppUpdateUtils {
             }
             return true;
         } catch (Exception e) {
-            // TODO 后续可以考虑这种情况应该通知应用开发者
-            e.printStackTrace();
+            ExceptionHandler exceptionHandler = ExceptionHandlerHelper.getInstance();
+            if (exceptionHandler != null) {
+                exceptionHandler.onException(e);
+            }
         }
         return false;
     }

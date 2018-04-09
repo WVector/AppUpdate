@@ -144,7 +144,8 @@ public class DownloadService extends Service {
 
     private void stop(String contentText) {
         if (mBuilder != null) {
-            mBuilder.setContentTitle(AppUpdateUtils.getAppName(DownloadService.this)).setContentText(contentText);
+            mBuilder.setContentTitle(AppUpdateUtils.getAppName(DownloadService.this))
+                    .setContentText(contentText);
             Notification notification = mBuilder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
             mNotificationManager.notify(NOTIFY_ID, notification);

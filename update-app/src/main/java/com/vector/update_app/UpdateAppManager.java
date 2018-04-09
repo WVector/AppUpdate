@@ -15,6 +15,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.vector.update_app.listener.ExceptionHandler;
+import com.vector.update_app.listener.ExceptionHandlerHelper;
 import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
@@ -187,6 +189,7 @@ public class UpdateAppManager {
                     .newInstance(bundle)
                     .setUpdateDialogFragmentListener(mUpdateDialogFragmentListener)
                     .show(((FragmentActivity) mActivity).getSupportFragmentManager(), "dialog");
+
         }
 
     }
@@ -614,6 +617,12 @@ public class UpdateAppManager {
         public boolean isOnlyWifi() {
             return mOnlyWifi;
         }
+
+        public Builder handleException(ExceptionHandler exceptionHandler) {
+            ExceptionHandlerHelper.init(exceptionHandler);
+            return this;
+        }
+
     }
 
 }

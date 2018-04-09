@@ -191,4 +191,5 @@ public class UpdateAppBean implements Serializable {
         this.origin_res = originRes;
         return this;
     }
+
 }

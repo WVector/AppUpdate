@@ -35,7 +35,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile 'com.qianwen:update-app:3.4.4'
+    compile 'com.qianwen:update-app:'+rootProject.ext.update_app_version
 
 //    compile project(':update-app')
 }
@@ -44,7 +44,7 @@ publish {
     userOrg = 'qianwen'//bintray.com用户名
     groupId = 'com.qianwen'//jcenter上的路径
     artifactId = 'update-app-kotlin'//项目名称
-    publishVersion = '1.1.6'//版本号
+    publishVersion = rootProject.ext.update_app_kotlin_version//版本号
     desc = 'a library for android version update'
     website = 'https://github.com/WVector/AppUpdate'
 }

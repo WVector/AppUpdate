@@ -21,6 +21,7 @@ import com.vector.update_app.SilenceUpdateCallback;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
+import com.vector.update_app.listener.ExceptionHandler;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
@@ -79,6 +80,12 @@ public class JavaActivity extends AppCompatActivity {
                 //当前Activity
                 .setActivity(this)
                 //更新地址
+                .handleException(new ExceptionHandler() {
+                    @Override
+                    public void onException(Exception e) {
+//                        e.printStackTrace();
+                    }
+                })
                 .setUpdateUrl(mUpdateUrl)
                 .dismissNotificationProgress()
                 //实现httpManager接口的对象
