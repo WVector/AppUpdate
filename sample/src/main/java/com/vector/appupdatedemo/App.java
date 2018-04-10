@@ -18,6 +18,7 @@ public class App extends Application {
                 .init(this)
                 .debug(true, "okHttp")
                 .timeout(20 * 1000);
+
         OkGo.getInstance().init(this);
     }
 }

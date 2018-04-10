@@ -7,6 +7,7 @@
 * [自定义接口协议+自定义对话框+显示进度对话框](#自定义接口协议+自定义对话框+显示进度对话框)
 * [静默下载](#静默下载)
 * [静默下载+自定义对话框](#静默下载+自定义对话框)
+* [只用下载功能](#只用下载功能)
 * [实现HttpManager接口](#实现HttpManager接口)
 
 ### 默认接口协议 
@@ -439,6 +440,74 @@ onFinish() 当返回 true ：下载完自动跳到安装界面，false：则不�
                 .create()
                 .show();
     }
+
+```
+### 只用下载功能
+
+```java
+
+        UpdateAppBean updateAppBean = new UpdateAppBean();
+
+        //设置 apk 的下载地址
+        updateAppBean.setApkFileUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk");
+
+        String path = "";
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) || !Environment.isExternalStorageRemovable()) {
+            try {
+                path = getExternalCacheDir().getAbsolutePath();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (TextUtils.isEmpty(path)) {
+                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            }
+        } else {
+            path = getCacheDir().getAbsolutePath();
+        }
+
+        //设置apk 的保存路径
+        updateAppBean.setTargetPath(path);
+        //实现网络接口，只实现下载就可以
+        updateAppBean.setHttpManager(new UpdateAppHttpUtil());
+
+        UpdateAppManager.download(this, updateAppBean, new DownloadService.DownloadCallback() {
+            @Override
+            public void onStart() {
+                HProgressDialogUtils.showHorizontalProgressDialog(JavaActivity.this, "下载进度", false);
+                Log.d(TAG, "onStart() called");
+            }
+
+            @Override
+            public void onProgress(float progress, long totalSize) {
+                HProgressDialogUtils.setProgress(Math.round(progress * 100));
+                Log.d(TAG, "onProgress() called with: progress = [" + progress + "], totalSize = [" + totalSize + "]");
+
+            }
+
+            @Override
+            public void setMax(long totalSize) {
+                Log.d(TAG, "setMax() called with: totalSize = [" + totalSize + "]");
+            }
+
+            @Override
+            public boolean onFinish(File file) {
+                HProgressDialogUtils.cancel();
+                Log.d(TAG, "onFinish() called with: file = [" + file.getAbsolutePath() + "]");
+                return true;
+            }
+
+            @Override
+            public void onError(String msg) {
+                HProgressDialogUtils.cancel();
+                Log.e(TAG, "onError() called with: msg = [" + msg + "]");
+            }
+
+            @Override
+            public boolean onInstallAppAndAppOnForeground(File file) {
+                Log.d(TAG, "onInstallAppAndAppOnForeground() called with: file = [" + file + "]");
+                return false;
+            }
+        });
 
 ```
 
