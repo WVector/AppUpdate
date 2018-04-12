@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.4.6'
+    compile 'com.qianwen:update-app:3.4.7'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.1.8'
+    compile 'com.qianwen:update-app-kotlin:1.1.9'
 }
 ```
 
@@ -70,10 +70,11 @@ dependencies {
 
 ## 简单使用
 
-```java
+
 
 1,java方式
 
+```java
 	new UpdateAppManager
                 .Builder()
                 //当前Activity
@@ -84,11 +85,11 @@ dependencies {
                 .setHttpManager(new UpdateAppHttpUtil())
                 .build()
                 .update();
-
+```
 2,kotlin方式
 
+```kotlin
 	updateApp(mUpdateUrl, UpdateAppHttpUtil()).update()
-
 ```
 
 ## 详细说明
@@ -102,7 +103,11 @@ dependencies {
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
 
-v3.4.6
+v3.4.7 
+
+	1,优化 APP 安装的问题
+	
+v3.4.6 
 
 	1,优化 APP 安装的问题
 
