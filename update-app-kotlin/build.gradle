@@ -35,8 +35,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile 'com.qianwen:update-app:'+rootProject.ext.update_app_version
-//    compile project(':update-app')
+//    compile 'com.qianwen:update-app:'+rootProject.ext.update_app_version
+    compile project(':update-app')
 }
 //添加
 publish {

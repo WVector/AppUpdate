@@ -81,6 +81,7 @@ public class AppUpdateUtils {
             Intent intent = getInstallAppIntent(context, appFile);
             if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
                 context.startActivity(intent);
+
             }
             return true;
         } catch (Exception e) {
@@ -93,11 +94,23 @@ public class AppUpdateUtils {
     }
 
     public static boolean installApp(Activity activity, File appFile) {
-        return installApp(activity.getApplicationContext(), appFile);
+        try {
+            Intent intent = getInstallAppIntent(activity, appFile);
+            if (activity.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+                activity.startActivityForResult(intent, REQ_CODE_INSTALL_APP);
+            }
+            return true;
+        } catch (Exception e) {
+            ExceptionHandler exceptionHandler = ExceptionHandlerHelper.getInstance();
+            if (exceptionHandler != null) {
+                exceptionHandler.onException(e);
+            }
+        }
+        return false;
     }
 
     public static boolean installApp(Fragment fragment, File appFile) {
-        return installApp(fragment.getContext(), appFile);
+        return installApp(fragment.getActivity(), appFile);
     }
 
     public static Intent getInstallAppIntent(Context context, File appFile) {
