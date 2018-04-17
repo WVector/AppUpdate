@@ -1,9 +1,9 @@
 {
   "update": "Yes",
   "new_version": "0.8.3",
-  "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk",
+  "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/sample-debug.apk",
   "update_log": "1，添加删除信用卡接口。\r\n2，添加vip认证。\r\n3，区分自定义消费，一个小时不限制。\r\n4，添加放弃任务接口，小时内不生成。\r\n5，消费任务手动生成。",
   "target_size": "5M",
-  "new_md5":"E14F1641C7829D7B387F2C8227011EBA",
+  "new_md5":"ed4bdc8131bd17c85c5b888ddd4f453c",
   "constraint": false
 }
