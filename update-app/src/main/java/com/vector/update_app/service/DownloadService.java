@@ -201,7 +201,7 @@ public class DownloadService extends Service {
          * 当应用处于前台，准备执行安装程序时候的回调，
          *
          * @param file 当前安装包
-         * @return false 默认false
+         * @return false 默认 false ,当返回时 true 时，需要自己处理 ，前提条件是 onFinish 返回 false 。
          */
         boolean onInstallAppAndAppOnForeground(File file);
     }

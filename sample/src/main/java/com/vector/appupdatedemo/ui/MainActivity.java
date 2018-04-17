@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_java));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_kotlin));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_java), 2, 60, 0xffedd0be);
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_kotlin), 2, 60, 0xffff534d);
 
         ImageView im = findViewById(R.id.iv);
 

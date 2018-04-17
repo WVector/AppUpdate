@@ -40,22 +40,22 @@ public class JavaActivity extends AppCompatActivity {
     private String mUpdateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
     private String mUpdateUrl1 = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json1.txt";
     private boolean isShowDownloadProgress;
+    private String mApkFileUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/sample-debug.apk";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java);
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_1));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_2));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_constraint));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_3));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_download));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence));
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence_diy_dialog));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_diy_1));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_diy_2));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_constraint));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_diy_3));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_download));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_default_silence));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_default_silence_diy_dialog));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default), 0xffe94339);
-
-        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_download));
+        DrawableUtil.setTextSolidTheme((Button) findViewById(R.id.btn_download));
     }
 
     @Override
@@ -398,16 +398,14 @@ public class JavaActivity extends AppCompatActivity {
                                     .setNewVersion(jsonObject.optString("new_version"))
                                     //（必须）下载地址
                                     .setApkFileUrl(jsonObject.optString("apk_file_url"))
-
                                     //（必须）更新内容
                                     .setUpdateLog(jsonObject.optString("update_log"))
-
                                     //大小，不设置不显示大小，可以不设置
                                     .setTargetSize(jsonObject.optString("target_size"))
                                     //是否强制更新，可以不设置
                                     .setConstraint(false)
                                     //设置md5，可以不设置
-                                    .setNewMd5(jsonObject.optString("new_md51"));
+                                    .setNewMd5(jsonObject.optString("new_md5"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -422,12 +420,6 @@ public class JavaActivity extends AppCompatActivity {
                      */
                     @Override
                     public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-                        //强制更新，
-                        if (updateApp.isConstraint()) {
-
-                        } else {
-
-                        }
                         //自定义对话框
                         showDiyDialog(updateApp, updateAppManager);
                     }
@@ -559,7 +551,7 @@ public class JavaActivity extends AppCompatActivity {
         UpdateAppBean updateAppBean = new UpdateAppBean();
 
         //设置 apk 的下载地址
-        updateAppBean.setApkFileUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/app-debug.apk");
+        updateAppBean.setApkFileUrl(mApkFileUrl);
 
         String path = "";
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) || !Environment.isExternalStorageRemovable()) {
