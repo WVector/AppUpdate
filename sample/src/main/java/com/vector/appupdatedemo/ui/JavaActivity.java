@@ -168,7 +168,7 @@ public class JavaActivity extends AppCompatActivity {
                     }
                 })
                 //不自动，获取
-                .setIgnoreDefParams(true)
+//                .setIgnoreDefParams(true)
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {
