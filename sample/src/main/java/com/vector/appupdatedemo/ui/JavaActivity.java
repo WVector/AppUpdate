@@ -23,6 +23,7 @@ import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
 import com.vector.update_app.listener.ExceptionHandler;
+import com.vector.update_app.listener.IUpdateDialogFragmentListener;
 import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
@@ -37,6 +38,7 @@ import java.util.Map;
 public class JavaActivity extends AppCompatActivity {
     private static final String TAG = JavaActivity.class.getSimpleName();
     private String mUpdateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
+    private String mUpdateUrl1 = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json1.txt";
     private boolean isShowDownloadProgress;
 
 
@@ -46,7 +48,9 @@ public class JavaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_java);
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_1));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_2));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_constraint));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_diy_3));
+        DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_download));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default_silence_diy_dialog));
         DrawableUtil.setTextStrokeTheme((Button) findViewById(R.id.btn_default), 0xffe94339);
@@ -56,18 +60,15 @@ public class JavaActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult() called with: requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
         switch (resultCode) {
-            case Activity.RESULT_OK:
-                break;
-            case Activity.DEFAULT_KEYS_DIALER:
+            case Activity.RESULT_CANCELED:
                 switch (requestCode){
                     // 得到通过UpdateDialogFragment默认dialog方式安装，用户取消安装的回调通知，以便用户自己去判断，比如这个更新如果是强制的，但是用户下载之后取消了，在这里发起相应的操作
                     case AppUpdateUtils.REQ_CODE_INSTALL_APP:
                         Toast.makeText(this,"用户取消了安装包的更新", Toast.LENGTH_LONG).show();
                         break;
                 }
-                break;
-            case Activity.RESULT_CANCELED:
                 break;
             default:
         }
@@ -84,29 +85,30 @@ public class JavaActivity extends AppCompatActivity {
                 //当前Activity
                 .setActivity(this)
                 //更新地址
-                .handleException(new ExceptionHandler() {
-                    @Override
-                    public void onException(Exception e) {
-//                        e.printStackTrace();
-                    }
-                })
                 .setUpdateUrl(mUpdateUrl)
-                .dismissNotificationProgress()
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
-//                // 监听更新提示框相关事件
-//                .setUpdateDialogFragmentListener(new IUpdateDialogFragmentListener() {
-//                    @Override
-//                    public void onUpdateNotifyDialogCancel(UpdateAppBean updateApp) {
-//                        if(updateApp.isConstraint()){
-//                            // 处理强制更新，被用户cancel的情况
-//                        }
-//                    }
-//                })
                 .build()
                 .update();
     }
 
+    /**
+     * 强制更新
+     *
+     * @param view
+     */
+    public void constraintUpdate(View view) {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(mUpdateUrl1)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .build()
+                .update();
+    }
     /**
      * 自定义接口协议
      *
@@ -132,7 +134,13 @@ public class JavaActivity extends AppCompatActivity {
                 .setHttpManager(new OkGoUpdateHttpUtil())
                 //必须设置，更新地址
                 .setUpdateUrl(mUpdateUrl)
+                //全局异常捕获
+                .handleException(new ExceptionHandler() {
+                    @Override
+                    public void onException(Exception e) {
 
+                    }
+                })
                 //以下设置，都是可选
                 //设置请求方式，默认get
                 .setPost(false)
@@ -142,8 +150,8 @@ public class JavaActivity extends AppCompatActivity {
 //                .showIgnoreVersion()
                 //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
                 .setParams(params)
-                //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
-                .hideDialogOnDownloading(false)
+                //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度，如果是强制更新，则设置无效
+//                .hideDialogOnDownloading()
                 //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
                 .setTopPic(R.mipmap.top_8)
                 //为按钮，进度条设置颜色。
@@ -152,7 +160,15 @@ public class JavaActivity extends AppCompatActivity {
 //                .setTargetPath(path)
                 //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
 //                .setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
+                .setUpdateDialogFragmentListener(new IUpdateDialogFragmentListener() {
+                    @Override
+                    public void onUpdateNotifyDialogCancel(UpdateAppBean updateApp) {
+                        //用户取消了更新
 
+                    }
+                })
+                //不自动，获取
+                .setIgnoreDefParams(true)
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {
@@ -189,7 +205,7 @@ public class JavaActivity extends AppCompatActivity {
                                     //是否强制更新，可以不设置
                                     .setConstraint(true)
                                     //设置md5，可以不设置
-                                    .setNewMd5(jsonObject.optString("new_md51"));
+                                    .setNewMd5(jsonObject.optString("new_md5"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -603,4 +619,6 @@ public class JavaActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

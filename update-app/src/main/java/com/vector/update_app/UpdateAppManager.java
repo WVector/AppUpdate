@@ -361,7 +361,7 @@ public class UpdateAppManager {
         // 是否忽略默认参数，解决
         private boolean mIgnoreDefParams = false;
         //7,是否隐藏对话框下载进度条
-        private boolean mHideDialog;
+        private boolean mHideDialog = false;
         private boolean mShowIgnoreVersion;
         private boolean dismissNotificationProgress;
         private boolean mOnlyWifi;
@@ -566,11 +566,11 @@ public class UpdateAppManager {
         /**
          * 是否隐藏对话框下载进度条
          *
-         * @param b 是否隐藏对话框下载进度条
+         *
          * @return Builder
          */
-        public Builder hideDialogOnDownloading(boolean b) {
-            mHideDialog = b;
+        public Builder hideDialogOnDownloading() {
+            mHideDialog = true;
             return this;
         }
 

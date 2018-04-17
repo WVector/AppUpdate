@@ -27,6 +27,15 @@
 
 
         <Button
+            android:id="@+id/btn_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:onClick="constraintUpdate"
+            android:text="强制更新"
+            />
+
+        <Button
             android:id="@+id/btn_diy_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
