@@ -229,12 +229,17 @@ public class UpdateAppManager {
         //拼接参数
         Map<String, String> params = new HashMap<String, String>();
         if(!mIgnoreDefParams) {
-            params.put("appKey", mAppKey);
+            if (!TextUtils.isEmpty(mAppKey)) {
+                params.put("appKey", mAppKey);
+            }
             String versionName = AppUpdateUtils.getVersionName(mActivity);
+            //过滤掉，debug 这情况
             if (versionName.endsWith("-debug")) {
                 versionName = versionName.substring(0, versionName.lastIndexOf('-'));
             }
-            params.put("version", versionName);
+            if (!TextUtils.isEmpty(versionName)) {
+                params.put("version", versionName);
+            }
         }
 
         //添加自定义参数，其实可以实现HttManager中添加

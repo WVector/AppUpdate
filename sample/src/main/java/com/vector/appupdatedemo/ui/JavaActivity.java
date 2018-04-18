@@ -163,7 +163,7 @@ public class JavaActivity extends AppCompatActivity {
                 .setUpdateDialogFragmentListener(new IUpdateDialogFragmentListener() {
                     @Override
                     public void onUpdateNotifyDialogCancel(UpdateAppBean updateApp) {
-                        //用户取消了更新
+                        //用户点击关闭按钮，取消了更新，如果是下载完，用户取消了安装，则可以在 onActivityResult 监听到。
 
                     }
                 })
