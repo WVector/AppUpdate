@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion  26
         versionCode 1
         versionName "1.0"
 
@@ -35,8 +35,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-//    compile 'com.qianwen:update-app:'+rootProject.ext.update_app_version
-    compile project(':update-app')
+    compile 'com.qianwen:update-app:'+rootProject.ext.update_app_version
+//    compile project(':update-app')
 }
 //添加
 publish {

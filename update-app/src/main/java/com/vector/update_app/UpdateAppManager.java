@@ -526,7 +526,7 @@ public class UpdateAppManager {
 
         /**
          *  设置默认的UpdateDialogFragment监听器
-         * @param updateDialogFragmentListener
+         * @param updateDialogFragmentListener updateDialogFragmentListener 更新对话框关闭监听
          * @return Builder
          */
         public Builder setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {

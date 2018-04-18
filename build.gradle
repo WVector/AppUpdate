@@ -41,8 +41,8 @@ allprojects {
 }
 
 ext {
-    update_app_version = '3.4.8'
-    update_app_kotlin_version = '1.2.0'
+    update_app_version = '3.5.0'
+    update_app_kotlin_version = '1.2.1'
 }
 
 
