@@ -102,6 +102,7 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+
 v3.5.1
 
 	1，修复bug
