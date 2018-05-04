@@ -419,7 +419,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 @Override
                 public boolean onInstallAppAndAppOnForeground(File file) {
                     // 如果应用处于前台，那么就自行处理应用安装
-                    AppUpdateUtils.installApp(UpdateDialogFragment.this, file);
+                    AppUpdateUtils.installApp(UpdateDialogFragment.this.getActivity(), file);
                     if (!mUpdateApp.isConstraint()) {
                         dismiss();
                     }

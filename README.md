@@ -50,7 +50,7 @@
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app:3.5.0'
+    compile 'com.qianwen:update-app:3.5.1'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile 'com.qianwen:update-app-kotlin:1.2.1'
+    compile 'com.qianwen:update-app-kotlin:1.2.2'
 }
 ```
 
@@ -102,6 +102,9 @@ dependencies {
 ## 更新日志
 
 kotlin版本是依赖java版本的，所以java版本的问题kotlin自然修复
+v3.5.1
+
+	1，修复bug
 
 v3.5.0
 
