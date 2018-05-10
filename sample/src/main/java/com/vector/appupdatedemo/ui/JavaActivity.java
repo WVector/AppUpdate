@@ -138,7 +138,7 @@ public class JavaActivity extends AppCompatActivity {
                 .handleException(new ExceptionHandler() {
                     @Override
                     public void onException(Exception e) {
-
+                        e.printStackTrace();
                     }
                 })
                 //以下设置，都是可选
