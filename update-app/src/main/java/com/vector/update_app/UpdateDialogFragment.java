@@ -412,6 +412,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                             dismissAllowingStateLoss();
                         }
                     }
+                    //一般返回 true ，当返回 false 时，则下载，不安装，为静默安装使用。
                     return true;
                 }
 
@@ -424,13 +425,18 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
                 @Override
                 public boolean onInstallAppAndAppOnForeground(File file) {
+                    //这样做的目的是在跳转安装界面，可以监听到用户取消安装的动作;
+                    //activity.startActivityForResult(intent, REQ_CODE_INSTALL_APP);
+                    //但是如果 由DownloadService 跳转到安装界面，则监听失效。
                     if (!mUpdateApp.isConstraint()) {
                         dismiss();
                     }
                     if (mActivity != null) {
                         AppUpdateUtils.installApp(mActivity, file);
+                        //返回 true ，自己处理。
                         return true;
                     } else {
+                        //返回 flase ，则由 DownloadService 跳转到安装界面。
                         return false;
                     }
                 }
