@@ -86,6 +86,12 @@ public class JavaActivity extends AppCompatActivity {
                 .setActivity(this)
                 //更新地址
                 .setUpdateUrl(mUpdateUrl)
+                .handleException(new ExceptionHandler() {
+                    @Override
+                    public void onException(Exception e) {
+                        e.printStackTrace();
+                    }
+                })
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
                 .build()

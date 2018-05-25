@@ -1,6 +1,7 @@
 package com.vector.update_app;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -76,6 +77,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private TextView mIgnore;
     private IUpdateDialogFragmentListener mUpdateDialogFragmentListener;
     private DownloadService.DownloadBinder mDownloadBinder;
+    private Activity mActivity;
 
     public UpdateDialogFragment setUpdateDialogFragmentListener(IUpdateDialogFragmentListener updateDialogFragmentListener) {
         this.mUpdateDialogFragmentListener = updateDialogFragmentListener;
@@ -97,6 +99,10 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         isShow = true;
 //        setStyle(DialogFragment.STYLE_NO_TITLE | DialogFragment.STYLE_NO_FRAME, 0);
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.UpdateAppDialog);
+
+
+        mActivity = getActivity();
+
 
 
     }
@@ -418,12 +424,15 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
                 @Override
                 public boolean onInstallAppAndAppOnForeground(File file) {
-                    // 如果应用处于前台，那么就自行处理应用安装
-                    AppUpdateUtils.installApp(UpdateDialogFragment.this.getActivity(), file);
                     if (!mUpdateApp.isConstraint()) {
                         dismiss();
                     }
-                    return true;
+                    if (mActivity != null) {
+                        AppUpdateUtils.installApp(mActivity, file);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             });
         }
