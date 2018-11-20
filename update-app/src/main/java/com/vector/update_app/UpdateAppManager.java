@@ -86,7 +86,7 @@ public class UpdateAppManager {
     public static void download(final Context context, @NonNull final UpdateAppBean updateAppBean, @Nullable final DownloadService.DownloadCallback downloadCallback) {
 
         if (updateAppBean == null) {
-            throw new NullPointerException("updateApp 不能为空");
+            throw new NullPointerException(context.getString(R.string.update_app_cant_be_empty));
         }
 
         DownloadService.bindService(context.getApplicationContext(), new ServiceConnection() {
@@ -158,7 +158,7 @@ public class UpdateAppManager {
         if (TextUtils.isEmpty(mTargetPath)
 //                || !mTargetPath.startsWith(preSuffix)
                 ) {
-            Log.e(TAG, "下载路径错误:" + mTargetPath);
+            Log.e(TAG, getContext().getString(R.string.download_path_mistake) + mTargetPath);
             return true;
         }
         return mUpdateApp == null;
@@ -222,7 +222,7 @@ public class UpdateAppManager {
 
         if (DownloadService.isRunning || UpdateDialogFragment.isShow) {
             callback.onAfter();
-            Toast.makeText(mActivity, "app正在更新", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getContext().getString(R.string.app_is_being_updated), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -292,7 +292,7 @@ public class UpdateAppManager {
      */
     public void download(@Nullable final DownloadService.DownloadCallback downloadCallback) {
         if (mUpdateApp == null) {
-            throw new NullPointerException("updateApp 不能为空");
+            throw new NullPointerException(getContext().getString(R.string.update_app_cant_be_empty));
         }
         mUpdateApp.setTargetPath(mTargetPath);
         mUpdateApp.setHttpManager(mHttpManager);
@@ -333,11 +333,11 @@ public class UpdateAppManager {
                 //没有则进行下载，监听下载完成，弹出安装对话框
 
             } else {
-                callback.noNewApp("没有新版本");
+                callback.noNewApp(getContext().getString(R.string.no_new_versions));
             }
         } catch (Exception ignored) {
             ignored.printStackTrace();
-            callback.noNewApp(String.format("解析自定义更新配置消息出错[%s]", ignored.getMessage()));
+            callback.noNewApp(String.format(getContext().getString(R.string.analysis_custom_update_configuration_information_error), ignored.getMessage()));
         }
     }
 
@@ -540,7 +540,7 @@ public class UpdateAppManager {
         public UpdateAppManager build() {
             //校验
             if (getActivity() == null || getHttpManager() == null || TextUtils.isEmpty(getUpdateUrl())) {
-                throw new NullPointerException("必要参数不能为空");
+                throw new NullPointerException(getActivity().getResources().getString(R.string.the_necessary_parameters_cannot_be_empty));
             }
             if (TextUtils.isEmpty(getTargetPath())) {
                 //sd卡是否存在

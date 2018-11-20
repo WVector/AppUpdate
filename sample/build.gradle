@@ -49,6 +49,8 @@ dependencies {
 
     implementation 'io.reactivex:rxjava:1.2.9'
 
+    implementation "com.android.support:support-v4:26.1.0"
+
     implementation 'io.reactivex:rxandroid:1.2.0'
     implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     androidTestImplementation 'junit:junit:4.12'
