@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_download">开始下载</string>
+    <string name="connecting_to_the_server">正在连接服务器</string>
+    <string name="new_versions_download_path_mistake">新版本下载路径错误</string>
+    <string name="is_downloading">正在下载：</string>
+    <string name="update_new_versions_error">更新新版本出错，</string>
+    <string name="download_completed_please_click_install">下载完成，请点击安装</string>
+
+    <string name="update_app_cant_be_empty">updateApp 不能为空</string>
+    <string name="download_path_mistake">下载路径错误:</string>
+    <string name="app_is_being_updated">app正在更新</string>
+    <string name="no_new_versions">没有新版本</string>
+    <string name="analysis_custom_update_configuration_information_error">解析自定义更新配置消息出错[%s]</string>
+    <string name="the_necessary_parameters_cannot_be_empty">必要参数不能为空</string>
+
+    <string name="please_authorize_access_to_storage_space">请授权访问存储空间权限，否则App无法更新</string>
+    <string name="new_version_size">新版本大小：</string>
+    <string name="whether_upgrade_versions">是否升级到%s版本？</string>
+    <string name="cancel_download">取消下载</string>
+    <string name="installation">安装</string>
+</resources>
