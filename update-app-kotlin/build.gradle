@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.novoda.bintray-release'//添加
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -27,15 +27,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    implementation "com.android.support:support-v4:26.1.0"
+    testImplementation 'junit:junit:4.12'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile 'com.qianwen:update-app:'+rootProject.ext.update_app_version
+    implementation 'com.qianwen:update-app:'+rootProject.ext.update_app_version
 //    compile project(':update-app')
 }
 //添加

@@ -47,7 +47,7 @@ import java.io.File;
  */
 
 public class UpdateDialogFragment extends DialogFragment implements View.OnClickListener {
-    public static final String TIPS = "请授权访问存储空间权限，否则App无法更新";
+    public final String TIPS = getString(R.string.please_authorize_access_to_storage_space);
     public static boolean isShow = false;
     private TextView mContentTextView;
     private Button mUpdateOkButton;
@@ -196,7 +196,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             String msg = "";
 
             if (!TextUtils.isEmpty(targetSize)) {
-                msg = "新版本大小：" + targetSize + "\n\n";
+                msg = getString(R.string.new_version_size) + targetSize + "\n\n";
             }
 
             if (!TextUtils.isEmpty(updateLog)) {
@@ -206,7 +206,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             //更新内容
             mContentTextView.setText(msg);
             //标题
-            mTitleTextView.setText(TextUtils.isEmpty(dialogTitle) ? String.format("是否升级到%s版本？", newVersion) : dialogTitle);
+            mTitleTextView.setText(TextUtils.isEmpty(dialogTitle) ? String.format(getString(R.string.whether_upgrade_versions), newVersion) : dialogTitle);
             //强制更新
             if (mUpdateApp.isConstraint()) {
                 mLlClose.setVisibility(View.GONE);
@@ -322,7 +322,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     public void cancelDownloadService() {
         if (mDownloadBinder != null) {
             // 标识用户已经点击了更新，之后点击取消
-            mDownloadBinder.stop("取消下载");
+            mDownloadBinder.stop(getString(R.string.cancel_download));
         }
     }
 
@@ -446,7 +446,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     private void showInstallBtn(final File file) {
         mNumberProgressBar.setVisibility(View.GONE);
-        mUpdateOkButton.setText("安装");
+        mUpdateOkButton.setText(getString(R.string.installation));
         mUpdateOkButton.setVisibility(View.VISIBLE);
         mUpdateOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
