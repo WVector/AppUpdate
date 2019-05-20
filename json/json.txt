@@ -1,8 +1,8 @@
 {
   "update": "Yes",
-  "new_version": "0.8.3",
-  "apk_file_url": "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/apk/sample-debug.apk",
-  "update_log": "1，添加删除信用卡接口。\r\n2，添加vip认证。\r\n3，区分自定义消费，一个小时不限制。\r\n4，添加放弃任务接口，小时内不生成。\r\n5，消费任务手动生成。",
+  "new_version": "1.5.3",
+  "apk_file_url": "http://tmcqres.zsdkgame.com/chuanqidestiny/app-mycard-v37.apk",
+  "update_log": "1、適配部分機型登入遊戲問題 \r\n2、優化體驗新增應用更新提示",
   "target_size": "5M",
   "new_md5":"b97bea014531123f94c3ba7b7afbaad2",
   "constraint": false
