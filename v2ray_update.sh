@@ -8,7 +8,8 @@
 	 clear
 	 echo
 	 echo 
-	 st=`ps | grep "passwall" | awk '{print $8}'` 
+	 st=`ps | grep "passwall" | awk '{print $8}'`  &> /dev/null
+	 sleep 1
 	 if [ `echo ${st: 10:8}` =  passwall ]; then
 		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
 		echo
@@ -26,9 +27,9 @@
 		echo
 	 fi
 	 echo
-	 echo -e " $green 正在获取网络最新版信息..$none"
+	 echo -e " $green 1.正在获取网络最新版信息..$none"
 	 echo
-	 echo -e " $green 只能x86-64的openwrt系统上，更新lean大佬的XXXPLUS的v2插件！$none"
+	 echo -e " $green 2.只能x86-64的openwrt系统上，更新lean大佬的XXXPLUS的v2插件！$none"
 	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f4)"
 	sleep 3
 	if [ -n "$v2ray_latest_ver" ]; then
