@@ -16,13 +16,14 @@
 	 fi
 	 echo
 	 sr=`ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}'` &> /dev/null
+	 echo
 	 if [ $sr != "/var/etc/v2-ssr-retcp.json" ]; then
 		clear
 		echo
 		echo -e " $green 请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！$none"
 		exit 0
 		echo
-	 echo
+		echo
 	 fi
 	 echo
 	 echo -e " $green 正在获取网络最新版信息..$none"
