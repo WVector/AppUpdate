@@ -9,6 +9,7 @@
 	 st=`ps | grep "passwall" | awk '{print $8}'` 
 	 if [ `echo ${st: 10:8}` =  passwall ]; then
 		clear
+		echo
 		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
 		exit 0
 	 fi
@@ -21,12 +22,14 @@
 	sleep 3
 	if [ -n "$v2ray_latest_ver" ]; then
 		clear
+		echo
 		echo "连接GitHub失败，请科学后再试试！"
 		exit 0
 	fi
 	v2ray_ver=v`/usr/bin/v2ray/v2ray -version | grep "V2" | awk '{print $2}'`  
 	if [ "$v2ray_ver" = v ]; then
 		clear
+		echo
 		echo "请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！"
 		exit 0
 	fi
@@ -64,6 +67,7 @@
 		exit 0
     else
 		clear
+		echo
         echo -e "
         $red 下载 V2Ray 失败啦..可能是你的 VPS 网络太辣鸡了...请重试...$none
         " && exit 0
