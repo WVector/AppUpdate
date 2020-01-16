@@ -19,7 +19,7 @@
 	 echo -e " $green 只能x86-64的openwrt系统上，更新lean大佬的XXXPLUS的v2插件！$none"
 	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f4)"
 	sleep 3
-	if [ "$v2ray_latest_ver"  ! = v*  ]; then
+	if [ "$v2ray_latest_ver"  != v*  ]; then
 		echo
 		clear
                 echo
