@@ -1,6 +1,5 @@
 #!/bin/bash
 #只能x86-64的openwrt系统上，更新lean大佬的XXXPLUS的v2插件！
-#用SSH终端登录路由后台，把这段代码用:vi v2rayupdate.sh 然后:bash  v2rayupdate.sh 运行即可
 #	bash -c "$(wget -O- https://git.io/JvTOE)"
 #By Len yu
 	 cd /tmp/tmp
