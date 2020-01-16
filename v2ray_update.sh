@@ -9,15 +9,15 @@
 	 clear
 	 echo
 	 echo 
-	 st=`ps | grep "passwall" | awk '{print $8}'`  &> /dev/null
-	 if [ `echo ${st: 10:8}` = passwall ]; then
+	 st=0`ps | grep "passwall" | awk '{print $8}'`  &> /dev/null
+	 if [ 0`echo ${st: 10:8}` =  0passwall ]; then
 		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
 		echo
 		exit 0
 	 fi
 	 echo
-	 sr=`ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}'` &> /dev/null
-	 if [ $sr !=  "/var/etc/v2-ssr-retcp.json" ]; then
+	 sr=0`ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}'` &> /dev/null
+	 if [ $sr != "0/var/etc/v2-ssr-retcp.json" ]; then
 		clear
 		echo
 		echo -e " $green 请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！$none"
