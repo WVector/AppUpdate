@@ -17,7 +17,7 @@
 	 fi
 	 echo
 	 sr=`ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}'` &> /dev/null
-	 if [ 0$sr != "0/var/etc/v2-ssr-retcp.json" ]; then
+	 if [ $sr !=  "/var/etc/v2-ssr-retcp.json" ]; then
 		clear
 		echo
 		echo -e " $green 请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！$none"
