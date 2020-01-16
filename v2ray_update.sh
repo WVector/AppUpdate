@@ -9,8 +9,8 @@
 	 clear
 	 echo
 	 echo 
-	 st=0`ps | grep "passwall" | awk '{print $8}'`  &> /dev/null
-	 if [ 0`echo ${st: 10:8}` =  0passwall ]; then
+	 st=`ps | grep "passwall" | awk '{print $8}'`  &> /dev/null
+	 if [ `echo ${st: 10:8}` = passwall ]; then
 		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
 		echo
 		exit 0
