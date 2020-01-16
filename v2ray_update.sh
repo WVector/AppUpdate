@@ -4,6 +4,7 @@
 #	bash -c "$(wget -O- https://git.io/JvUxL)"
 #By Len yu
 	 cd /tmp/tmp
+	 rm -rf *
 	 echo -e " $green 运行前检查..$none"
 	 clear
 	 echo
