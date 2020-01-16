@@ -8,8 +8,8 @@
 	 echo 
 	 st=`ps | grep "passwall" | awk '{print $8}'` 
 	 if [ `echo ${st: 10:8}` =  passwall ]; then
-	 echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!"  
-         exit 0
+		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
+		exit 0
 	 fi
 	 echo
 	 echo -e " $green 正在获取网络最新版信息..$none"
@@ -18,13 +18,13 @@
 	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f4)"
 	sleep 3
 	if [ -n "$v2ray_latest_ver" ]; then
-    echo "连接GitHub失败，请科学后再试试！"
-	exit 0
+		echo "连接GitHub失败，请科学后再试试！"
+		exit 0
 	fi
 	v2ray_ver=v`/usr/bin/v2ray/v2ray -version | grep "V2" | awk '{print $2}'`  
 	if [ "$v2ray_ver" = v ]; then
-    echo "请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！"
-	exit 0
+		echo "请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！"
+		exit 0
 	fi
 	echo
 	if [ $v2ray_ver != $v2ray_latest_ver ]; then
@@ -63,6 +63,3 @@
         $red 下载 V2Ray 失败啦..可能是你的 VPS 网络太辣鸡了...请重试...$none
         " && exit 0
     fi
-
-
-
