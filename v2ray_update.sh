@@ -8,10 +8,21 @@
 	 clear
 	 echo
 	 echo 
-	 st=`ps | grep "passwall" | awk '{print $8}'`  &> dev>null
+	 st=`ps | grep "passwall" | awk '{print $8}'` 
 	 if [ `echo ${st: 10:8}` =  passwall ]; then
 		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
+		echo
 		exit 0
+	 fi
+	 echo
+	 sr=`ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}'` &> /dev/null
+	 if [ "$sr" != "/var/etc/v2-ssr-retcp.json" ]; then
+		clear
+		echo
+		echo -e " $green 请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！$none"
+		exit 0
+		echo
+	 echo
 	 fi
 	 echo
 	 echo -e " $green 正在获取网络最新版信息..$none"
@@ -19,18 +30,10 @@
 	 echo -e " $green 只能x86-64的openwrt系统上，更新lean大佬的XXXPLUS的v2插件！$none"
 	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f4)"
 	sleep 3
-	if [ -n $v2ray_latest_ver ]; then
+	if [ -n "$v2ray_latest_ver" ]; then
 		echo
-		clear
-                echo
 		#echo "连接GitHub失败，请科学后再试试！"
 		#exit 0
-	fi
-	v2ray_ver=v`/usr/bin/v2ray/v2ray -version | grep "V2" | awk '{print $2}'`  
-	if [ "$v2ray_ver" = v ]; then
-		echo
-		echo "请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！"
-		exit 0
 	fi
 	echo
 	if [ $v2ray_ver != $v2ray_latest_ver ]; then
