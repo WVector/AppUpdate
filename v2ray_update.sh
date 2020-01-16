@@ -23,8 +23,8 @@
 		echo
 		clear
                 echo
-		echo "连接GitHub失败，请科学后再试试！"
-		exit 0
+		#echo "连接GitHub失败，请科学后再试试！"
+		#exit 0
 	fi
 	v2ray_ver=v`/usr/bin/v2ray/v2ray -version | grep "V2" | awk '{print $2}'`  
 	if [ "$v2ray_ver" = v ]; then
