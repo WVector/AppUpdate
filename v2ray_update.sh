@@ -7,7 +7,7 @@
 	 echo -e " $green 运行前检查..$none"
 	 echo 
 	 st=`ps | grep "passwall" | awk '{print $8}'` && echo ${st: 10:8}
-	 if [ $st =  passwall ]
+	 if [ $st =  passwall ]; then
 	 echo " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！"
 	 exit 0
 	 fi
