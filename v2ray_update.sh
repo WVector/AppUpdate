@@ -8,7 +8,7 @@
 	 clear
 	 echo
 	 echo 
-	 st=`ps | grep "passwall" | awk '{print $8}'` 
+	 st=`ps | grep "passwall" | awk '{print $8}'`  &> dev>null
 	 if [ `echo ${st: 10:8}` =  passwall ]; then
 		echo -e " 请先关闭passwall并启动lean大佬的SSRPULS+，并选择v2ray方式启动再试!" 
 		exit 0
@@ -21,6 +21,8 @@
 	sleep 3
 	if [ -n "$v2ray_latest_ver" ]; then
 		echo
+		clear
+                echo
 		echo "连接GitHub失败，请科学后再试试！"
 		exit 0
 	fi
