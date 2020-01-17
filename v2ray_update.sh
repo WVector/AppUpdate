@@ -51,8 +51,8 @@
     if [ -e /tmp/tmp/v2ray ]; then
 		mv -f /tmp/tmp/v2ctl  /usr/bin/v2ray
 		mv -f /tmp/tmp/v2ray  /usr/bin/v2ray
-		chmod 755 /usr/bin/v2ray/v2ctl
-		chmod 755 /usr/bin/v2ray/v2ray
+		chmod a+x /usr/bin/v2ray/v2ctl
+		chmod a+x /usr/bin/v2ray/v2ray
 		/etc/init.d/shadowsocksr restart
 		echo
         	echo -e " $green 更新成功啦...当前 V2Ray 版本: ${cyan}$v2ray_latest_ver$none"
