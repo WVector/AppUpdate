@@ -4,6 +4,7 @@
 #Version: v2.0.1 By Len yu.
 cd /tmp/tmp
 rm -rf *
+echo
 echo -e " $green Version: v2.0.1 By Len yu.$none"
 echo
 echo -e " $green 2.只能x86-64的openwrt系统上，可更新lean大佬的XXXPLUS和passwall的v2插件！$none"
