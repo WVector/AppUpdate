@@ -7,7 +7,7 @@ rm -rf *
 echo -e " $green Version: v2.0.1 By Len yu.$none"
 echo
 echo -e " $green 2.只能x86-64的openwrt系统上，可更新lean大佬的XXXPLUS和passwall的v2插件！$none"
-sleep 1
+sleep 2
 clear
 echo 
 echo -e " $green 1.正在获取网络v2ray最新版信息..$none"
