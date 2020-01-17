@@ -1,5 +1,5 @@
 #!/bin/bash
-#只能x86-64的openwrt系统上，更新lean大佬的XXXPLUS的v2插件！
+#只能x86-64的openwrt系统上，能lean大佬的XXXPLUS和passwall的v2插件
 #	bash -c "$(wget -O- https://git.io/JvTVT)"
 #Version: v2.0.1 By Len yu.
 cd /tmp/tmp
