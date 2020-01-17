@@ -66,7 +66,6 @@ elif [[ "$sr" = "/var/etc/v2-ssr-retcp.json" &&  -e /tmp/tmp/v2ray ]]; then
 		exit 0
 else
 		echo
-        echo -e "
-        $red 下载 V2Ray 失败啦..可能是你的 VPS 网络太辣鸡了...请重试...$none
-        " && exit 0
+        	echo -e "$red 下载 V2Ray 失败啦..可能是你的 VPS 网络太辣鸡了...请重试...$none"
+        	exit 0
 fi
