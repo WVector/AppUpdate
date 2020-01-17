@@ -17,7 +17,7 @@
 	 echo
 	 sr="`ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}'`" &> /dev/null
 	 #sr="$(ps -ef | grep "/var/etc/v2-ssr" | awk '{print $7}')"
-	 if [ $sr != "/var/etc/v2-ssr-retcp.json" ]; then
+	 if [ "$sr" != "/var/etc/v2-ssr-retcp.json" ]; then
 		clear
 		echo
 		echo -e " $green 请先启动lean大佬的SSRPULS+，并选择v2ray方式启动后再试！$none"
@@ -51,8 +51,8 @@
     if [ -e /tmp/tmp/v2ray ]; then
 		mv -f /tmp/tmp/v2ctl  /usr/bin/v2ray
 		mv -f /tmp/tmp/v2ray  /usr/bin/v2ray
-		chmod a+x /usr/bin/v2ray/v2ctl
-		chmod a+x /usr/bin/v2ray/v2ray
+		chmod 755 /usr/bin/v2ray/v2ctl
+		chmod 755 /usr/bin/v2ray/v2ray
 		/etc/init.d/shadowsocksr restart
 		echo
         	echo -e " $green 更新成功啦...当前 V2Ray 版本: ${cyan}$v2ray_latest_ver$none"
