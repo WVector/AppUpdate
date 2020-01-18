@@ -70,5 +70,7 @@ elif [[ "$sr" = "retcp" &&  -e /tmp/tmp/v2ray ]]; then
 else
 		echo
         	echo -e "$red 下载 V2Ray 失败[需要连接科学]...请重试...$none"
+		echo
+		echo
         	exit 0
 fi
