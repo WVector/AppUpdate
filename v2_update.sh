@@ -41,7 +41,6 @@ fi
 ##install
 st="`ps | grep "passwall" | awk '{print $8}' | cut -d/ -f4`"  &> /dev/null
 sr="`ps -ef | grep "ssr-retcp" | awk '{print $9}' | echo ${sr: 13:5}`" &> /dev/null
-sleep 3
 if [[ "$st" =  "passwall" &&  -e /tmp/tmp/v2ray ]]; then
 		mv -f /tmp/tmp/v2ctl  /usr/bin/v2ray
 		mv -f /tmp/tmp/v2ray  /usr/bin/v2ray
