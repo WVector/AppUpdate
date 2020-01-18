@@ -5,13 +5,13 @@
 cd /tmp/tmp
 rm -rf *
 echo
-echo -e " $green Version: v2.0.1 By Len yu.$none"
+echo -e " $green Version: v2.0.2 By Len yu.$none"
 echo
-echo -e " $green 2.只能x86-64的openwrt系统上，可更新lean大佬的XXXPLUS和passwall的v2插件！$none"
+echo -e " $green 只能x86-64的openwrt系统上，可更新lean大佬的XXXPLUS和passwall的v2插件！$none"
 sleep 2
 clear
 echo 
-echo -e " $green 1.正在获取网络v2ray最新版信息..$none"
+echo -e " $green 正在获取网络v2ray最新版信息..$none"
 echo
 #judgment
 v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f4)" 
@@ -69,4 +69,3 @@ else
         echo -e "$red 下载 V2Ray 失败[需要连接科学]...请重试...$none"
         exit 0
 fi
-
