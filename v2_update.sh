@@ -61,7 +61,7 @@ elif [[ "$sr" = "retcp" &&  -e /tmp/tmp/v2ray ]]; then
 		chmod 755 /usr/bin/v2ray/v2ray
 		/etc/init.d/shadowsocksr restart
 		echo
-        echo -e " $green 更新成功啦...当前 V2Ray 版本: ${cyan}$v2ray_latest_ver$none"
+        	echo -e " $green 更新成功啦...当前 V2Ray 版本: ${cyan}$v2ray_latest_ver$none"
 		echo
 		echo -e " $yellow 温馨提示: 为了避免出现莫名其妙的问题...V2Ray路由端的版本最好和服务器的版本保持一致$none"
 		echo
