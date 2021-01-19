@@ -1,6 +1,6 @@
 #/usr/bin/bash
 #Author Lenyu 
-#version v1.1.1
+#version v1.1.2
 #获取当前绝对路径
 #echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" 
 cd /home/lenyu
@@ -111,7 +111,13 @@ if [[("$nolede" = "update") || ("$noopclash" = "update") || ("$noxray" = "update
 	echo "准备开始编译最新固件…" 
 	source /etc/environment && cd /home/lenyu/lede && git pull && git -C ~/lede/package/luci-app-openclash  pull && ./scripts/feeds update -a  && ./scripts/feeds install -a && make defconfig && make -j8 download && make -j10 V=s &&  bash rename.sh
 	echo
+	echo $new_ver > /home/lenyu/old_ver
+	rm -rf /home/lenyu/noxray
+	rm -rf /home/lenyu/noopclash
+	rm -rf /home/lenyu/nolede
+	rm -rf /home/lenyu/nossr
 	echo "固件编译成功，脚本退出！"
+	echo
 	exit 0
 fi
 echo
@@ -121,8 +127,7 @@ if [[("$nolede" = "no_update") && ("$noopclash" = "no_update") && ("$noxray" = "
 	echo "呃呃…检查lede/ssr+/xray/passwall/openclash源码，没有一个源码更新哟…还是稍安勿躁…" 
 fi
 #脚本结束，准备最后的清理工作	
-cd /home/lenyu
-echo $new_ver > old_ver
+echo $new_ver > /home/lenyu/old_ver
 rm -rf /home/lenyu/noxray
 rm -rf /home/lenyu/noopclash
 rm -rf /home/lenyu/nolede
@@ -130,5 +135,4 @@ rm -rf /home/lenyu/nossr
 echo
 echo "脚本退出！"
 echo
-sleep 1
 exit 0
